@@ -11,18 +11,20 @@
 
 \newcounter{lemmaCounter}
 \newcounter{theoremCounter}
-\newenvironment{shortlemma}{\stepcounter{lemmaCounter}\textbf{Lemma~\thelemmaCounter.}}
+\newenvironment{shortlemma}[1]{\refstepcounter{lemmaCounter}\label{#1}\textbf{Lemma~\thelemmaCounter.}}
 
-\newenvironment{shorttheorem}{\stepcounter{theoremCounter}\textbf{Theorem~\thetheoremCounter.}}
+\newenvironment{shorttheorem}[1]{\refstepcounter{theoremCounter}\label{#1}\textbf{Theorem~\thetheoremCounter.}}
 
 \DeclarePairedDelimiter\abs{\lvert}{\rvert}
 
 \newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
 \newcommand{\Q}{\mathbb{Q}}
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\ra}{\rightarrow}
 \newcommand{\set}[1]{\{#1\}}
 \newcommand{\exc}[2][Abbott]{\item \textbf{#1, Exercise #2.}}
+\newcommand{\lep}[1][L]{#1et $\epsilon > 0$ be arbitrary}
 
 
 \title{Real Analysis Exercises}
@@ -36,114 +38,114 @@
 \begin{enumerate}
 	\exc[Tao]{5.4.1} For every real
 	number $x$, exactly one of the following three statements is true: $(a)\, x$ is zero; $(b)\, x$ is positive; $(c)\, x$ is negative.
-		      	      
+				      	      
 	\begin{proof}
 		First we show that at least one of $a$, $b$ or $c$ is true. Let $x$ be an arbitrary real number. If $x=0$ we are done. Otherwise, we need to show that either $b$ or $c$ is true. Since $x \neq 0$, it can be written as $\text{LIM}_{n \to \infty} a_n$ where $(a_n)_{n=1}^{\infty}$ is a Cauchy sequence that is bounded away from zero. Then, there is some $c > 0$ such that $|a_n| \geq c$ for all $n$. Also, there is some $N \geq 1$ such that $|a_N - a_n| \leq c/2$ for all $n \geq N$, since the sequence is Cauchy, $c/2 > 0$ and $N \geq N$. Since the sequence is bounded away from zero, none of its terms are zero. Therefore we can split the problem in two cases, $a_N > 0$ and $a_N < 0$.
-			      		      	 
-		Case 1 ($a_N > 0$): If we can show that $a_n \geq c/2 > 0$ we would almost be done, since we could then define a new sequence $(b_n)_{n=1}^\infty$ where $b_n := c/2$ if $n < N$ and $b_n := a_n$ if $n \geq N$, which is clearly positively bounded away from zero and equivalent to $(a_n)_{n=1}^{\infty}$. So, assume for the sake of contradiction that $a_n < c/2$. Then, $-a_n > -c/2$, therefore $a_N - a_n > a_N-c/2 \geq c/2 > 0$. But then $|a_N - a_n| = a_N - a_n \leq c/2$. Thus we have show that $c/2 < a_N-a_n \leq c/2$, a contradiction. This means that $a_n \geq c/2$ for all $n \geq N$, and we are done.
-			      		      	 
+							      		      	 
+		Case 1 ($a_N > 0$): If we can show that $a_n \geq c/2 > 0$ for all $n \geq N$ we would almost be done, since we could then define a new sequence $(b_n)_{n=1}^\infty$ where $b_n := c/2$ if $n < N$ and $b_n := a_n$ if $n \geq N$, which is clearly positively bounded away from zero and equivalent to $(a_n)_{n=1}^{\infty}$. So, assume for the sake of contradiction that $a_n < c/2$ for some $n \geq N$. Then, $-a_n > -c/2$, therefore $a_N - a_n > a_N-c/2 \geq c/2 > 0$. But then $|a_N - a_n| = a_N - a_n \leq c/2$. Thus we have show that $c/2 < a_N-a_n \leq c/2$, a contradiction. This means that $a_n \geq c/2$ for all $n \geq N$, and we are done.
+							      		      	 
 		Case 2 ($a_N < 0$): Similarly to case one, we assume for the sake of contradiction that $a_n > -c/2$. Since $-a_N \geq c$, $a_n - a_N > c/2 > 0$. But then $|a_n - a_N| = a_n - a_N \leq c/2$, so we have show that $c/2 < a_n-a_N \leq c/2$, a contradiction. Therefore, for all $n \geq N$, $a_n \leq -c/2$. Now we can define a new sequence $(b_n)_{n=1}^\infty$ where $b_n := -c/2$ if $n < N$ and $b_n := a_n$ if $n \geq N$, which is clearly negatively bounded away from zero and equivalent to $(a_n)_{n=1}^{\infty}$.
-			      		      	  
+							      		      	  
 		Now, we show that at most one of $a$, $b$ or $c$ must be true. We do that by contradiction, in three separate cases.
-			      		      	  
+							      		      	  
 		Case 1 ($a$ and $b$ are true): Since x is positive, it can be written as $x = \text{LIM}_{n \to \infty} a_n$ where $(a_n)_{n=1}^{\infty}$ is positively bounded away from zero. In other words, there is some $c > 0$ such that $a_n \geq c$ for all $n \geq 1$. But since $x = 0$, $(a_n)_{n=1}^{\infty}$ is equivalent to zero, which means that there is some $N \geq 1$ such that $|a_N| = a_N \leq c/2 < c$, a contradiction.
-			      		      	  
+							      		      	  
 		Case 2 ($a$ and $c$ are true): Since x is negative, it can be written as $x = \text{LIM}_{n \to \infty} a_n$ where $(a_n)_{n=1}^{\infty}$ is negatively bounded away from zero. In other words, there is some $-c < 0$ such that $a_n \leq -c$ for all $n \geq 1$. But since $x = 0$, $(a_n)_{n=1}^{\infty}$ is equivalent to zero, which means that there is some $N \geq 1$ such that $|a_N| = -a_N \leq c/2$. But then $a_N \geq -c/2 > -c$, a contradiction.
-			      		      	
+							      		      	
 		Case 3 ($b$ and $c$ are true): Since $x$ is both positive and negative, we have that $x = \text{LIM}_{n \to \infty} a_n = \text{LIM}_{n \to \infty} b_n$, where $(a_n)_{n=1}^{\infty}$ is positively bounded away from zero and $(b_n)_{n=1}^{\infty}$ is negatively bounded away from zero. This means that there there exists some $c_1, c_2 > 0$ such that $a_n \geq c_1$ and $-b_m \geq c_2$ for all $n,m \geq 1$. Then $a_n - b_m \geq c_1 + c_2 > 0$. However, since the sequences are equivalent, there is some $N \geq 1$ such that
 		\begin{equation*}
 			|a_N - b_N| = a_N - b_N \leq \frac{c_1+c_2}{2} < c_1 + c_2
 			\, .
 		\end{equation*}
-			      		      	
+							      		      	
 		This is a contradiction, since we have already shown that $a_N - b_N \geq c_1 + c_2$ 
-			      		      	 
+							      		      	 
 	\end{proof}
-		      	      
-	\exc[Tao]{5.5.2} Let $E$ be a non-empty subset of $\mathbb{R}$, let $n \geq 1$ be an integer, and
+				      	      
+	\exc[Tao]{5.5.2} Let $E$ be a non-empty subset of $\R$, let $n \geq 1$ be an integer, and
 	let $L<K$ be integers. Suppose that $K/n$ is an upper bound for $E$, but that
 	$L/n$ is not an upper bound for $E$. Without using the Least Upper Bound Theorem, show that there exists an integer $L < m \leq K$ such that $m/n$ is an upper bound for $E$, but that $(m - 1)/n$ is not an upper bound for $E$.
-		      	      
+				      	      
 	\begin{proof}
 		We will say a real number $w$ is U.B whenever $w$ is an upper bound for $E$.
-			      		      	
-			      		      	
+							      		      	
+							      		      	
 		Suppose for sake of contradiction that there is no integer $L < m \leq K$ such that $m/n$ is U.B but that $(m - 1)/n$ is not U.B. This implies that if $m/n$ is U.B, $(m - 1)/n$ must also be U.B (as long as $L < m \leq K$).
 		Let $P(t)$ be the statement "$L < K-t \implies$ Both $(K-t)/n$ and $(K-t-1)/n$ are U.B". We will prove $P(t)$ holds for all natural $t$ by induction. First, we need to show that $L < K \implies$ Both $K/n$ and $(K-1)/n$ are U.B. $K/n$ is U.B by assumption, and since $L < K \leq K$, $(K - 1)/n$ also has to be an U.B, again by assumption. Now assume $P(t)$. We need to show that $L < K-t-1 \implies$ Both $(K-t-1)/n$ and $(K-t-2)/n$ are U.B. If $ L \geq K-t-1$, $P(t+1)$ is vacuously true, so we assume $K \geq K-t-1 > L$. Notice that $K-t-1 > L \implies K-t > L$. By the induction hypothesis, $(K-t-1)/n$ is U.B, but this also means that $(K-t-2)/n$ is U.B, as we wanted to show.
-			      		      	
+							      		      	
 		Now, since $K>L$ we have that $K \geq L+1$, which means that $K = L+1+c$ for some natural number $c$. Then $P(c)$ holds and also $L < K- c = L + 1 \leq K$. Therefore $(K-c-1)/n = L/n$ must be U.B, a contradiction.
 	\end{proof}
-		      	      
+				      	      
 	\exc[Tao]{5.4.5} Given any two real numbers $x<y$, we can find a rational number $q$ such that $x<q<y$.
 	\begin{proof}
 		By the Archimedean Property, there is a positive integer $b$ such that $(y-x)b > 1 > 0$. Since $x-y$ is positive and their product with $b$ is also positive, it follows that $b > 0$. By Exercise 5.4.3, there is an integer $a-1$ such that $a-1 \leq bx < a$. By the definition of $b$, we have that $bx < by - 1$. Then, $a-1 \leq bx < by-1 \implies a < by$. Now we have $bx < a < by$. Since $b > 0$, we can divide this inequality by $b$ resulting in $x < a/b < y$. We can define $q := a/b$ and since $a$ and $b$ are integers (with $b \neq$ 0) we are done.
 	\end{proof}
-		      	      
+				      	      
 	\exc[Tao]{5.4.8} Let $(a_n)_{n=0}^\infty$ be a Cauchy sequence of rationals, and let $x$ be
 	a real number. Show that if $a_n \leq x$ for all $n \geq 1$, then $\text{LIM}_{n \to \infty} a_n \leq x$
-	Similarly, show that if $an \geq x$ for all $n \geq 1$, then $n \geq 1$, then $\text{LIM}_{n \to \infty} a_n \geq x$.
-		      	      
+	Similarly, show that if $a_n \geq x$ for all $n \geq 1$, then $\text{LIM}_{n \to \infty} a_n \geq x$.
+				      	      
 	\begin{proof}
 		Assume $a_n \leq x$ for all $n \geq 1$. For sake of contradiction, assume that $\text{LIM}_{n \to \infty} a_n > x$. In that case, we can find a rational $q$ such that $\text{LIM}_{n \to \infty} a_n > q > x \geq a_n$. Since $q > a_n$ for all $n \geq 1$, Corollary 5.4.10 asserts that $q \geq \text{LIM}_{n \to \infty} a_n$. Now, we have that $\text{LIM}_{n \to \infty} a_n > q \geq \text{LIM}_{n \to \infty} a_n$, a contradiction. A very similar proof follows when $x \leq a_n$.
 	\end{proof}
-		      	      
+				      	      
 	\exc{1.3.2}
 	\begin{enumerate}
-		\item A real number $s$ is the \textit{greatest lower bound} for a set $A \subseteq \mathbb{R}$ if and only if it meets the following criteria:
+		\item A real number $s$ is the \textit{greatest lower bound} for a set $A \subseteq \R$ if and only if it meets the following criteria:
 		      \begin{enumerate}
 		      	\item $s$ is a lower bound for $A$;
 		      	\item If $b$ is a lower bound for $A$, then $s \geq b$.
 		      \end{enumerate}
-		\item We want to show that if $s \in \mathbb{R}$ is a lower bound for a set $A \subseteq \mathbb{R}$, then $s = \inf A$ if and only if for every $\epsilon > 0$, there exists an element $a \in A$ such that $s + \epsilon > a$.
+		\item We want to show that if $s \in \R$ is a lower bound for a set $A \subseteq \R$, then $s = \inf A$ if and only if for every $\epsilon > 0$, there exists an element $a \in A$ such that $s + \epsilon > a$.
 		      \begin{proof}
 		      	For the forward direction, assume $s = \inf A$. Since $s + \epsilon > s$, it is not a lower bound for $A$. Therefore, there must be some $a \in A$ such that $s + \epsilon > a$.
-		      		      	      		      	      	    
+		      			      			      		      	      		      	      	    
 		      	Conversely, assume $s$ is a lower bound for $A$, with the property that for every $\epsilon > 0$ there is some $a \in A$ such that $ s + \epsilon > a$. Let $b$ be a lower bound for $A$. Assume for sake of contradiction that $b > s$. then we can choose $\epsilon = b - s > 0$ and we have that $b = s + \epsilon > a$, which means that $b$ is not a lower bound for $A$, a contradiction. Therefore $b \leq s$, thus $s = \inf A$.
 		      \end{proof}
 	\end{enumerate}
-		      	      
+				      	      
 	\pagebreak
 	\exc{1.3.3}
-		      	      
+				      	      
 	\begin{enumerate}
 		\item First, we show that $s := \sup B \geq m$ for any $m$ that is a lower bound for $A$. Since $m$ is a lower bound for $A$, $m \in B$. But, since $s$ is an upper bound for $B$, $s \geq m$. Now we need to show that given any $a \in A$, $s \leq a$. Let $b \in B$ be arbitrary. By Lemma 1.3.7, for every choice of $\epsilon > 0$, $s-\epsilon < b$. Since $b$ is a lower bound for $A$, we have that $s-\epsilon < b \leq a$, therefore $s \leq a$. 
-		      	      	      	      	          
-		\item The previous item gives a general process for finding the greatest lower bound of any nonempty $A \subseteq \mathbb{R}$ that is bounded below. Namely, construct a set $B = \{b \in \mathbb{R} : b \text{ is a lower bound for }A\}$. Then ,since $A$ is bounded below, $B$ is nonempty. $B$ is also bounded above, since any $a \in A$, is an upper bound for $B$. This follows because if $b \in B$, then $b$ is a lower bound for $A$, therefore $a \geq b$. Then, the Axiom of Completeness guarantees that $s := \sup B$ exists, and we have already shown that this means $s = \inf A$. This means that the existence of the greatest lower bound is a corollary of Completeness, hence needs not be asserted by it.
-		      	      	      	      	          
-		\item Let $A \subseteq \mathbb{R}$ be nonempty and bounded below. Then, define the set $-A = \{-x: x \in A\}$. $-A$ is clearly nonempty. Also, let $m$ be a lower bound for $A$ and pick an $x \in -A$. Then, $x = -a$ for some $a \in A$. But then $a \geq m \implies x=-a \leq -m$. This shows that $-m$ is an upper bound for $-A$, therefore $-A$ is both nonempty and bounded above. Then, by the Axiom of Completeness, there exists an $s := \sup -A$. We want to show that $-s = \inf A$. We have that $s \geq x = -a$. Then, $-s \leq a$ thus $-s$ is a lower bound for $A$. Now, let $b \in \mathbb{R}$ be a lower bound for $A$. Then, $-b$ is an upper bound of $-A$, therefore $-b \geq \sup -A = s$. This means that $b \leq -s$, and $-s$ is indeed the greatest lower bound of $A$.
+		      		      		      	      	      	      	          
+		\item The previous item gives a general process for finding the greatest lower bound of any nonempty $A \subseteq \R$ that is bounded below. Namely, construct a set $B = \{b \in \R : b \text{ is a lower bound for }A\}$. Then ,since $A$ is bounded below, $B$ is nonempty. $B$ is also bounded above, since any $a \in A$, is an upper bound for $B$. This follows because if $b \in B$, then $b$ is a lower bound for $A$, therefore $a \geq b$. Then, the Axiom of Completeness guarantees that $s := \sup B$ exists, and we have already shown that this means $s = \inf A$. This means that the existence of the greatest lower bound is a corollary of Completeness, hence needs not be asserted by it.
+		      		      		      	      	      	      	          
+		\item Let $A \subseteq \R$ be nonempty and bounded below. Then, define the set $-A = \{-x: x \in A\}$. $-A$ is clearly nonempty. Also, let $m$ be a lower bound for $A$ and pick an $x \in -A$. Then, $x = -a$ for some $a \in A$. But then $a \geq m \implies x=-a \leq -m$. This shows that $-m$ is an upper bound for $-A$, therefore $-A$ is both nonempty and bounded above. Then, by the Axiom of Completeness, there exists an $s := \sup -A$. We want to show that $-s = \inf A$. We have that $s \geq x = -a$. Then, $-s \leq a$ thus $-s$ is a lower bound for $A$. Now, let $b \in \R$ be a lower bound for $A$. Then, $-b$ is an upper bound of $-A$, therefore $-b \geq \sup -A = s$. This means that $b \leq -s$, and $-s$ is indeed the greatest lower bound of $A$.
 	\end{enumerate}
-		      	      
+				      	      
 	\exc{1.3.4}
-		      	      
+				      	      
 	Since $B \subseteq A$, it follows that if $b \in B$, then $b \in A$. Lets pick one such $b$. Then we must have $b \leq \sup B$, but also $b \leq \sup A$
 	, since $b$ is an element of $A$. This means that $\sup A$ must be an upper bound of $B$, therefore $\sup B \leq \sup A$.
-		      	      
+				      	      
 	\exc{1.3.5}
-		      	      
+				      	      
 	\begin{enumerate}
 		\item Let $x$ be an element of $c + A$. Then, there is some $a \in A$ such that $x = c + a$. Then, since $\sup A \geq a$ we have $c + \sup A \geq c + a = x$, therefore $c + \sup A$ is an upper bound for $c + A$. Now, let $b$ be an upper bound of $c + A$. Then, $b \geq x = c+a$, which means that $b - c \geq a$, so $b-c$ is an upper bound for $A$. This means that $b-c \geq \sup A$, thus $b \geq c + \sup A$, and $\sup (c+A) = c + \sup A$, as desired.
-		      	      	      	      	          
+		      		      		      	      	      	      	          
 		\item If $c = 0$, then the only element of $c A$ is $0 = \sup c A = c \sup A$. Then, we can assume $c > 0$ and proceed very similarly to the previous item. Let $x$ be an element of $c A$. The, there is some $a \in A$ such that $x = c a$. Then, since $\sup A \geq a$ we have $c \sup A \geq c a = x$, therefore $c \sup A$ is an upper bound for $c A$. Now, let $b$ be an upper bound of $c A$. The, $b \geq x = c A$, which means that $b/c \geq a$, so $b/c$ is an upper bound of $A$. This means that $b/c \geq \sup A$, thus $b \geq c \sup A$, and $\sup (c A) = c \sup A$, as desired.
-		      	      	      	      	          
+		      		      		      	      	      	      	          
 		\item If $c < 0$, then $\sup(c A) = c\inf(A)$.
 	\end{enumerate}
-		      	      
+				      	      
 	\exc{1.3.6}
-		      	      
+				      	      
 	\begin{enumerate}
 		\item $3$, $1$.
 		\item $1$, $0$.
 		\item $1/3$, $1/2$
 		\item $9$, $1/9$
 	\end{enumerate}
-		      	      
+				      	      
 	\exc{1.3.7}
-		      	      
+				      	      
 	Let $b$ also be an upper bound for $A$. Then $b \geq a$, therefore $a = \sup A$
-		      	      
+				      	      
 	\exc{1.3.8}
 	Let $\epsilon = \sup B - \sup A$. Since $\sup B > \sup A$, $\epsilon$ is positive, which means there is an element $b \in B$ such that $\sup A = \sup B - \epsilon < b$. Now, let $a$ be an element of $A$. Then, $a \leq \sup A < b$, therefore $b$ is an upper bound for $A$.
-		      	      
+				      	      
 	\exc{1.3.9}
 	\begin{enumerate}
 		\item True.
@@ -152,56 +154,56 @@
 		\item True.
 		\item False. $A = B = (0, 1).$
 	\end{enumerate}
-		      	       
+				      	       
 	\exc{1.4.1}
-		      	       
-	If $b > 0$, then $a < 0 < b$ hence we can set $r := 0$ since $0 \in \mathbb{Q}$. Now, assume $b \leq 0$. Then, $0 \leq -b < -a$ so we can choose an $r \in \mathbb{Q}$ such that $-b < r < -a$, therefore $a < -r < b$ and we are done ($-r$ is also rational). 
-		      	       
+				      	       
+	If $b > 0$, then $a < 0 < b$ hence we can set $r := 0$ since $0 \in \Q$. Now, assume $b \leq 0$. Then, $0 \leq -b < -a$ so we can choose an $r \in \Q$ such that $-b < r < -a$, therefore $a < -r < b$ and we are done ($-r$ is also rational). 
+				      	       
 	\exc{1.4.2}
-	Since $a,b \in \mathbb{Q}$, there are integers $r_1, r_2, q_1,q_2$ such that $a = r_1/q_1$ and $b = r_2/q_2$.
-		      	        
+	Since $a,b \in \Q$, there are integers $r_1, r_2, q_1,q_2$ such that $a = r_1/q_1$ and $b = r_2/q_2$.
+				      	        
 	\begin{enumerate}
 		\item \begin{equation*}
 		      a + b = \frac{r_1}{q_1} + \frac{r_2}{q_2} = \frac{r_1 q_2 + r_2 q_1}{q_1 q_2} 
 		\end{equation*}
-			      		      	      
+							      		      	      
 		\begin{equation*}
 			ab = \frac{r_1 r_2}{q_1 q_2}
 		\end{equation*}
-			      		      	      
+							      		      	      
 		Since $r_1 q_2 + r_2 q_1$ and $q_1 q_2 \neq 0$ are integers, $a+b$ and $ab$ are rational numbers.
-			      		      	      
-		\item Assume $a + t \in \mathbb{Q}$. Then, 
+							      		      	      
+		\item Assume $a + t \in \Q$. Then, 
 		      \begin{equation*}
 		      	a + t = \frac{r_1}{q_1} + t = \frac{r_3}{q_3}
 		      \end{equation*}
-		      	      	      	      	            
-		      for some $r_3, q_3 \in \mathbb{Z}$ with $q_3 \neq 0$. But then,
+		      		      		      	      	      	      	            
+		      for some $r_3, q_3 \in \Z$ with $q_3 \neq 0$. But then,
 		      \begin{equation*}
 		      	t = \frac{r_3}{q_3} +  \frac{-r_1}{q_1}
 		      \end{equation*}
-		      	      	      	      	            
-		      which is a sum of rational numbers, therefore also rational, a contradiction. Since $\mathbb{R}$ is closed under addition, $t$ must be irrational.
-		      	      	      	      	            
+		      		      		      	      	      	      	            
+		      which is a sum of rational numbers, therefore also rational, a contradiction. Since $\R$ is closed under addition, $t$ must be irrational.
+		      		      		      	      	      	      	            
 		\item $\mathbb{I}$ is not closed under addition or multiplication. If $t$ is an irrational number and $q$ is rational, then $s := q-t$ is also irrational. However, $t + s = q$ is a rational number, therefore two irrationals can sum to a rational. Also, if we instead set $s := q/t$, then $t s = q$, so irrationals are also not closed under multiplication.
 	\end{enumerate}
-		      	        
+				      	        
 	\exc{1.4.3}
 	Since $a < b$, $a - \sqrt{2} < b - \sqrt{2}$, and we can find a rational number $q$ such that $a - \sqrt{2} < q < b - \sqrt{2}$. We then have $a < q + \sqrt{2} < b$. Since $q \in Q$, $q + \sqrt{2}$ must be irrational.
-		      	      
+				      	      
 	\exc{1.4.4}
-	Let $A := \{1/n : n \in \mathbb{N}\}$.
-	Assume there is some $n \in \mathbb{N}$ such that $1/n < 0$. Multiplying by $n$ makes the contradiction clear, so $0$ is a lower bound for $A$. Now, let $b$  also be a lower bound for $A$ and assume $b > 0$. Then, we can use the Archimedean Property of $\mathbb{R}$ to find some $n \in \mathbb{N}$ such that $1/n < b$. But this contradicts the fact that $b$ is a lower bound for $A$, therefore we must have $b \leq 0$, which proves $0 = \inf A$.
-		      	        
+	Let $A := \{1/n : n \in \N\}$.
+	Assume there is some $n \in \N$ such that $1/n < 0$. Multiplying by $n$ makes the contradiction clear, so $0$ is a lower bound for $A$. Now, let $b$  also be a lower bound for $A$ and assume $b > 0$. Then, we can use the Archimedean Property of $\R$ to find some $n \in \N$ such that $1/n < b$. But this contradicts the fact that $b$ is a lower bound for $A$, therefore we must have $b \leq 0$, which proves $0 = \inf A$.
+				      	        
 	\exc{1.4.5} 
-	Assume that $\bigcap_{n=1}^\infty (0, 1/n) \neq \emptyset$. Then, there must be some $x \in \mathbb{R}$ such that for all $n \in \mathbb{N}$, $0 < x < 1/n$. But then we can use the Archimedean Property to find a natural $m$ such that $x > 1/m$, which is a contradiction. Therefore $\bigcap_{n=1}^\infty (0, 1/n) = \emptyset$.
-		      	        
+	Assume that $\bigcap_{n=1}^\infty (0, 1/n) \neq \emptyset$. Then, there must be some $x \in \R$ such that for all $n \in \N$, $0 < x < 1/n$. But then we can use the Archimedean Property to find a natural $m$ such that $x > 1/m$, which is a contradiction. Therefore $\bigcap_{n=1}^\infty (0, 1/n) = \emptyset$.
+				      	        
 	\exc{1.4.6}
 	The following has already been shown:
 	\begin{equation*}
 		(\alpha-\frac{1}{n})^2 > \alpha^2 - \frac{2\alpha}{n} \, .
 	\end{equation*}
-	Now, choose $n_0 \in \mathbb{N}$ such that
+	Now, choose $n_0 \in \N$ such that
 	\begin{equation*}
 		\frac{1}{n_0} < \frac{\alpha^2-2}{2\alpha} \, .
 	\end{equation*}
@@ -210,82 +212,86 @@
 		(\alpha-\frac{1}{n_0})^2 > \alpha^2-\frac{2\alpha}{n_0} > 2 > t^2
 	\end{equation*}
 	for any $t \in T$. Since $\alpha = \sup T$, it follows that there is some $r \ in T$ such that $\alpha - 1/n_0 < r$. But, since $(\alpha-1/n_0)^2 > r^2$ and $\alpha - 1/n_0 > 0$, we have $\alpha - 1/n_0 > r$, a contradiction.
-		      	        
+				      	        
 	\exc{1.4.7}
-	Let $C_1 = \{n \in \mathbb{N} : f(n) \in A\}$ and $C_{k+1} = C_k \backslash \{n_k\}$ for all $k \in \mathbb{N}$, where $n_k := \min C_k$. Then, let $g : \mathbb{N} \rightarrow A$ be defined as $g(k) = f(n_k)$. First we prove a couple of useful lemmas.
-		      	        
-	Lemma 1: For all natural $k$, $n_{k+1} > n_k$. Also, $a \neq b \implies n_a \neq n_b$. \begin{proof}
+	Let $C_1 = \{n \in \N : f(n) \in A\}$ and $C_{k+1} = C_k \backslash \{n_k\}$ for all $k \in \N$, where $n_k := \min C_k$. Then, let $g : \N \rightarrow A$ be defined as $g(k) = f(n_k)$. First we prove a couple of useful lemmas.
+				      	        
+	\begin{shortlemma}{lem147_1}
+		For all natural $k$, $n_{k+1} > n_k$. Also, $a \neq b \implies n_a \neq n_b$.
+	\end{shortlemma} \begin{proof}
 	In the first part, since $n_{k+1} \in C_{k+1}$, we have that $n_{k+1} \in \{n \in C_k : n \neq n_k\}$, therefore $n_{k+1} \in C_k$, so $n_{k+1} > n_k$, since $n_k$ is the minimum of $C_k$ and $n_{k+1} \neq n_k$.
-		      	        
-	Now, assume $a,b \in \mathbb{N}$ and $a \neq b$. Without loss of generality, also assume that $a > b$. Then $n_a > n_b$, therefore $n_a \neq n_b$.
+				      	        
+	Now, assume $a,b \in \N$ and $a \neq b$. Without loss of generality, also assume that $a > b$. Then $n_a > n_b$, therefore $n_a \neq n_b$.
 	\end{proof}
-			  
-	Lemma 2: For every $L \in \mathbb{N}$ such that $f(L) \in A$, there is some $k \in \mathbb{N}$ such that $n_k = L$.
+					  
+	\begin{shortlemma}{lem147_2}
+		For every $L \in \N$ such that $f(L) \in A$, there is some $k \in \N$ such that $n_k = L$.
+	\end{shortlemma}
 	\begin{proof}
-		Let $L$ be a natural number such that $f(L) \in A$. Then, $L \in C_1$. Now, assume for sake of contradiction that there is no natural $k$ such that $n_k = L$. This means that for all $k \in \mathbb{N}$, we can find a $c_k \in C_k$ such that $L > c_k$, since $L$ cannot be the minimum of $C_k$. Now, pick a $c_L \in C_L$ such that $L > c_L$. Then, $c_L$ must be grater than or equal to the minimum of $C_L$, namely $n_L$. Now, we can use Lemma 1 to see that $L > n_L > n_{L-1} > \dots > n_1 > 0$. This shows that there are $L$ natural numbers strictly between $0$ and $L$, which is a contradiction.
+		Let $L$ be a natural number such that $f(L) \in A$. Then, $L \in C_1$. Now, assume for sake of contradiction that there is no natural $k$ such that $n_k = L$. This means that for all $k \in \N$, we can find a $c_k \in C_k$ such that $L > c_k$, since $L$ cannot be the minimum of $C_k$. Now, pick a $c_L \in C_L$ such that $L > c_L$. Then, $c_L$ must be grater than or equal to the minimum of $C_L$, namely $n_L$. Now, we can use Lemma \ref{lem147_1} to see that $L > n_L > n_{L-1} > \dots > n_1 > 0$. This shows that there are $L$ natural numbers strictly between $0$ and $L$, which is a contradiction.
 	\end{proof}
-			  
-	Now, we show that $g$ is onto. Let $a$ be an element of $A$. Since $f$ is onto and $A \subseteq B$, there must be a natural number $L$ such that $f(L) = a$. Then, by Lemma 2, we have a $k \in \mathbb{N}$ such that $n_k = L$. Now, we have that $f(L) = f(n_k) = g(k) = a$, as we wanted to show.
-			  
-	Next, we show that $g$ is one-to-one. Assume that $g(k_1) = g(k_2)$, for $k_1, k_2 \in \mathbb{N}$. This means that $f(n_{k_1}) = f(n_{k_2})$, and since $f$ is one-to-one, it must be that $n_{k_1} = n_{k_2}$. By Lemma 1, this can only happen when $k_1 = k_2$, and we are done.
-			  
+					  
+	Now, we show that $g$ is onto. Let $a$ be an element of $A$. Since $f$ is onto and $A \subseteq B$, there must be a natural number $L$ such that $f(L) = a$. Then, by Lemma \ref{lem147_2}, we have a $k \in \N$ such that $n_k = L$. Now, we have that $f(L) = f(n_k) = g(k) = a$, as we wanted to show.
+					  
+	Next, we show that $g$ is one-to-one. Assume that $g(k_1) = g(k_2)$, for $k_1, k_2 \in \N$. This means that $f(n_{k_1}) = f(n_{k_2})$, and since $f$ is one-to-one, it must be that $n_{k_1} = n_{k_2}$. By Lemma \ref{lem147_1}, this can only happen when $k_1 = k_2$, and we are done.
+					  
 	\exc{1.4.8}
 	\begin{enumerate}
-		\item $B_2$ is a subset of $A_1$, therefore it is countable or finite. First, assume it is countable. Then, there must be two functions $f : \mathbb{N} \rightarrow A_1$ and $g : \mathbb{N} \rightarrow B_2$ which are 1-1 and onto. Then, we can define another function $h : \mathbb{N} \rightarrow A_1 \cup B_2$ as following:
+		\item $B_2$ is a subset of $A_1$, therefore it is countable or finite. First, assume it is countable. Then, there must be two functions $f : \N \rightarrow A_1$ and $g : \N \rightarrow B_2$ which are 1-1 and onto. Then, we can define another function $h : \N \rightarrow A_1 \cup B_2$ as following:
 		      \begin{equation*}
 		      	h(n) = \begin{cases}
 		      	f(\frac{n-1}{2}) & \text{n is odd} \\
 		      	g(\frac{n}{2}), & \text{n is even}
 		      	\end{cases}
 		      \end{equation*}
-		      	      	      	      	        
+		      		      		      	      	      	      	        
 		      To show that $h$ is 1-1, assume that $a \neq b$ for natural numbers $a$ and $b$. If they are both odd, then $h(a) = f((a-1)/2)$ and $h(b) = f((b-1)/2)$. Since $(a-1)/2 \neq (b-1)/2$ and $f$ is 1-1, we must have $h(a) \neq h(b)$.
-		      A very similar argument follows if $a$ and $b$ are both even. The final case is $a$ is odd and $b$ is even. Then, $h(a) = f((n-1)/2)$ and $h(b) = g(b/2)$. Since $f((n-1)/2) \in A_1$ and $g(b/2) \in B_2$, it must be the case that $h(a) \neq h(b)$, since $g(b/2) \notin A_1$. Now, we need to show that $h$ is onto. Let $t \in A_1 \cup B_2$. We must find an $n \in \mathbb{N}$ such that $h(n) = t$. First, assume $t \in A_1$. Since $f$ is onto, there is a $k \in \mathbb{N}$ such that $f(k) = t$. Setting $n := 2k + 1$, we have that $h(n)=f(k)=t$. Next, assume $t \in B_2$. Since $g$ is onto, there is a $k \in B_2$ such that $g(k) = t$. Setting $n := 2k$, we have that $h(n)=g(k)=t$.
-		      This shows that $A_1 \cup B_2 \sim \mathbb{N}$ is countable whenever $B_2$ is countable.
-		      	      	      	      	        
-		      Next, we informally discuss why the theorem holds if $B_2$ is finite. In this case, we can find a bijection $g: \{1, 2, 3, \dots, m\} \rightarrow B_2$, where $m$ is the cardinality of $B_2$. Now, we define a new function $h: \mathbb{N} \rightarrow A_1 \cup B_2$ as following: 
+		      A very similar argument follows if $a$ and $b$ are both even. The final case is $a$ is odd and $b$ is even. Then, $h(a) = f((n-1)/2)$ and $h(b) = g(b/2)$. Since $f((n-1)/2) \in A_1$ and $g(b/2) \in B_2$, it must be the case that $h(a) \neq h(b)$, since $g(b/2) \notin A_1$. Now, we need to show that $h$ is onto. Let $t \in A_1 \cup B_2$. We must find an $n \in \N$ such that $h(n) = t$. First, assume $t \in A_1$. Since $f$ is onto, there is a $k \in \N$ such that $f(k) = t$. Setting $n := 2k + 1$, we have that $h(n)=f(k)=t$. Next, assume $t \in B_2$. Since $g$ is onto, there is a $k \in B_2$ such that $g(k) = t$. Setting $n := 2k$, we have that $h(n)=g(k)=t$.
+		      This shows that $A_1 \cup B_2 \sim \N$ is countable whenever $B_2$ is countable.
+		      		      		      	      	      	      	        
+		      Next, we informally discuss why the theorem holds if $B_2$ is finite. In this case, we can find a bijection $g: \{1, 2, 3, \dots, m\} \rightarrow B_2$, where $m$ is the cardinality of $B_2$. Now, we define a new function $h: \N \rightarrow A_1 \cup B_2$ as following: 
 		      \begin{equation*}
 		      	h(n) = \begin{cases}
 		      	g(n) & n \leq m \\
 		      	f(n-m) & n > m
 		      	\end{cases}
 		      \end{equation*}
-		      where $f : \mathbb{N} \rightarrow A_1$ is a bijection. Now pick two numbers $a, b \in \mathbb{N}$ and assume $a \neq b$. WLOG, we can make $a > b$. If $a > b > m$, then $h(a) = f(a-m)$ and $f(b-m) = h(b)$. Since $f$ is 1-1, $h(a) \neq h(b)$. Next, if $b \leq m$,  then $h(b) = g(b)$. In the case where $a \leq m$, we also have $h(a) = g(a) \neq g(b)$. Otherwise, $h(a) = f(a-m) \in A_1$, and, since $h(b) \notin A_1$, $h(a) \neq h(b)$, therefore $h$ is 1-1.
-		      	      	      	      	        
-		      Now, we need to show that $h$ is onto. Let $t \in A_1 \cup B_2$. We must find an $n \in \mathbb{N}$ such that $h(n) = t$. First, assume $t \in A_1$. Since $f$ is onto, there is a $k \in \mathbb{N}$ such that $f(k) = t$. Setting $n := m + k$, we have that $h(n) = f(k) = t$. Next, assume $t \in B_2$. Since $g$ is onto, there is a $k \in B_2$ such that $g(k) = t$. Setting $n := k$, we have that $h(n)=g(k)=t$, since $k \in B_2 \implies k \leq m$.
-		      	      	      	      	        
+		      where $f : \N \rightarrow A_1$ is a bijection. Now pick two numbers $a, b \in \N$ and assume $a \neq b$. WLOG, we can make $a > b$. If $a > b > m$, then $h(a) = f(a-m)$ and $f(b-m) = h(b)$. Since $f$ is 1-1, $h(a) \neq h(b)$. Next, if $b \leq m$,  then $h(b) = g(b)$. In the case where $a \leq m$, we also have $h(a) = g(a) \neq g(b)$. Otherwise, $h(a) = f(a-m) \in A_1$, and, since $h(b) \notin A_1$, $h(a) \neq h(b)$, therefore $h$ is 1-1.
+		      		      		      	      	      	      	        
+		      Now, we need to show that $h$ is onto. Let $t \in A_1 \cup B_2$. We must find an $n \in \N$ such that $h(n) = t$. First, assume $t \in A_1$. Since $f$ is onto, there is a $k \in \N$ such that $f(k) = t$. Setting $n := m + k$, we have that $h(n) = f(k) = t$. Next, assume $t \in B_2$. Since $g$ is onto, there is a $k \in B_2$ such that $g(k) = t$. Setting $n := k$, we have that $h(n)=g(k)=t$, since $k \in B_2 \implies k \leq m$.
+		      		      		      	      	      	      	        
 		      The more general statement in (i) follows easily by applying induction to the statement just proved.
-		      	      	      	      	        
-		\item We can use induction to show that $\bigcup_{n=1}^m A_n$ is countable for any particular $m \in \mathbb{N}$, which only consists of a finite ($m$) number of unions, not infinite.
-		      	      	      	      	        
+		      		      		      	      	      	      	        
+		\item We can use induction to show that $\bigcup_{n=1}^m A_n$ is countable for any particular $m \in \N$, which only consists of a finite ($m$) number of unions, not infinite.
+		      		      		      	      	      	      	        
 		\item Each one of the columns has a countable number of elements, and there are countably many columns. By matching each $a_m \in A_n$ with the $n$th column, and $m$th row, we have created a bijection between the unions of all the $A_n$ and the natural numbers.
 	\end{enumerate}
-		      	          
+				      	          
 	\exc{1.4.9}
-		      	          
+				      	          
 	\begin{enumerate}
 		\item Let $f : A \rightarrow B$ be a bijection. Since for every $b \in B$ there is a unique $a \in A$ such that $f(a) = b$, we can define a new function $g: B \rightarrow A$ where $g(b) = g(f(a)) = a$. To show that $g$ is 1-1, let $g(b_1) = g(b_2)$, where $b_1,b_2 \in B$. Then, we can find $a_1, a_2 \in A$ such that $f(a_1) = b_1$ and $f(a_2) = b_2$. Then, $g(f(a_1)) = g(f(a_2))$ and by the definition of $g$ this means that $f(a_1) = f(a_2)$, therefore $a_1 = a_2$. Now, $b_1 = f(a_1) = f(a_2) = b_2$, so $g$ is 1-1. Next, let $a \in A$. We must find a $b \in B$ such that $g(b) = a$. All we have to do is set $b := f(a)$, and we are done. Since $g$ is a bijection between $B$ and $A$, it follows that $B \sim A$.
-		      	      	      	      	              
+		      		      		      	      	      	      	              
 		\item Let $f : A \rightarrow B$ and $g : B \rightarrow C$ be bijections and $h : A \rightarrow C$ be a function such that for every $a \in A$, $h(a) = g(f(a))$. This can be done since $f(a) \in B$ and $g(f(a)) \in C$. To show that $h$ is 1-1, let $h(a_1) = h(a_2)$. This means that $g(f(a_1)) = g(f(a_2))$, then $f(a_1) = f(a_2)$ and finally $a_1 = a_2$. Now, pick a $c \in C$.  Since $g$ is onto, there is a $b \in B$ such that $g(b) = c$, and since $f$ is onto, there is an $a \in A$ such that $f(a)=b$. Then $g(f(a)) = h(a) = c$, which shows $h$ is onto. Since $h$ is also 1-1, it follows that $A \sim C$.
 	\end{enumerate}
-		      	          
+				      	          
 	\exc{1.4.10}
-	Let $S_n := \{S \subseteq \mathbb{N} : \text{The cardinality of } S = n\}$ for every $n \in \mathbb{N}$. Then, the set of all finite subsets of $\mathbb{N}$ is $U = \bigcup_{n=1}^\infty S_n$. If we can show that each $S_n$ is countable, Theorem 1.4.13 guarantees $U$ is also countable.
-		      	          
-	Define $T_{1,m} = S_1$ and $T_{n+1,m} = \{\{m\} \cup s : s \in S_n, m \notin s\}$ for all $n, m \in \mathbb{N}$. We claim that \begin{equation*}
+	Let $S_n := \{S \subseteq \N : \text{The cardinality of } S = n\}$ for every $n \in \N$. Then, the set of all finite subsets of $\N$ is $U = \bigcup_{n=1}^\infty S_n$. If we can show that each $S_n$ is countable, Theorem 1.4.13 guarantees $U$ is also countable.
+				      	          
+	Define $T_{1,m} = S_1$ and $T_{n+1,m} = \{\{m\} \cup s : s \in S_n, m \notin s\}$ for all $n, m \in \N$. We claim that \begin{equation*}
 	S_n = \bigcup_{m=1}^{\infty} T_{n,m} \, .
 	\end{equation*}
-			    
-	This is clearly true when $n = 1$, so we now show that the equality holds for all $n > 1$. To see that, let $x \in \bigcup_{m=1}^{\infty} T_{n,m}$. Then $x \in T_{n, m}$ for some $m \in \mathbb{N}$. This means that $x = \{m\} \cup s$, where $s \in S_{n-1}$, thus $x \subseteq \mathbb{N}$. Since $m \notin s$, the cardinality of $x$ is $n$, so $x \in S_n$. Now, we must show that $x \in S_n \implies x \in \bigcup_{m=1}^{\infty} T_{n,m}$, and we will call this statement $P(n)$. Assume $x \in S_n$. If $n = 1$, we have already seen that the equality in question holds, so $P(1)$ is true. Now assume $P(n)$. Also, let $y \in S_{n+1}$. Then, the cardinality of $y$ is $n+1$. Next, we can use the fact that $y \subseteq \mathbb{N}$ to see that $y = \{m\} \cup s$ for some $s \in S_n$ and some natural $m \notin s$. But this means that $y \in T_{n+1, m}$, so $P(n+1)$ holds.
-			    
-	Now, lets show by induction that $T_n$ is countable. $T_{1,m} = S_1$ is easily seen to be countable by defining a function $v : \mathbb{N} \rightarrow T_{1,m} $ such that $v(n) = \{n\}$. Now, assume $T_{n,m}$ is countable and define the set $A_m := \{a \in \mathbb{N} : m \notin f(a)\}$. By Theorem 1.4.13, $S_n$ is also countable, therefore there is a bijection $f : \mathbb{N} \rightarrow S_n$. Define a function $g : A\rightarrow T_{n+1, m}$ such that $g(a) = \{m\} \cup f(a)$, and let $a_1, a_2 \in A$ with $a_1 \neq a_2$. Then, $f(a_1) \neq f(a_2)$, and since $m \notin f(a_1), f(a_2)$, we have that $\{m\} \cup f(a_1) \neq \{m\} \cup f(a_1)$, thus $g(a_1) \neq g(a_2)$ so $g$ is 1-1. Now, let $t \in T_{n+1, m}$. Then, $t = \{m\} \cup s$ where $m \notin s$. Since $f$ is onto, there is some $n \in \mathbb{N}$ such that $f(n) = s$. Then, $g(n) = \{m\} \cup s = t$, so $g$ is onto. This shows that $A \sim T_{n+1, m}$. Since $A \subseteq \mathbb{N}$ and $A$ is not finite, it must be countable, therefore every $T_{n, m}$ is also countable, and Theorem 1.4.13 can be used to see that this results in every $S_n$ being countable, as we wanted to show.
-			    
+					    
+	This is clearly true when $n = 1$, so we now show that the equality holds for all $n > 1$. To see that, let $x \in \bigcup_{m=1}^{\infty} T_{n,m}$. Then $x \in T_{n, m}$ for some $m \in \N$. This means that $x = \{m\} \cup s$, where $s \in S_{n-1}$, thus $x \subseteq \N$. Since $m \notin s$, the cardinality of $x$ is $n$, so $x \in S_n$. Now, we must show that $x \in S_n \implies x \in \bigcup_{m=1}^{\infty} T_{n,m}$, and we will call this statement $P(n)$. Assume $x \in S_n$. If $n = 1$, we have already seen that the equality in question holds, so $P(1)$ is true. Now assume $P(n)$. Also, let $y \in S_{n+1}$. Then, the cardinality of $y$ is $n+1$. Next, we can use the fact that $y \subseteq \N$ to see that $y = \{m\} \cup s$ for some $s \in S_n$ and some natural $m \notin s$. But this means that $y \in T_{n+1, m}$, so $P(n+1)$ holds.
+					    
+	Now, lets show by induction that $T_n$ is countable. $T_{1,m} = S_1$ is easily seen to be countable by defining a function $v : \N \rightarrow T_{1,m} $ such that $v(n) = \{n\}$. Now, assume $T_{n,m}$ is countable and define the set $A_m := \{a \in \N : m \notin f(a)\}$. By Theorem 1.4.13, $S_n$ is also countable, therefore there is a bijection $f : \N \rightarrow S_n$. Define a function $g : A\rightarrow T_{n+1, m}$ such that $g(a) = \{m\} \cup f(a)$, and let $a_1, a_2 \in A$ with $a_1 \neq a_2$. Then, $f(a_1) \neq f(a_2)$, and since $m \notin f(a_1), f(a_2)$, we have that $\{m\} \cup f(a_1) \neq \{m\} \cup f(a_1)$, thus $g(a_1) \neq g(a_2)$ so $g$ is 1-1. Now, let $t \in T_{n+1, m}$. Then, $t = \{m\} \cup s$ where $m \notin s$. Since $f$ is onto, there is some $n \in \N$ such that $f(n) = s$. Then, $g(n) = \{m\} \cup s = t$, so $g$ is onto. This shows that $A \sim T_{n+1, m}$. Since $A \subseteq \N$ and $A$ is not finite, it must be countable, therefore every $T_{n, m}$ is also countable, and Theorem 1.4.13 can be used to see that this results in every $S_n$ being countable, as we wanted to show.
+					    
 	\exc{1.4.11}
 	\begin{enumerate}
 		\item $f : (0,1) \rightarrow S$, $f(x) = (x, 1/2)$.
-		      	      	      	      	              
-		\item For every $x \in \mathbb{R}$ if there is a decimal expansion of $x$ that ends in a tail of nines, we can instead choose one that ends in a tail of zeros, and we will call this the unique expansion of $x$ (when $x$ does not end in a tail of nines the expansion is already unique). Then, let $(x_1, x_2) \in S$. We can expand $x_1$ and $x_2$ uniquely as follows:
-		      	      	      	      	              
+		      		      		      	      	      	      	              
+		\item For every $x \in \R$ if there is a decimal expansion of $x$ that ends in a tail of nines, we can instead choose one that ends in a tail of zeros, and we will call this the unique expansion of $x$ (when $x$ does not end in a tail of nines the expansion is already unique). Then, let $(x_1, x_2) \in S$. We can expand $x_1$ and $x_2$ uniquely as follows:
+		      		      		      	      	      	      	              
 		      \begin{gather}
 		      	\nonumber x_1 = 0.d_1 d_2 d_3 \dots \\
 		      	\nonumber x_2 = 0.e_1 e_2 e_3 \dots
@@ -294,15 +300,15 @@
 		      \begin{equation*}
 		      	f((x_1, x_2)) = 0.d_1e_1d_2e_2 \dots
 		      \end{equation*}
-		      	      	      	      	             
+		      		      		      	      	      	      	             
 		      $f$ is 1-1, but not onto. Consider for example $x = 0.898989\dots$. Notice that every other digit is a $9$, so in order for $f$ to map some ordered pair to $x$, one of the elements of the pair would have to be $0.999\dots = 1$, which is not in the domain of $f$.
 	\end{enumerate}
-		      	          
+				      	          
 	\exc{1.5.11} (Switched to second edition here)
-		      	          
+				      	          
 	\begin{enumerate}
 		\item Since $g$ maps $B'$ onto $A'$, for every $a \in A'$ there is a $b \in B'$ such that $g(b) = a$. Since $g$ is also 1-1, this $b$ is unique. Then, we can define a function $g^{-1} : A' \rightarrow B'$ such that $g^{-1}(a) = b$. To show that $g^{-1}$ is onto, let $y \in B'$ be arbitrary. Then $g(y) = x$ for some $x \in A'$, which by the definition of $g^{-1}$ means that $g^{-1}(x) = y$ so $g^{-1}$ is onto. Next, we show that $g{-1}$ is 1-1 by letting $g^{-1}(x_1) = g^{-1}(x_2)$ for some $x_1, x_2 \in A'$. Then, we can find $y_1, y_2 \in B'$ such that $g(y_1) = x_1$ and $g(y_2) = x_2$. Then, $g^{-1}(g(y_1)) = g^{-1}(g(y_2))$, in other words, $g(y_1) = g(y_2)$, which means $y_1 = y_2$ since $g$ is 1-1. Then, $g(y_1) = x_1 = g(y_2) = x_2$, and $g^{-1}$ is 1-1 and onto.
-		      	      	      	      	              
+		      		      		      	      	      	      	              
 		      Now, let $h : X \rightarrow Y$ be such that 
 		      \begin{equation*}
 		      	h(x) = \begin{cases}
@@ -310,49 +316,49 @@
 		      	g^{-1}(x) & x \in A'
 		      	\end{cases}
 		      \end{equation*}
-		      	      	      	      	              
+		      		      		      	      	      	      	              
 		      for every $x \in X$. Now, assume $a \neq b$ for $a, b \in X$. If $a$ and $b$ are elements of $A$, then $h(a) \neq h(b)$, since $f$ is 1-1. Also, if $a,b \in A'$, then $h(a) \neq h(b)$ since $g^{-1}$ is 1-1. The last case is $a \in A$ and $b \in A'$, then $h(a)=f(a) \in B$, and $h(b)=g^{-1}(b) \in B'$, and we can use the fact that $A'$ and $B'$ are disjoint to see that $h(a) \neq h(b)$, so $h$ is 1-1. Now, let $y \in Y$. If $y \in B$, then there is some $a \in A$ such that $f(a)=h(a)=y$, since $f$ maps $A$ onto $B$. Also, if $y \in B'$, then there is some $a' \in A'$ such that $g^{-1}(a') = y$, since $g^{-1}$ is onto.
 	\end{enumerate}
-		      	          
+				      	          
 	\exc{1.6.1}
-	The function $(1-2x)/((2x-1)^2-1)$ maps $(0, 1)$ to $\mathbb{R}$ both 1-1 and onto, therefore $\mathbb{R} \sim (0, 1)$, and since $\sim$ is an equivalence relation, $\mathbb{R}$ is uncountable $\iff (0, 1)$ is uncountable. 
-		      	          
+	The function $(1-2x)/((2x-1)^2-1)$ maps $(0, 1)$ to $\R$ both 1-1 and onto, therefore $\R \sim (0, 1)$, and since $\sim$ is an equivalence relation, $\R$ is uncountable $\iff (0, 1)$ is uncountable. 
+				      	          
 	\exc{1.6.2}
 	\begin{enumerate}
 		\item If $a_{11} = 2$, then $b_1 = 3$, and if $a_{11} \neq 2$, $b_1 = 2$. In both cases, $a_{11} \neq b_1$. Since $f(1) = .a_{11} a_{12} \dots$, $x$ and $f(1)$ differ in at least one decimal place, therefore they are not equal.
-		      	      	      	      	              
+		      		      		      	      	      	      	              
 		\item If $a_{nn} = 2$, then $b_n = 3$, and if $a_{nn} \neq 2$, $b_n = 2$. In both cases, $a_{nn} \neq b_1$. Since $f(n) = .a_{n 1} \dots a_{nn} a_{n n+1} \dots$, $x$ and $f(n)$ differ in at least one decimal place , therefore they are not equal.
-		      	      	      	      	              
-		\item We assumed that every real number is included in the list, therefore there is some $n \in \mathbb{N}$ such that $x = f(n)$. However, we have also shown that this cannot be the case, which is a contradiction. Therefore, our assumption that $(0, 1)$ must be false, and $(0, 1)$ is uncountable.
+		      		      		      	      	      	      	              
+		\item We assumed that every real number is included in the list, therefore there is some $n \in \N$ such that $x = f(n)$. However, we have also shown that this cannot be the case, which is a contradiction. Therefore, our assumption that $(0, 1)$ must be false, and $(0, 1)$ is uncountable.
 	\end{enumerate}
-		      	          
+				      	          
 	\exc{1.6.3}
-		      	          
+				      	          
 	\begin{enumerate}
-		\item We cannot apply the same argument to $\mathbb{Q}$ because even though every rational number has a decimal expansion, it is not true that every decimal expansion corresponds to a rational number. Therefore, the number $x = .b_1b_2 \dots$ created is only guaranteed to be a real number, so we cannot use the fact that $x$ is not in the list to get a contradiction. Instead, this argument shows that the number $x$ must be irrational.
-		      	      	      	      	              
-		\item We used the fact that if $x, y \in \mathbb{R}$ and the $n$th digit of $x$ is not equal to the $n$th digit of $y$, then $x \neq y$. However, $0.499\dots = 0.5$, and their first digits (after the decimal point) are different. Fortunately, this only happens when one of $x$ has a decimal expansion that terminates, and $y$ can be written with repeating nines (or vice-versa), and this is never the case with the real number $x$ that we constructed, since its only digits are $2$ and $3$. 
+		\item We cannot apply the same argument to $\Q$ because even though every rational number has a decimal expansion, it is not true that every decimal expansion corresponds to a rational number. Therefore, the number $x = .b_1b_2 \dots$ created is only guaranteed to be a real number, so we cannot use the fact that $x$ is not in the list to get a contradiction. Instead, this argument shows that the number $x$ must be irrational.
+		      		      		      	      	      	      	              
+		\item We used the fact that if $x, y \in \R$ and the $n$th digit of $x$ is not equal to the $n$th digit of $y$, then $x \neq y$. However, $0.499\dots = 0.5$, and their first digits (after the decimal point) are different. Fortunately, this only happens when one of $x$ has a decimal expansion that terminates, and $y$ can be written with repeating nines (or vice-versa), and this is never the case with the real number $x$ that we constructed, since its only digits are $2$ and $3$. 
 	\end{enumerate}
-		      	          
+				      	          
 	\exc{1.6.4}
-	Assume that $S$ is countable. Then, there is a function $f : \mathbb{N} \rightarrow S$ which is 1-1 and onto. Now, let $(a_n)$ be a sequence such that \begin{equation*}
+	Assume that $S$ is countable. Then, there is a function $f : \N \rightarrow S$ which is 1-1 and onto. Now, let $(a_n)$ be a sequence such that \begin{equation*}
 	a_n = \begin{cases}
 	0 & f(n)_n = 1 \\ 
 	1 & f(n)_n = 0
 	\end{cases}
 	\end{equation*}
-	where $f(n)_n$ represents the $n$th entry in the sequence $f(n)$. Since $a_n$ is a sequence of only zeros and ones, $(a_n) \in S$. Since $f$ is onto, this means that there is some $k \in \mathbb{N}$ such that $f(k) = (a_n)$. However, we know that $f(k)_k \neq a_k$, therefore $f(k) \neq (a_n)$, a contradiction. This means that $S$ is not countable. Since $S$ is also infinite, $S$ is uncountable.
-			    
+	where $f(n)_n$ represents the $n$th entry in the sequence $f(n)$. Since $a_n$ is a sequence of only zeros and ones, $(a_n) \in S$. Since $f$ is onto, this means that there is some $k \in \N$ such that $f(k) = (a_n)$. However, we know that $f(k)_k \neq a_k$, therefore $f(k) \neq (a_n)$, a contradiction. This means that $S$ is not countable. Since $S$ is also infinite, $S$ is uncountable.
+					    
 	\exc{1.6.5}
-		      	          
+				      	          
 	\begin{enumerate}
 		\item $P(A) = \{\emptyset, \{a\}, \{b\}, \{c\}, \{a, b\}, \{a, c\}, \{b, c\}, \{a, b, c\}\}$.
-		      	      	      	      	              
+		      		      		      	      	      	      	              
 		\item If $A$ has $1$ element $a$, then $P(A) = \{\emptyset, \{a\}\}$ has $2^1 = 2$ elements. Now assume that if $A$ has $n$ elements $P(A)$ has $2^n$ elements. Let $B$ have $n + 1$ elements, and $b \in B$. The set $B' = B \backslash \{b\}$, has cardinality $n$, so $P(B')$ has $2^n$ elements. But every element of $P(B)$ is either an element of $P(B')$ or the union of one of the elements of $B'$ with $b$. Therefore, $P(B)$ has $2^n + 2^n = 2^{n+1}$ elements.
 	\end{enumerate}
-		      	          
+				      	          
 	\exc{1.6.6}
-		      	          
+				      	          
 	\begin{enumerate}
 		\item \begin{equation*}
 		      f(x) = \begin{cases}
@@ -368,7 +374,7 @@
 			\{c\} & x = c
 			\end{cases}
 		\end{equation*}
-			      		      	        
+							      		      	        
 		\item \begin{equation*}
 		      g(x) = \begin{cases}
 		      \{1\} & x = 1 \\
@@ -377,141 +383,151 @@
 		      \{4\} & x = 4
 		\end{cases}
 		\end{equation*}
-			      		      	        
+							      		      	        
 		\item Since there are more elements in $P(C)$ than $C$, a mapping from $C \rightarrow P(C)$ always "runs out of" elements from $C$ before mapping all to all of the elements in $P(C)$.
 	\end{enumerate}
-		      	          
+				      	          
 	\exc{1.6.8}
-		      	          
+				      	          
 	\begin{enumerate}
 		\item By the definition of $B$, $a'$ is some element of $A$ such that $a' \notin f(a') = B$. Since we assumed $a' \in B$, this is a contradiction.
-		      	      	      	      	              
+		      		      		      	      	      	      	              
 		\item Since $a' \notin B$ and $a' \in A$, it must be the case that $a' \in f(a') = B$, a contradiction.
 	\end{enumerate}
-		      	          
+				      	          
 	\exc{1.6.9}
-	Let $A \in P(\mathbb{N})$ be an arbitrary subset of the naturals. Then, define the function $f : P(\mathbb{N}) \rightarrow S$ such that
+	Let $A \in P(\N)$ be an arbitrary subset of the naturals. Then, define the function $f : P(\N) \rightarrow S$ such that
 	\begin{equation*}
 		f(A)_n = \begin{cases}
 		0 & n \notin A \\
 		1 & n \in A
 		\end{cases}
 	\end{equation*}
-	where $S$ is the set of all sequences of $0'$s and $1'$s discussed in Exercise 1.6.4, and $f(A)_n$ stands for the $n$th term of the sequence $f(A)$. Since $S$ is uncountable, if we can show that $f$ is 1-1 and onto, then $P(\mathbb{N}) \sim S$, which is uncountable. Assume that $f(X) = f(Y)$ for some $X, Y \subseteq \mathbb{N}$. This means that for all $n \in \mathbb{N}$ $f(X)_n = f(Y)_n$. Now, pick an arbitrary $n \in X$. Then, $f(X)_n = 1 = f(Y)_n$, which means $n$ must also be an element of $Y$. A very similar argument follows if you first pick an $n \in Y$. This means that $n \in X \iff n \in Y$, so $X = Y$ and $f$ is 1-1. Now, let $s \in S$ be arbitrary. To show that $f$ is onto, we must find some $A \subseteq \mathbb{N}$ such that $f(A) = s$. To do that let $A = \{a \in \mathbb{N}:s_a = 1\}$. Then $f(A)_n = 1$ means that $n \in A$, which only happens if $s_n$ is also equal to $1$, so $f(A_n) = s_n$ in this case. Finally, if $f(A)_n = 0$, then $n \notin A$, so $s_n \neq 1$, which can only happen if $s_n = 0 = f(A)_n$, therefore $f(A) = s$ and $f$ is onto. 
-		      	          
-	We have shown that $P(\mathbb{N}) \sim S$, but our goal was to show that $P(\mathbb{N}) \sim \mathbb{R}$. We do this by showing that $S \sim (0, 1)$. Since $(0, 1) \sim \mathbb{R}$ and $\sim$ is an equivalence relation this automatically gives our wanted result. To do that, let $x \in (0, 1)$ be a real number. We are interested in the binary representation of $x$, namely \begin{equation*}
+	where $S$ is the set of all sequences of $0'$s and $1'$s discussed in Exercise 1.6.4, and $f(A)_n$ stands for the $n$th term of the sequence $f(A)$. Since $S$ is uncountable, if we can show that $f$ is 1-1 and onto, then $P(\N) \sim S$, which is uncountable. Assume that $f(X) = f(Y)$ for some $X, Y \subseteq \N$. This means that for all $n \in \N$ $f(X)_n = f(Y)_n$. Now, pick an arbitrary $n \in X$. Then, $f(X)_n = 1 = f(Y)_n$, which means $n$ must also be an element of $Y$. A very similar argument follows if you first pick an $n \in Y$. This means that $n \in X \iff n \in Y$, so $X = Y$ and $f$ is 1-1. Now, let $s \in S$ be arbitrary. To show that $f$ is onto, we must find some $A \subseteq \N$ such that $f(A) = s$. To do that let $A = \{a \in \N:s_a = 1\}$. Then $f(A)_n = 1$ means that $n \in A$, which only happens if $s_n$ is also equal to $1$, so $f(A_n) = s_n$ in this case. Finally, if $f(A)_n = 0$, then $n \notin A$, so $s_n \neq 1$, which can only happen if $s_n = 0 = f(A)_n$, therefore $f(A) = s$ and $f$ is onto. 
+				      	          
+	We have shown that $P(\N) \sim S$, but our goal was to show that $P(\N) \sim \R$. We do this by showing that $S \sim (0, 1)$. Since $(0, 1) \sim \R$ and $\sim$ is an equivalence relation this automatically gives our wanted result. To do that, let $x \in (0, 1)$ be a real number. We are interested in the binary representation of $x$, namely \begin{equation*}
 	x = 0.a_1 a_2 a_3 \dots
 	\end{equation*}
 	where the $a_n$ are either $0$ or $1$. Also, we require that the binary expansion never terminates in $1'$s. Then, the function $f : (0, 1) \rightarrow S$ such that $f(x)_n = a_n$ is easily seen to be 1-1, but it is not onto, since sequences that terminate in $1$'s will not be "reached" by the function. However, by the Schröder–Bernstein Theorem finding a 1-1 function from $g : S \rightarrow (0, 1)$ is enough for our purposes. To do this, let $g(A)_n = A_n$, where $g(A)_n$ represents the $n$th digit in the decimal expansion of a real number in the interval $(0, 1)$. $g$ is clearly 1-1, so we are done.
-			    
+					    
 	\exc{1.6.10}
-		      	          
+				      	          
 	\begin{enumerate}
-		\item Let $F$ be the set of all functions from $\{0, 1\}$ to $\mathbb{N}$. Then, define $g : \mathbb{N}^2 \rightarrow F$ such that $g((a, b))$ is a function $f : \{0, 1\} \rightarrow \mathbb{N}^2$ such that \begin{equation*}
+		\item Let $F$ be the set of all functions from $\{0, 1\}$ to $\N$. Then, define $g : \N^2 \rightarrow F$ such that $g((a, b))$ is a function $f : \{0, 1\} \rightarrow \N^2$ such that \begin{equation*}
 		      f(x) = \begin{cases}
 		      a & x = 0 \\
 		      b & x = 1
 		\end{cases}
 		\end{equation*}
-		$g$ is easily seen to be 1-1 and onto, so $F \sim \mathbb{N}^2 \sim \mathbb{N}$, therefore $F$ is countable.
-			      		      	        
-		\item Let $F$ now be the set of all $f : \mathbb{N} \rightarrow \{0, 1\}$. Now let the function $g : F \rightarrow S$ be such that $g(f)_n = f(n)$ for every $n \in \mathbb{N}$ and every $f \in F$, where $S$ is the set of all sequences of $0'$s and $1'$s discussed in Exercise 1.6.4. Again, $g$ is easily seen to be a bijection, so $F \sim S \sim \mathbb{R}$, therefore $F$ is uncountable.
+		$g$ is easily seen to be 1-1 and onto, so $F \sim \N^2 \sim \N$, therefore $F$ is countable.
+							      		      	        
+		\item Let $F$ now be the set of all $f : \N \rightarrow \{0, 1\}$. Now let the function $g : F \rightarrow S$ be such that $g(f)_n = f(n)$ for every $n \in \N$ and every $f \in F$, where $S$ is the set of all sequences of $0'$s and $1'$s discussed in Exercise 1.6.4. Again, $g$ is easily seen to be a bijection, so $F \sim S \sim \R$, therefore $F$ is uncountable.
 	\end{enumerate}
-		      	          
+				      	          
 	\exc{2.2.1}
 	The sequence $f(n) = (-1)^n$ verconges to $0$ and $1$, but does not converge. This definition describes bounded sequences.
-		      	          
+				      	          
 	\exc{2.2.4}
-		      	          
+				      	          
 	\begin{enumerate}
 		\item $f(n) = (-1)^n$.
-		\item There is no such sequence. To see that, let $(a_n)$ be a sequence such that for every $N \in \mathbb{N}$ there is some $n \geq N$ such that $a_n = 1$ which also converges to some real number $L$. Now, assume $L \neq 1$. Since $(a_n)$ converges, there is some $M \in \mathbb{N}$ such that for all $m \geq M$ $|a_m - L| < |1-L|/2$, since $|1-L|/2 > 0$. By the construction of $(a_n)$, we can pick an $m \geq M$ such that $a_m = 1$. Then, we have $|1-L| < |1-L|/2$ which implies $1 < 1/2$, a contradiction. Therefore $(a_n)$ must converge to $1$.
-		      	      	      	      	              
+		\item There is no such sequence. To see that, let $(a_n)$ be a sequence such that for every $N \in \N$ there is some $n \geq N$ such that $a_n = 1$ which also converges to some real number $L$. Now, assume $L \neq 1$. Since $(a_n)$ converges, there is some $M \in \N$ such that for all $m \geq M$ $|a_m - L| < |1-L|/2$, since $|1-L|/2 > 0$. By the construction of $(a_n)$, we can pick an $m \geq M$ such that $a_m = 1$. Then, we have $|1-L| < |1-L|/2$ which implies $1 < 1/2$, a contradiction. Therefore $(a_n)$ must converge to $1$.
+		      		      		      	      	      	      	              
 		\item $(0, 1, 0, 1, 1, 0, 1, 1, 1, 0, \dots)$.
 	\end{enumerate}
-		      	          
+				      	          
 	\exc{2.2.5}
-		      	              
+				      	              
 	\begin{enumerate}
 		\item We claim that $\lim a_n = 0$. Let $\epsilon > 0$ be arbitrary. Choose a natural number $N > 5$. Notice that whenever $n \geq N > 5$, $1 > 5/n \geq 0$, which means $0 = [[a_n]]$, therefore $|a_n - 0| = 0 < \epsilon$.
-		      	      	      	      	                  
+		      		      		      	      	      	      	                  
 		\item We claim that $\lim a_n = 1$. Let $\epsilon > 0$ be arbitrary. Choose a natural number $N > 6$. Notice that whenever $n \geq N > 6$, $2 > (12+4n)/(3n) \geq 1$, which means $1 = [[a_n]]$, therefore $|a_n - 1| = 0 < \epsilon$.
 	\end{enumerate}
-		      	              
+				      	              
 	\exc{2.2.6}
 	Assume $a \neq b$. Then, there are naturals $N_1, N_2$ such that for every $n_1 \geq N_1$ and every $n_2 \geq N_2$, we have $|a_{n_1} - a| < |a-b|/2$ and $|a_{n_2} - b| < |a-b|/2$. By letting $N = \max (N_1, N_2)$, it is then true that for every $n \geq N$ $|a_n - a| < |a-b|/2$ and $|a_n - b| < |a-b|/2$. Adding both of these equations, we have $|a_n - a| + |a_n - b| < |a-b|$, which contradicts the triangle inequality, so we must have $a = b$.
-		      	              
+				      	              
 	\exc{2.2.7}
-		      	              
+				      	              
 	\begin{enumerate}
 		\item The sequence $(-1)^n$ is frequently in $\{1\}$.
 		\item Definition (i) is stronger, a sequence that is eventually in a set is also frequently in the set.
-		      	      	      	      	                  
+		      		      		      	      	      	      	                  
 		\item A sequence $(a_n)$ converges to $a$ if, given any $\epsilon$-neighborhood $V_\epsilon(a)$ of $a$, the sequence is eventually in $V_\epsilon(a)$.
-		      	      	      	      	                  
+		      		      		      	      	      	      	                  
 		\item The sequence $(1,2,1,2,1\dots)$ is not eventually in $(1.9, 2.1)$. However, any sequence with an infinite number of $2'$s is frequently in $(1.9, 2.1)$, since $2$ is in this set. 
 	\end{enumerate}
-		      	              
+				      	              
 	\exc{2.2.8}
-		      	              
+				      	              
 	\begin{enumerate}
 		\item Yes.
 		\item Yes.
 		\item The sequence $(0, 1, 0, 1, 1, 0, 1,1,1, 0 \dots)$ is a counterexample.
-		\item A sequence is not zero-heavy if for all $M \in \mathbb{N}$ there exists $N \in \mathbb{N}$ such that for all $n$ satisfying $N \leq n \leq N + M$ we have $x_n \neq 0$.
+		\item A sequence is not zero-heavy if for all $M \in \N$ there exists $N \in \N$ such that for all $n$ satisfying $N \leq n \leq N + M$ we have $x_n \neq 0$.
 	\end{enumerate}
-		      	              
+				      	              
 	\exc{2.3.1}
 	\begin{enumerate}
-		\item  Let $\epsilon > 0$ be arbitrary. Since $(x_n) \rightarrow 0$, there is an $N \in \mathbb{N}$ such that for all $n \geq N$, $x_n < \epsilon^2$. Then, $\sqrt{x_n} = |\sqrt{x_n} - 0| < \epsilon$, so $(\sqrt{x_n}) \rightarrow 0$.
-		      	      	      	      	                  
-		\item Since item (a) already proves the case where $x = 0$, we can assume $x > 0$. Now, let $\epsilon > 0$ be arbitrary. Since $(x_n) \rightarrow x$, there is an $N \in \mathbb{N}$ such that for all $n \geq N$ $|x_n-x| < \epsilon \sqrt{x}$. In that case, \begin{equation*}
+		\item  Let $\epsilon > 0$ be arbitrary. Since $(x_n) \rightarrow 0$, there is an $N \in \N$ such that for all $n \geq N$, $x_n < \epsilon^2$. Then, $\sqrt{x_n} = |\sqrt{x_n} - 0| < \epsilon$, so $(\sqrt{x_n}) \rightarrow 0$.
+		      		      		      	      	      	      	                  
+		\item Since item (a) already proves the case where $x = 0$, we can assume $x > 0$. Now, let $\epsilon > 0$ be arbitrary. Since $(x_n) \rightarrow x$, there is an $N \in \N$ such that for all $n \geq N$ $|x_n-x| < \epsilon \sqrt{x}$. In that case, \begin{equation*}
 		      |\sqrt{x_n}-\sqrt{x}| = |\sqrt{x_n}-\sqrt{x}| \frac{\sqrt{x_n}+ \sqrt{x}}{\sqrt{x_n}+ \sqrt{x}} = \frac{|x_n-x|}{\sqrt{x_n}+\sqrt{x}} \leq \frac{|x_n-x|}{\sqrt{x}} < \epsilon
 		\end{equation*}
 		and we are done.
 	\end{enumerate}
-		      	              
+				      	              
 	\exc{2.3.2}
-		      	              
+				      	              
 	\begin{enumerate}
 		\item Let $\epsilon > 0$ be arbitrary. Since $(x_n) \rightarrow 2$, we can choose a natural number $N$ such that $|x_n-2| < 3\epsilon/2$ for all $n \geq N$. Then, \begin{equation*}
 		      \abs[\Big]{\frac{2x_n-1}{3}-1} = \frac{2}{3}|x_n-2| < \epsilon \, .
 		\end{equation*}
-			      		      	            
+							      		      	            
 		\item Let $\epsilon > 0$ be arbitrary. Since $(x_n) \rightarrow 2$, we can choose a natural number $N_1$ such that $|x_n-2| < 2\epsilon$ for all $n \geq N_1$. We can also find a natural $N_2$ such that $\abs{2-x_n} < 1$, for all $n \geq N_2$, which implies $|x_n| > 1$. Let $N := \max(N_1, N_2)$. Then, for all $n \geq N$, we have \begin{equation*}
 		      \abs[\Big]{\frac{1}{x_n}-\frac{1}{2}} = \abs[\Big]{\frac{2-x_n}{2x_n}} < \abs[\Big]{\frac{x_n-2}{2}} < \epsilon.
 		\end{equation*}
 	\end{enumerate}
-		      	              
+	
+	\begin{shortlemma}{lem_convergEquiv}
+	    If $(x_n), (y_n) \rightarrow L$ for some real number $L$, then for every $\epsilon > 0$ there is some natural $N$ such that $\abs{x_n-y_n} < \epsilon$ for all $n \geq N$.
+	\end{shortlemma}
+	\begin{proof}
+    \lep \space and use the fact that both the sequences converge to find $N_1, N_2 \in \N$ such that $\abs{x_n - L} < \epsilon/2$ for all $n \geq N_1$ and $\abs{y_m-L} < \epsilon/2$ for all $m \geq N_2$. Setting $N := \max(N_1, N_2)$ we have $\abs{x_n-L} < \epsilon/2$ $\abs{y_n-L} < \epsilon/2$ for all $n \geq N$. Summing the two inequalities, we get $\abs{x_n-L} + \abs{y_n-L} < \epsilon$, and we can use the triangle inequality to see that $\abs{x_n-y_n} \leq \abs{x_n-L} + \abs{y_n-L} < \epsilon$, as we wanted to show.
+	\end{proof}
+				      	              
 	\exc{2.3.3}
-	Applying Theorem 2.3.4 twice, we have $l \leq \lim y_n \leq l$, which means $\lim y_n = l$.
-		      	    
+	\lep. The convergence of $(x_n)$ and $(y_n)$ to $l$, together with Lemma \ref{lem_convergEquiv} imply that we can choose $N \in \N$ such that $\abs{x_n-l}, \abs{x_n-z_n} < \epsilon/2$. Also, we have 
+	\begin{equation*}
+	    x_n \leq y_n \leq z_n \implies 0 \leq y_n-x_n \leq z_n-x_n \implies 
+	    \abs{y_n-x_n} \leq \abs{z_n-x_n} < \frac{\epsilon}{2}.
+	\end{equation*} Then, $\abs{y_n-l} \leq \abs{y_n-x_n} + \abs{x_n-l} < \epsilon/2 + \epsilon/2 = \epsilon$, which means $(y_n) \ra l$, as we wanted to show.
+	 
 	\exc{2.3.4}
 	\begin{enumerate}
 		\item Applying the Algebraic Limit Theorem several times, we have: \begin{gather}
 		      \nonumber \lim (\frac{1+2a_n}{1+3a_n-4a_{n}^2}) = \frac{\lim (1 + 2a_n)}{\lim (1 + 3a_n-4a_n^2)} = \\
 		      \nonumber \frac{\lim (1) + 2\lim(a_n)}{\lim(1) + 3\lim(a_n) - 4 \lim(a_n) \lim(a_n)} = \frac{1}{1} = 1 \, .
 		\end{gather}
-			      		        
+							      		        
 		\item \begin{equation*}
 		      \frac{(a_n+2)^2-4}{a_n} = \frac{a_n (a_n+4)}{a_n} = a_n + 4
 		\end{equation*}
 		Then, \begin{equation*}
 		\lim (\frac{(a_n+2)^2-4}{a_n}) = \lim (a_n) + \lim(4) = 4 \, .
 		\end{equation*}
-			      		        
+							      		        
 		\item \begin{equation*}
 		      \lim(\frac{\frac{2}{a_n}+3}{\frac{1}{a_n}+5}) = \lim (\frac{3a_n + 2}{5a_n + 1}) = 2 \, .
 		\end{equation*}
 	\end{enumerate}
-		      
+				      
 	\exc{2.3.5}
 	Assume $(z_n) \rightarrow L$, for some real number $L$. We must show that both $(x_n)$ and $(y_n)$ are also convergent. Let $\epsilon > 0$ be arbitrary. There exists a natural number $N$ such that for all $n \geq N$ we have $\abs{z_n - L} < \epsilon$. Since $n \geq N \implies 2n-1 \geq N$, we also have $\abs{z_{2n-1} - L} < \epsilon$ for $n \geq N$. Similarly, $n \geq N \implies 2n \geq N$, therefore $\abs{z_{2n}-L} < \epsilon$. Therefore, for all $n \geq N$ we have both $\abs{x_n - L} < \epsilon$ and $\abs{y_n - L} < \epsilon$, since $z_{2n-1} = x_n$ and $z_{2n} = y_n$, so all three sequences converge to $L$.
-	        
-	For the converse, we assume $(x_n), (y_n) \rightarrow L$ for some real number $L$, and we must show $(z_n)$ also converges, in particular, we will show $(z_n) \rightarrow L$. Since $\abs{a} \geq 0$ for any real $a$, we have $\abs{y_n-L} = \abs{z_{2n} - L} \leq \abs{x_n-y_n} + \abs{y_n-L}$ for all natural $n$. Also, we can use the triangle inequality to see that $\abs{x_n-L} = \abs{z_{2n-1}- L} \leq \abs{x_n-y_n} + \abs{y_n - L}$. Now, let $\epsilon > 0$ be arbitrary. Choose a natural $N$ such that $\abs{x_n-y_n} < \epsilon/2$ and $\abs{y_n-L} < \epsilon/2$ for all $n \geq N$. Using the two inequalities just mentioned, we then have $\abs{z_{2n} - L} \leq \epsilon$ and $\abs{z_{2n-1} - L} < \epsilon$. This shows that $\abs{z_m - L} < \epsilon$ for all $m \geq 2N-1$, so $(z_n) \rightarrow 0$.
-	        
-	In the proof just given, we used the following fact: if $(x_n), (y, n) \rightarrow L$ for some real number $L$, then for every $\epsilon > 0$ there is some natural $N$ such that $\abs{x_n-y_n} < \epsilon$ for all $n \geq N$. To see that we can always do this, let $\epsilon > 0$ be arbitrary and use the fact that both the sequences converge to find $N_1, N_2 \in \mathbb{N}$ such that $\abs{x_n - L} < \epsilon/2$ for all $n \geq N_1$ and $\abs{y_m-L} < \epsilon/2$ for all $m \geq N_2$. Setting $N := \max(N_1, N_2)$ we have $\abs{x_n-L} < \epsilon/2$ $\abs{y_n-L} < \epsilon/2$ for all $n \geq N$. Summing the two inequalities, we get $\abs{x_n-L} + \abs{y_n-L} < \epsilon$, and we can use the triangle inequality to see that $\abs{x_n-y_n} \leq \abs{x_n-L} + \abs{y_n-L} < \epsilon$, as we wanted to show.
-	        
+			        
+	For the converse, we assume $(x_n), (y_n) \rightarrow L$ for some real number $L$, and we must show $(z_n)$ also converges, in particular, we will show $(z_n) \rightarrow L$. Since $\abs{a} \geq 0$ for any real $a$, we have $\abs{y_n-L} = \abs{z_{2n} - L} \leq \abs{x_n-y_n} + \abs{y_n-L}$ for all natural $n$. Also, we can use the triangle inequality to see that $\abs{x_n-L} = \abs{z_{2n-1}- L} \leq \abs{x_n-y_n} + \abs{y_n - L}$. Now, let $\epsilon > 0$ be arbitrary. Lemma \ref{lem_convergEquiv} lets us choose a natural $N$ such that $\abs{x_n-y_n} < \epsilon/2$ and $\abs{y_n-L} < \epsilon/2$ for all $n \geq N$. Using the two inequalities just mentioned, we then have $\abs{z_{2n} - L} \leq \epsilon$ and $\abs{z_{2n-1} - L} < \epsilon$. This shows that $\abs{z_m - L} < \epsilon$ for all $m \geq 2N-1$, so $(z_n) \rightarrow 0$.
+			        
+			        
 	\exc{2.3.6}
 	First, notice that
 	\begin{equation*}
@@ -521,30 +537,30 @@
 	\begin{equation*}
 		b_n = n-\sqrt{n^2+2n} \cdot \frac{n+\sqrt{n^2+2n}}{n+\sqrt{n^2+2n}} = \frac{-2n}{n+\sqrt{n^2+2n}} = \frac{-2}{1+\sqrt{1+\frac{2}{n}}} ~ .
 	\end{equation*}
-	        
+			        
 	Combining both results we have $\lim(b_n) = -1$.
-	        
+			        
 	\exc{2.3.7}
 	\begin{enumerate}
 		\item $x_n = n$ and $y_n = -n$.
-		                  
+		      		      		                  
 		\item This is impossible. To see this, assume that $(x_n+y_n)$ and $(x_n)$ are convergent, while $(y_n)$ is not. By the Algebraic Limit Theorem, we have $\lim(y_n)=\lim((x_n+y_n)-x_n) = \lim(x_n+y_n)-\lim(x_n)$, so $(y_n)$ converges, a contradiction.
-		                  
+		      		      		                  
 		\item $(1, 1/2, 1/3, 1/4 \dots)$.
-		                  
+		      		      		                  
 		\item This is not possible. Assume for contradiction that $(a_n)$ is unbounded, $(b_n)$ is convergent and $(a_n-b_n)$ is bounded. By Theorem 2.3.2, there is a real number $M$ such that $M \geq \abs{b_n}$ for all $n$. By our initial assumption, there is also a real $L$ such that $L \geq \abs{a_n-b_n}$ for all $n$. Then, we have $L \geq \abs{a_n-b_n} \geq \abs{a_n} - \abs{b_n} \geq \abs{a_n} - M$, which means $L+M \geq \abs{a_n}$ for all $n$, which contradicts the assumption that $(a_n)$ was not bounded.
-		                  
+		      		      		                  
 		\item $(a_n) = (0,0,0, \dots)$, $(b_n) = (1,2,3, \dots)$.
 	\end{enumerate}
-	        
+			        
 	\exc{2.3.8}
-	    
+			    
 	\begin{enumerate}
 		\item Assume $(x_n) \rightarrow x$. First, we use induction to show that \begin{equation*}
 		      \lim (x_n^k) = x ^ k
 		\end{equation*}
 		for all natural $k$. The case $k = 1$ is trivial, so we assume the equality holds for $k$ and seek to show that it also holds for $k+1$. Applying the Algebraic Limit Theorem, we have $\lim(x_n^{k+1}) = \lim(x_n^k x_n) = x^k x = x^{k+1}$, as we wanted to show.
-		            
+						            
 		Now, let $p$ be a polynomial. We can write \begin{equation*}
 		p(z) = \sum\limits_{i=0}^k a_i z^i
 		\end{equation*}
@@ -552,39 +568,39 @@
 		\lim (p(x_n)) = \sum\limits_{i=0}^k a_i \lim(x_n^i) =\sum\limits_{i=0}^k a_i x^i = p(x)
 		\end{equation*}
 		therefore $p(x_n) \rightarrow p(x)$.
-		            
+						            
 		\item Let $(x_n)$ be the sequence where $x_n = 1/n$ for all natural $n$, and $f : {x_1, x_2, \dots} \rightarrow {0, 1}$ be such that \begin{equation*}
 		      f(z) = \begin{cases}
 		      0 & z \neq 0 \\
 		      1 & z = 0
 		\end{cases}
 		\end{equation*}
-		            
+						            
 		Then, $\lim f(x_n) = \lim (0) = 0$ and $f(\lim x_n) = f(0) = 1$. Therefore, $\lim (f(x_n)) \neq f(\lim(x_n))$.
 	\end{enumerate}
-	        
+			        
 	\exc{2.3.9}
 	\begin{enumerate}
 		\item Let $\epsilon > 0$ be arbitrary. Since $(a_n)$ is bounded, there is a real number $M \neq 0$ such that $M \geq \abs{a_n}$ for all natural $n$. Also, since $(b_n) \rightarrow 0$, there is a natural $N$ such that $\abs{b_n} \leq \epsilon/M$ for all $n \geq N$. Then, for all $n \geq N$ we have $\abs{a_n b_n} = \abs{a_n} \abs{b_n} \leq M \abs{b_n} < \epsilon$, so $(a_n b_n) \rightarrow 0$.
-		      	        
+		      		      		      	        
 		      We cannot use the Algebraic Limit Theorem to prove this since $(a_n)$ might not be convergent, even though it is bounded.
-		      	        
+		      		      		      	        
 		\item If $(b_n) \rightarrow b \neq 0$, then $(a_b b_n)$ converges $\iff (a_n)$ converges. The converse direction is a special case of the statement of the Algebraic Limit Theorem. In the other direction, notice that $a_n = (a_n b_n) / b_n$, so, $\lim ((a_n b_n) / b_n) = \lim(a_n b_n) / b = \lim (a_n)$, therefore $(a_n)$ converges.
-		      	        
+		      		      		      	        
 		\item Assume $\lim (a_n) = 0$ and $\lim (b_n) = b$. Since $(a_n)$ is convergent it is also bounded, therefore (a) guarantees that $\lim(a_b b_n) = 0 = \lim(a_n) \lim(b_n)$.
 	\end{enumerate}
-		    
+				    
 	\exc{2.3.10}
 	\begin{enumerate}
-		\item $a_n = n$ and $b_n = n$ for all $n \in \mathbb{N}$ is a counterexample, since $\lim (a_n - b_n) = 0$ and neither $\lim(a_n)$ nor $\lim(b_n)$ exist.
-		      	     
+		\item $a_n = n$ and $b_n = n$ for all $n \in \N$ is a counterexample, since $\lim (a_n - b_n) = 0$ and neither $\lim(a_n)$ nor $\lim(b_n)$ exist.
+		      		      		      	     
 		\item Let $\epsilon > 0$ be arbitrary. Choose a natural number $N$ such that $\abs{b_n - b} < \epsilon$ for all $n \geq N$. Since $\abs{b_n} - \abs{b} \leq \abs{b_n - b}$ and $\abs{b} - \abs{b_n} \leq \abs{b_n - b}$, we have $\abs{\abs{b_n}-\abs{b}} \leq \abs{b_n-b} < \epsilon$ for all $n \geq N$ so $\abs{b_n} \rightarrow \abs{b}$.
-		      	     
+		      		      		      	     
 		\item By Theorem 2.3.3, $\lim ((b_n-a_n) + a_n) = \lim(b_n) = \lim (b_n - a_n) + \lim(a_n) = a$.
-		      	     
-		\item Let $\epsilon > 0$ be arbitrary. Choose an $N \in \mathbb{N}$ such that $\abs{a_n} < \epsilon$ for all $n \geq N$. Then, $0 \leq \abs{b_n-b} \leq a_n = \abs{a_n} < \epsilon$, so $\abs{b_n - b} < \epsilon$ for all $n \geq N$, therefore $(b_n) \rightarrow b$.
+		      		      		      	     
+		\item Let $\epsilon > 0$ be arbitrary. Choose an $N \in \N$ such that $\abs{a_n} < \epsilon$ for all $n \geq N$. Then, $0 \leq \abs{b_n-b} \leq a_n = \abs{a_n} < \epsilon$, so $\abs{b_n - b} < \epsilon$ for all $n \geq N$, therefore $(b_n) \rightarrow b$.
 	\end{enumerate}
-		 
+				 
 	\exc{2.3.11}
 	\begin{enumerate}
 		\item Assume $(x_n) \rightarrow x$ and let $\epsilon > 0$ be arbitrary. Notice that \begin{equation*}
@@ -602,7 +618,7 @@
 		\end{equation*} Finally, \begin{equation*}
 		\abs{y_n-x} \leq \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon
 		\end{equation*} for all $n \geq N$, which means $(y_n) \rightarrow (x_n)$.
-			     
+							     
 		\item If for all naturals $n$ \begin{equation*}
 		      x_n := \begin{cases}
 		      0 & n \text{ is odd} \\
@@ -615,34 +631,202 @@
 		\end{cases}
 		\end{equation*} Therefore, $(y_n)$ is the "shuffled" sequence of $a_n = (n-1)/(2n)$ and $b_n = 1/2$, in the sense of Exercise 2.3.5. Notice that $\lim((n-1)/(2n)) = \lim(1/2 - 1/n) = 1/2 = \lim(a_n) = \lim(b_n)$, and by what was shown on Exercise 2.3.5 $(y_n)$ must converge, even though $(x_n)$ diverges.
 	\end{enumerate}
-		 
+				 
 	\exc{2.3.12}
-		 
+				 
 	\begin{enumerate}
 		\item True. For every $b \in B$ and every $n \in \N$ we have $a_n \geq B$, which implies $a \geq b$, by the Order Limit Theorem.
-		      	     
+		      		      		      	     
 		\item First, we show that every $a_n$ being in the complement of $(0, 1)$ implies the existence of some $N \in \N$ such that $a_n \geq 1$ for all $n \geq N$ or $a_n \leq 0$ for all $n \geq N$, as long as $a \neq 0$. Assume $a > 0$. Then, there is some $N \in \N$ such that $\abs{a-a_n} < a/2$. Now, assume for contradiction that there is some $m \geq N$ such that $a_m \leq 0$. Then, $\abs{a-a_m} = a-a_m < a/2$, which means $a_m > a/2 > 0$, a contradiction. For the case $a < 0$, choose $N \in \N$ such that $\abs{a_n-a} < 1-a$ for all $n \geq N$. Assume for contradiction that there is some $m \geq N$ such that $a_m \geq 1$. Then, $\abs{a_m-a} = a_m-a < 1-a$, which means $a_m < 1$, a contradiction. 
-		      	     
+		      		      		      	     
 		      If $a = 0$, then $a$ is already in the complement of $(0, 1)$, so assume $a \neq 0$. If $a > 0$, we have shown that there is some $n \geq N$ such that all $a_n \geq 1$, which, by a slightly modified version of the Order Limit Theorem, implies $a \geq 1$, so $a$ is in the complement of $(0, 1)$, and a similar argument follows when $a < 0$.
-		      	     
+		      		      		      	     
 		\item We have already shown that given any two real numbers, there is a rational number strictly between them. Therefore, we can make the sequence $(a_n)$ by choosing each $a_n$ such that $\sqrt{2} < a_n < \sqrt{2} + 1/n$ and $a_n \in \Q$. Every $a_n$ is rational by construction, but we claim $(a_n) \rightarrow \sqrt{2}$, which is irrational. To see this, let $\epsilon > 0$ be arbitrary and choose $N \in \N$ such that $N > 1/\epsilon$. Then, for every $n \geq N$, $a_n < \sqrt{2}+1/n < \sqrt{2}+\epsilon$, therefore $0 < a_n-\sqrt{2} = \abs{a_n-\sqrt{2}} < \epsilon$ for all $n \geq N$, so $(a_n) \rightarrow \sqrt{2}.$
 	\end{enumerate} 
-		 
-	\item \begin{shortlemma}
+				 
+	\item \begin{shortlemma}{CauchyBounded}
 	      Every Cauchy sequence is bounded.
 	\end{shortlemma}
 	\begin{proof}
 		Let $(a_n)$ be a Cauchy sequence. Choose $N \in \N$ such that $\abs{a_n-a_m} < 1$ for all $n \geq N$. Then, $\abs{a_n} - \abs{a_N} \leq \abs{a_n-a_N} < 1$, therefore $\abs{a_n} < \abs{a_N} + 1$ for all $n \geq N$. Since every finite sequence is bounded, there is some real number $M_1$ such that $M_1 \geq \abs{a_n}$ for every $n < N$, so if we define $M := \max (M_1, \abs{a_N} + 1)$ we will have $M \geq \abs{a_n}$ for every natural $n$, therefore $(a_n)$ is bounded by $M$.  
 	\end{proof}
-	\item \begin{shorttheorem}
-	      A sequence $(a_n)$ converges if and only if it is Cauchy.
+	\item \begin{shorttheorem}{thm_convergCauchy}
+	      A sequence $(a_n)$ converges if and only if for all $\epsilon > 0$ there is a $N \in \N$ such that $\abs{a_n-a_m} < \epsilon$ for all $n,m \geq N$ (this is the definition of a Cauchy Sequence).
 	\end{shorttheorem}
-		 
+				 
 	\begin{proof}
 		First, assume $(a_n) \rightarrow L$ for some $L \in \R$. Let $\epsilon > 0$ be arbitrary and choose $N \in \N$ such that $\abs{a_t - L} \leq \epsilon/2$ for all $t \geq N$. Then, for all $n,m \geq N$ we have $\abs{a_n - a_m} = \abs{a_n - L + L - a_m} \leq \abs{a_n-L} + \abs{a_m - L} < \epsilon/2 + \epsilon/2 = \epsilon$, so $(a_n)$ is Cauchy.
-			     
+							     
 		For the converse direction, assume $(a_n)$ is Cauchy. Now, let $\epsilon > 0$ be arbitrary and choose $N \in \N$ such that $\abs{a_n-a_m} < \epsilon/2$ for all $n,m \geq N$. Since every Cauchy sequence is bounded, we can define $s := \sup \set{a_n :n \in \N \text{ and } n \geq N}$. Since $s$ is a least upper bound, there is some $a_{n_0}$ with $n_0 \geq N$ such that $s-\epsilon/2 < a_{n_0}$, which implies $\abs{s-a_{n_0}} < \epsilon/2$. Then, $\abs{s-a_n} = \abs{s-a_{n_0} + a_{n_0}-a_n} \leq \abs{s-a_{n_0}} + \abs{a_{n_0}-a_n} < \epsilon/2 + \epsilon/2 = \epsilon$, so $(a_n) \ra s$.
 	\end{proof}
+			
+	\exc{2.3.13} \begin{enumerate}
+	\item Since \begin{equation*}
+	      a_{mn} = \frac{1}{1+\frac{n}{m}} ~ ,
+	\end{equation*} we have \begin{equation*}
+	\lim_{n \ra \infty} \left(\lim_{m \ra \infty} a_{mn} \right) = \lim_{n \ra \infty} 1 = 1,
+	\end{equation*} whereas \begin{equation*}
+	\lim_{m \ra \infty} \left(\lim_{n \ra \infty} a_{mn} \right) = \lim_{m \ra \infty} 0 = 0.
+	\end{equation*}
+			    
+	\item \begin{enumerate}
+	\item Let $a_{mn} = 1/(m+n)$. We claim that \begin{equation*}
+	      \lim_{m, n \ra \infty} a_{mn} = 0.
+	\end{equation*} \lep \space and choose $N \in \N$ such that $N > 1/(2\epsilon)$. Then, \begin{equation*}
+	\abs{\frac{1}{m+n} - 0} = \frac{1}{m+n} < \epsilon
+	\end{equation*} for all $m,n \geq N$. It is easy to see that both the iterated limits are also equal to $0$.
+			        
+	\item Let $a_{mn}= mn/(m^2+n^2)$. Then, $a_{mn} = m/(m^2/n+n)$, which is easily seen to equal zero when taking the limit as $n \ra \infty$ (just set $N > m/\epsilon$). By symmetry, both the iterated limits are equal to $0$. Now, assume for contradiction that $\lim_{m,n \ra \infty} a_{mn}= a$ for some $a \in \R$. Then, there is a $N \in \N$ such that $\abs{a_{mn} - a}  < 1/20$ for all $m,n \geq N$. In particular, $\abs{a_{NN}-a} = \abs{1/2-a} < 1/20$ and $\abs{a_{2N N} - a} = \abs{2/5-a} < 1/20$. Summing these equations and applying the triangle inequality we have $\abs{1/2-2/5}\leq \abs{1/2-a}+\abs{2/5-a}<1/10$, which simplifies to $1/10 < 1/10$, a contradiction. In summary, both the iterated limits are zero but $\lim_{m,n \ra \infty} a_{mn}$ does not exist.
+\end{enumerate}
+	    
+    \item \begin{equation*}
+    a_{mn} = \begin{cases}
+    0 & n,m \geq 2 \\
+    n & m = 1 \\
+    m & n = 1 \\
+    1 & m = n = 1
+    \end{cases}
+    \end{equation*}
+    	        
+    \item \lep \space and choose $N \in \N$ such that for all $m,n \geq N$, $\abs{b_n-a_{mn}}, \abs{a-a_{mn}} < \epsilon/2$. Then, $\abs{b_m-a} = \abs{b_m-a_{mn} + a_{mn} - a} \leq \abs{b_m-a_{mn}} + \abs{a_{mn}-a} < \epsilon$, therefore $(b_m) \ra a$.
+    \end{enumerate}
+    	
+    \exc{2.4.1}
+    \begin{enumerate}
+    	\item First we use induction to show that $x_{n+1} \leq x_n$ for all $n \in \N$. For the base case, $x_2 = 1 \leq x_1 = 3$. Now, assume inductively that $x_{n+1} \leq x_n$. Then, \begin{gather*}
+    	      4-x_{n+1} \geq 4-x_n \\ 
+    	      \frac{1}{4-x_{n+1}} \leq \frac{1}{4-x_n} \\ 
+    	      x_{n+2} \leq x_{n+1} ~ .
+    	\end{gather*}
+    	Next, we use induction again to prove that $x_n \geq 0$ for all $n \in \N$. The base case is $x_1 = 3 \geq 0$. Now, assume $x_n \geq 0$. Then, \begin{gather*}
+    	4-x_n \leq - 4 < 4 \\ 
+    	x_{n+1} = \frac{1}{4-x_n} > \frac{1}{4} \geq 0.
+    	\end{gather*} We will also show that $3 \geq \abs{x_n} = x_n$ for all $n \in \N$ by induction. The base case is trivial so we assume $3 \geq x_n$. Then, \begin{gather*}
+    	\frac{1}{3} \leq 4-3 \leq 4-x_n \\
+    	3 \geq \frac{1}{4-x_n} = x_{n+1}.
+    	\end{gather*} Therefore the sequence is monotone and bounded, so the Monotone Convergence Theorem applies and $(x_n)$ converges.
+    		    	
+    	\item The sequence $(x_{n+1})$ is simply $(x_n)$ "shifted over" by one, so if $(x_n)$ eventually gets arbitrarily close to some real number, so will $(x_{n+1})$.
+    	
+    	\item Let $x := \lim x_n$. Then, applying the Algebraic Limit Theorem, we have \begin{equation*}
+    	    x = \lim \frac{1}{4-x_n} = \frac{1}{4-\lim x_n} = \frac{1}{4-x}.
+    	\end{equation*} There are two real numbers that satisfy this equation, namely $2 \pm \sqrt{3}$. Since $3 > 1$, we have $\sqrt{3} > 1$, therefore $2 + \sqrt{3} > 3$. But, since for every $x_n$ we have $x_n \leq 3$, the Order Limit Theorem guarantees that $x \leq 3 < 2 + \sqrt{3}$, so $x$ must be $2 - \sqrt{3}$. 
+    \end{enumerate} 
+    
+    \exc{2.4.2} 
+    \begin{enumerate}
+        \item  The problem with the argument is that $\lim y_n$ does not exist, since $(y_n) = (1,2,1,2 \dots)$ which does not converge.
+        
+        \item Yes, since $(y_n)$ converges. To see that, first we show that $y_n \leq 4$ for all $n \in \N$ with induction. After verifying the base case, assume $y_n \leq 4$. Now, \begin{gather*}
+            \frac{1}{y_n} \geq \frac{1}{4} \\ 
+            3 - \frac{1}{y_n} = y_{n+1} \leq 3-\frac{1}{4} \leq 4.
+        \end{gather*} It is also easy to verify with induction that $(y_n)$ is increasing, therefore it must converge, so the strategy in (a) can be applied to compute the limit of the sequence.
+    \end{enumerate}
+    
+    \exc{2.4.3} 
+    \begin{enumerate}
+        \item The given sequence can be defined recursively as $a_1 = \sqrt{2}$ and
+        \begin{equation*}
+            a_{n+1} = \sqrt{2 + a_n}.
+        \end{equation*} Induction can be easily used to verify that the sequence is increasing and bounded above, therefore it converges to some real number $a$. Using the strategy presented in the previous exercise, we have $a = \sqrt{2 + a}$, and $a=2$ is the only solution to this equation, therefore $(a_n) \ra 2$.
+        
+        \item The given sequence can be defined recursively as $a_1 = \sqrt{2}$ and
+        \begin{equation*}
+            a_{n+1} = \sqrt{2 a_n}.
+        \end{equation*} Induction can be easily used to verify that the sequence is increasing and bounded above, therefore it converges to some real number $a$. Using the strategy presented in the previous exercise, we have $a = \sqrt{2a}$, which has solutions $a = 1$ or $a = 0$, but it is easy to see that $a_n \geq 1$ for all $n$, so the Order Limit Theorem guarantees that $a \geq 1$, therefore $a = 1$.
+    \end{enumerate}
+    
+    \exc{2.4.4}
+    \begin{enumerate}
+        \item Assume for contradiction that the naturals are bounded above. Then, the sequence $a_n = n$ is bounded above and increasing, so it converges to some real number $x$, by the Monotone Convergence Theorem. Then, there is some natural $N$ such that $\abs{n-x}, \abs{n+2-x} < 1$ for all $n \geq N$. Adding the inequalities and using the Triangle Inequality we have $\abs{(n+2)-n} \leq \abs{n-x}+\abs{n+2-x} < 2$, therefore $\abs{2}=2 < 2$, a contradiction. Thus, for every real number $x$ there is some $n \in \N$ such that $n > x$
+        
+        \item Since $I_{n} \supseteq I_{n+1}$ for every natural $n$, we have $a_{n+1} \geq a_n$ for every $n \in \N$. Also, $b_1$ is an upper bound for $(a_n)$, so the Monotone Convergence Theorem guarantees that $(a_n)$ converges to some real number $a$. Since $a_{n+m} \geq a_n$ for every $n,m \in \N$, we can use the Order Limit Theorem to see that $\lim_{m \ra \infty} a_{m+n} = a \geq a_n$ for every $n \in \N$. We also have $a_m \leq b_n$ for every $n, m \in \N$, which also implies $a \leq b_n$. Therefore, $a_n \leq a \leq b_n$ for every natural $n$, so all the $I_n'$s contain $a$, which means their intersection cannot be empty.
+    \end{enumerate}
+    
+    \exc{2.4.5}
+    \begin{enumerate}
+        \item Since $x_1^2 = 4 \geq 2$ and
+        \begin{equation*}
+            x_{n+1}^2 = \frac{1}{4}\left(x_n+\frac{2}{x_n}\right)^2 = 
+            \frac{1}{4}\left(x_n-\frac{2}{x_n}\right)^2 + 2 \geq 2,
+        \end{equation*} $x_n \geq 2$ for all $n \in \N$.
+        
+        Now, we show that the sequence is decreasing. Let $n \in \N$ be arbitrary. Since $x_n$ is rational, we can write $x_n = a/b$ for $a,b \in \N$, since every $x_n$ is also positive (this is easy to verify with induction). Applying the formula for $x_{n+1}$, we get 
+        \begin{equation*}
+            x_{n+1} = \frac{a^2+2b^2}{2ab}.
+        \end{equation*}
+        Then, 
+        \begin{equation*}
+            x_n \geq x_{n+1} \iff \frac{a}{b} \geq \frac{a^2+2b^2}{2ab} \iff
+            \frac{a^2}{b^2} \geq 2 \iff x_n^2 \geq 2,
+        \end{equation*} and we have already shown that $x_n^2$ is always greater than or equal to 2, so the sequence decreases.
+        
+        Since the sequence is monotone and bounded, it must converge to some real $x$. In particular, the Order Limit Theorem guarantees that $x \geq 0$ since every $x_n \geq 0$.
+        Then, we can use the fact that $\lim x_{n+1} = \lim x_n$ to get 
+        \begin{equation*}
+            x = \frac{1}{2} \left(x + \frac{2}{x}\right)
+        \end{equation*} which, after simple algebra, means that $x = \pm \sqrt{2}$, but $x$ is non-negative so $x = \sqrt{2}$.
+        
+        \item Let $x_1 = c$ for some $c \geq 0$, and define
+        \begin{equation*}
+            x_{n+1} = \frac{1}{2} \left(x_n + \frac{c}{x_n} \right).
+        \end{equation*} To prove that $(x_n) \ra \sqrt{c}$, we first show that $x_n^2 \geq c$ and then use this fact to show that $x_n \geq x_{n+1}$ for every $n \in \N$. This implies the convergence of the sequence, in particular to $\sqrt{c}$. All of this is achieved almost identically to the previous exercise simply by switching the appropriate $2'$s with $c'$s. The case $c = 0$ can be easily be verified separately.
+    \end{enumerate}
+    
+    \exc{2.4.6}
+    
+    \begin{enumerate}
+        \item Since both $x$ and $y$ are positive, we can write the following equivalences:
+        \begin{equation*}
+            \frac{x+y}{2} \geq \sqrt{x y} \iff x^2+2x y+y^2 \geq 4x y \iff  \left(x-y\right)^2 \geq 0.
+        \end{equation*} Since any real number squared is non-negative, the result follows.
+        
+        \item Notice that it is easy to verify with induction that every $x_n, y_n \geq 0$.
+        Since $y_1 \geq x_1$ by assumption and we have shown in the previous exercise that $y_{n+1} = (x_n+y_n)/2 \geq \sqrt{x_n y_n}= x_{n+1}$, it follows that $y_n \geq x_n$ for all $n$. Then, $y_n x_n \geq x_n^2$, which means $\sqrt{y_n x_n} = x_{n+1} \geq x_n$ so $(x_n)$ is increasing. Similarly, $y_n \geq x_n \implies 2y_n \geq x_n + y_n \implies y_n \geq y_{n+1}$, so $(y_n)$ is decreasing. Since $(y_n)$ is also bounded below by $0$, it must converge to some real number $y$. Now, we show that $(x_n)$ is bounded above by $y_1$ with induction. The base case is true by assumption, so we assume that $x_n \leq y_1$. Since $(y_n)$ decreases, $y_n \leq y_1$, therefore $x_n y_n \leq y_1^2$ thus $\sqrt{x_n y_n} = x_{n+1} \leq y_1$ and the induction is complete. Since $(x_n)$ increases and is bounded above, it must converge to some real number $x$. Then, 
+        
+        \begin{equation*}
+            \lim y_{n+1} = y = \lim (\frac{x_n + y_n}{2}) = \frac{x + y}{2}
+        \end{equation*} which can only happen when $x = y$.
+    \end{enumerate}
+
+    \exc{2.4.7}
+    First we prove a useful lemma. \newline
+    \begin{shortlemma}{lem_2.4.7}
+        Let $A$ and $B$ be two bounded non-empty sets of real numbers with $A \subseteq B$. Then, $\sup{A} \leq \sup{B}$ and $\inf{A} \geq \inf{B}$.
+    \end{shortlemma}
+    
+    \begin{proof}
+        Let $a \in A$ be arbitrary. Since $A \subseteq B$, it follows that $a \in B$. Then, $\sup B \geq a$, so $\sup B$ is an upper bound for $A$. By the definition of the least upper bound, this means that $\sup {A} \leq \sup{B}$. Also, $\inf{B} \leq a$, so $\inf{B}$ is a lower bound for $A$, and we must have $\inf{A} \geq \inf{B}$. 
+    \end{proof}
+    \begin{enumerate}
+        \item Since $\set{a_k : k \geq n+1} \subseteq \set{a_k : k \geq n}$, it follows from Lemma \ref{lem_2.4.7} that $y_{n+1} \leq y_n$, so $(y_n)$ is decreasing. Also, there is some real number $M$ such that $M \leq a_n$ for every $n \in \N$, since we assumed $(a_n)$ is bounded. Then, the $y_n'$s are upper bounds, we have $y_n \geq a_n \geq M$, so $y_n$ is bounded below by $M$, and it must converge.
+        
+        \item Use the sequence defined by $x_n = \inf \set{a_k : k \geq n}$ to define 
+        \begin{equation*}
+            \liminf{a_n} := \lim x_n.
+        \end{equation*} We can then show that $(x_n)$ increases using the fact that each next set in the definition of $(x_n)$ is a subset of the previous (just like in the last case) to see that $x_{n+1} \geq x_n$ by Lemma \ref{lem_2.4.7}. Also, $(a_n)$ is bounded above, so $N \geq a_n \geq x_n$ some $N \in \R$ and for every $n$, so $(x_n)$ is also bounded above, which means it must converge.
+        
+        \item Define the sequences $(x_n), (y_n)$ by 
+        \begin{gather*}
+            A_n := \set{a_k : k \geq n} \\
+            x_n := \inf{A_n} \\
+            y_n := \sup{A_n}.
+        \end{gather*} Since $\sup{B} \geq \inf{B}$ for any non-empty bounded set $B$, we have $y_n \geq x_n$ for every natural $n$, so we can apply the Order Limit Theorem to get $\lim y_n \geq \lim x_n$,
+        which means that $\limsup{a_n} \geq \liminf{a_n}$.
+        
+        The sequence defined by $a_n = (0,1,0,1 \dots)$ has $\limsup{a_n} = 1$ and $\liminf{a_n} = 0$, so $\limsup{a_n} > \liminf{a_n}$.
+        
+        \item First, assume $\lim a_n = a$ and \lep[l]. Then, we use Theorem \ref{thm_convergCauchy} to find $N_1, N_2 \in \N$ such that $\abs{a_n-a} < \epsilon/2$ for all $n \geq N_1$ and $\abs{a_n-a_m} < \epsilon/4$ for all $n, m \geq N_2$. Also, define $N := \max\left(N_1, N_2\right)$. Since the $y_n'$s are least upper bounds, for every $n \geq N$, we can find $a_L$ with $L \geq N$ such that $y_n-\epsilon/4 < a_L$, which implies $\abs{y_n-a_L} < \epsilon/4$. Then, 
+        \begin{equation*}
+            \abs{y_n-a_n} \leq \abs{y_n-a_L} + \abs{a_L-a_n} < \frac{\epsilon}{4} + \frac{\epsilon}{4} = \frac{\epsilon}{2}
+        \end{equation*} for all $n \geq N$. Then,
+        \begin{equation*}
+            \abs{y_n-a} \leq \abs{y_n-a_n} + \abs{a_n-a} < \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon
+        \end{equation*} for all $n \geq N$, which means that $\lim y_n = \liminf{a_n} = a$. The proof that $\liminf{a_n} = a$ is almost identical.
+        
+        For the other direction, assume $\limsup a_n = \liminf a_n = a$ for some $a \in \R$. For every $n$, we know that $x_n \leq a_n \leq y_n$, so we can apply the Squeeze theorem to get $\lim a_n = \lim x_n = \limsup a_n = a$.
+    \end{enumerate}
+
 \end{enumerate}
 
 
