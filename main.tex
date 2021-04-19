@@ -11,9 +11,9 @@
 
 \newcounter{lemmaCounter}
 \newcounter{theoremCounter}
-\newenvironment{shortlemma}[1]{\refstepcounter{lemmaCounter}\label{#1}\textbf{Lemma~\thelemmaCounter.}}
+\newenvironment{shortlemma}[1]{\refstepcounter{lemmaCounter}\label{#1}\textbf{Lemma~\thelemmaCounter.}\em}
 
-\newenvironment{shorttheorem}[1]{\refstepcounter{theoremCounter}\label{#1}\textbf{Theorem~\thetheoremCounter.}}
+\newenvironment{shorttheorem}[1]{\refstepcounter{theoremCounter}\label{#1}\textbf{Theorem~\thetheoremCounter.}\em}
 
 \DeclarePairedDelimiter\abs{\lvert}{\rvert}
 
@@ -25,6 +25,9 @@
 \newcommand{\set}[1]{\{#1\}}
 \newcommand{\exc}[2][Abbott]{\item \textbf{#1, Exercise #2.}}
 \newcommand{\lep}[1][L]{#1et $\epsilon > 0$ be arbitrary}
+
+\let\oldlog\log
+\renewcommand{\log}[1]{\oldlog \left( #1 \right)}
 
 
 \title{Real Analysis Exercises}
@@ -807,11 +810,11 @@
         \end{equation*} We can then show that $(x_n)$ increases using the fact that each next set in the definition of $(x_n)$ is a subset of the previous (just like in the last case) to see that $x_{n+1} \geq x_n$ by Lemma \ref{lem_2.4.7}. Also, $(a_n)$ is bounded above, so $N \geq a_n \geq x_n$ some $N \in \R$ and for every $n$, so $(x_n)$ is also bounded above, which means it must converge.
         
         \item Define the sequences $(x_n), (y_n)$ by 
-        \begin{gather*}
-            A_n := \set{a_k : k \geq n} \\
-            x_n := \inf{A_n} \\
-            y_n := \sup{A_n}.
-        \end{gather*} Since $\sup{B} \geq \inf{B}$ for any non-empty bounded set $B$, we have $y_n \geq x_n$ for every natural $n$, so we can apply the Order Limit Theorem to get $\lim y_n \geq \lim x_n$,
+        \begin{align*}
+            A_n &:= \set{a_k : k \geq n} \\
+            x_n &:= \inf{A_n} \\
+            y_n &:= \sup{A_n}.
+        \end{align*} Since $\sup{B} \geq \inf{B}$ for any non-empty bounded set $B$, we have $y_n \geq x_n$ for every natural $n$, so we can apply the Order Limit Theorem to get $\lim y_n \geq \lim x_n$,
         which means that $\limsup{a_n} \geq \liminf{a_n}$.
         
         The sequence defined by $a_n = (0,1,0,1 \dots)$ has $\limsup{a_n} = 1$ and $\liminf{a_n} = 0$, so $\limsup{a_n} > \liminf{a_n}$.
@@ -825,6 +828,85 @@
         \end{equation*} for all $n \geq N$, which means that $\lim y_n = \liminf{a_n} = a$. The proof that $\liminf{a_n} = a$ is almost identical.
         
         For the other direction, assume $\limsup a_n = \liminf a_n = a$ for some $a \in \R$. For every $n$, we know that $x_n \leq a_n \leq y_n$, so we can apply the Squeeze theorem to get $\lim a_n = \lim x_n = \limsup a_n = a$.
+    \end{enumerate}
+    
+    \exc{2.4.8}
+    \begin{enumerate}
+        \item It is easy to verify with induction that the sequence of partial sums is \begin{equation*}
+            s_n = 1-\frac{1}{2^n}.
+        \end{equation*} We can then apply the Algebraic Limit Theorem together with the fact that $(1/2^n) \ra 0$ to get $(s_n) \ra 1$. Therefore the sum converges, in particular
+        \begin{equation*}
+            \sum_{n=1}^\infty \frac{1}{2^n} = 1.
+        \end{equation*}
+        
+        \item Using the fact that 
+        \begin{equation*}
+            \frac{1}{n(n+1)} = \frac{1}{n} - \frac{1}{n+1},
+        \end{equation*} it is easy to see with induction that $s_n = 1 - 1/(n+1)$, which clearly converges to $1$, so 
+        \begin{equation*}
+            \sum_{n=1}^{\infty} \frac{1}{n(n+1)} = 1.
+        \end{equation*}
+        
+        \item Since 
+        \begin{equation*}
+            \log{\frac{n+1}{n}}= \log{n+1} - \log{n},
+        \end{equation*} it is easy to verify that $s_n = \log{n+1}$. Now, assume for contradiction that there is some $M \in \R$ such that $M \geq s_n$ for all $n \in \N$. Then, we can choose a natural number $N$ such that $N > e^M - 1$, but this implies $\log{N+1} = s_N > M$, a contradiction. Since $(s_n)$ is not bounded above, it must diverge, and so does the corresponding sum.
+    \end{enumerate}
+    
+    \exc{2.4.9}
+    Let $(t_n)$ be the partial sum sequence of \begin{equation*}
+        \sum_{n=0}^\infty 2^n b_{2^n},
+    \end{equation*} which diverges by assumption. Notice that 
+    \begin{align*}
+        s_{2^k} &= b_1 + b_2 + (b_3 + b_4) + \dots + (b_{2^{k-1}+1} + \dots + b_{2^k}) \\
+        &\geq b_1 + b_2 + (b_4 + b_4) + \dots + (b_{2^k} + \dots + b_{2^k}) \\
+        &= b_1 + b_2 + 2b_4 + 4b_8 + \dots + 2^{k-1}b_{2^k} \\
+        &= \frac{b_1}{2} + \frac{b_1 + 2b_2 + 8b_8 + \dots + 2^k b_{2^k}}{2} \\
+        &= \frac{b_1}{2} + \frac{t_k}{2} \\
+        &\geq \frac{t_k}{2},
+    \end{align*} which is unbounded. Thus, $(s_n)$ diverges and so does $\sum_{n=1}^\infty b_n.$
+    
+    \exc{2.4.10}
+    \begin{enumerate}
+        \item Induction shows that the partial product sequence is given by $p_m = m+1$, which diverges. The first few terms of the partial product sequence when $a_n = 1/n^2$ are 
+        \begin{equation*}
+            2, 2.5, 2.77\dots, 2.95\dots,3.069\dots
+        \end{equation*} with the $10000$th term being around $3.67$, not much bigger than the $6$th term. With this in mind, we conjecture that this sequence converges.
+        
+        \item Let $(s_n),(p_n)$ be the sequences of the partial sums and partial products respectively. First, we show by induction that $p_n \geq 1$ and $p_n \geq s_n$ for all $n \in \N$. The base case is $1+a_1 \geq 1$ and $(1+a_1) \geq a_1$, which are both true since $a_n \geq 0$. Now, assume $p_n \geq 1$ and $p_n \geq s_n$. Then, $p_{n+1} = p_n + p_{n}a_{n+1} \geq 1$ since $a_{n+1} \geq 0$. Also, $p_{n+1}-s_{n+1} = p_n-s_n + (p_{n}-1)a_{n+1}$. Since $p_n - s_n \geq 0$ and $p_n -1 \geq 0$, $p_{n+1}-s_{n+1} \geq 0$, as we wanted to show.
+        
+        Thus, if $(s_n)$ diverges it is not bounded, which means $(p_n)$ is also not bounded since $p_n \geq s_n$ for all $n \in \N$. Therefore $(p_n)$ must also diverge in this case.
+        
+        For the other direction, assume $(s_n)$ converges. Then, we can use the inequality given in the exercise to get 
+        \begin{equation*}
+            p_m = \prod_{n=1}^m (1+a_n) \leq \prod_{n=1}^m 3^{a_n} 
+            = 3^{\sum\limits_{n=1}^m a_n} = 3^{s_m}.
+        \end{equation*} Since $(s_n)$ converges, there is some $M \in \R$ such that $s_m \leq M$ for all $m \in \N$. Then, $p_m \leq 3^{s_m}\leq 3^M$, which means $(p_m)$ is bounded. Since it is also increasing (every term in the product is greater than or equal to $1$), it must converge.
+    \end{enumerate}
+    
+    \exc{2.5.1}
+    \begin{enumerate}
+        \item This is not possible. If a sequence $(a_n)$ has a subsequence $(b_n)$ which is bounded, then $(b_n)$ must have a subsequence $(c_n)$ which converges, by the Bolzano-Weierstrass Theorem. Since $(b_n)$ is a subsequence of $(a_n)$, $(c_n)$ is also a subsequence of $(a_n)$.
+        
+        \item $(0.1,0.9,0.01,0.99,0.001,0.999, \dots)$.
+        
+        \item \begin{equation*}
+            (1, 1, \frac{1}{2}, 1, \frac{1}{2}, \frac{1}{3}, 1, \frac{1}{2}, \frac{1}{3}, \frac{1}{4}, 1, \dots)
+        \end{equation*}
+        
+        \item This is not possible. Let $(a_n)$ be a sequence that contains a subsequence converging to $1/m$ for every $m \in \N$. We will show that $(a_n)$ must have a subsequence which converges to zero. \lep. Then, $(a_n)$ must have infinitely many elements which are in the $\epsilon/2$-neighborhood of $1/1$. Pick one of those elements and call it $a_{n_1}$. In general, $(a_n)$ has infinitely many members which are $\epsilon/2$-close to $1/(k+1)$, so we can pick one called $a_{n_{k+1}}$ with $n_{k+1} > n_k$. By the construction of $(a_{n_k})$, it follows that $\abs{a_{n_k} - 1/k} < \epsilon/2$ for all $k \in \N$. Now, choose $N \in \N$ such that $N > 2/\epsilon$ and notice that $k \geq N \implies \abs{1/k} < \epsilon/2$. Next, for all $k \geq N$ we have that $\abs{a_{n_k}-0} \leq \abs{a_{n_k}-1/k}+\abs{1/k} < \epsilon/2 + \epsilon/2 = \epsilon$, so $(a_{n_k}) \ra 0$, which is outside the set mentioned in the exercise.
+    \end{enumerate}
+    
+    \newpage
+    \exc{2.5.2}
+    \begin{enumerate}
+        \item True. Since every proper subsequence converges, the subsequence containing all but the first element also converges, but this clearly implies the convergence of the whole sequence.
+        
+        \item True. By Theorem 2.5.2, if $(x_n)$ converges than every one of its subsequences also converge, so a sequence that contains a divergent subsequence cannot converge.
+        
+        \item True. Let $(x_n)$ be bounded and divergent. By Theorem 2.5.5, there is a subsequence $(x_{n_k})$ which converges to some real number $x$. Since $(x_n)$ diverges, there is a $\epsilon_0 > 0$ such that for all $N \in \N$ there exists some $n \geq N$ such that $\abs{x_n-x} \geq \epsilon_0$. In particular, let $n_1 \geq 1$ be such that $\abs{x_{n_1}-x} \geq \epsilon_0$, and let $n_{k+1} \geq n_k$ be such that $\abs{x_{n_{k+1}} - x} \geq \epsilon_0$. Since $(x_n)$ is bounded, so is the subsequence $(x_{n_k})$, therefore $(x_{n_k})$ must a have subsequence $(y_n)$ which converges to some real number $y$. However, none of the terms in $(y_n)$ are in the $\epsilon_0$-neighborhood of $x$, so $(y_n)$ cannot converge to $x$, which means $x \neq y$. Thus, we have found two subsequences of $(x_n)$ which converge to different limits.
+        
+        \item True. Assume $(x_n)$ is increasing and contains $(x_{n_k})$, which is a convergent subsequence. Since $(x_{n_k})$ converges, it must be bounded above by some real number $M$. Now, assume for contradiction that there is some $n \in \N$ such that $x_n > M$. Now, pick some $n_k$ which is greater than $n$. Since $(x_n)$ is increasing, it follows that $x_{n_k} \geq x_n > M$, so $(x_{n_k})$ is not bounded above by $M$, a contradiction. Hence, $(x_n)$ must also be bounded above by $M$, so the Monotone Convergence Theorem guarantees that it also converges. A very similar proof follows if $(x_n)$ is decreasing.
     \end{enumerate}
 
 \end{enumerate}
