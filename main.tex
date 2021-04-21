@@ -5,6 +5,9 @@
 \usepackage{amsthm}
 \usepackage{mathtools}
 \usepackage{amsfonts}
+\usepackage{indentfirst}
+
+\setlength\parindent{24pt}
 
 \newtheorem{theorem}{Theorem}
 \newtheorem{lemma}{Lemma}
@@ -28,7 +31,6 @@
 
 \let\oldlog\log
 \renewcommand{\log}[1]{\oldlog \left( #1 \right)}
-
 
 \title{Real Analysis Exercises}
 \author{Eduardo Freire}
@@ -907,6 +909,80 @@
         \item True. Let $(x_n)$ be bounded and divergent. By Theorem 2.5.5, there is a subsequence $(x_{n_k})$ which converges to some real number $x$. Since $(x_n)$ diverges, there is a $\epsilon_0 > 0$ such that for all $N \in \N$ there exists some $n \geq N$ such that $\abs{x_n-x} \geq \epsilon_0$. In particular, let $n_1 \geq 1$ be such that $\abs{x_{n_1}-x} \geq \epsilon_0$, and let $n_{k+1} \geq n_k$ be such that $\abs{x_{n_{k+1}} - x} \geq \epsilon_0$. Since $(x_n)$ is bounded, so is the subsequence $(x_{n_k})$, therefore $(x_{n_k})$ must a have subsequence $(y_n)$ which converges to some real number $y$. However, none of the terms in $(y_n)$ are in the $\epsilon_0$-neighborhood of $x$, so $(y_n)$ cannot converge to $x$, which means $x \neq y$. Thus, we have found two subsequences of $(x_n)$ which converge to different limits.
         
         \item True. Assume $(x_n)$ is increasing and contains $(x_{n_k})$, which is a convergent subsequence. Since $(x_{n_k})$ converges, it must be bounded above by some real number $M$. Now, assume for contradiction that there is some $n \in \N$ such that $x_n > M$. Now, pick some $n_k$ which is greater than $n$. Since $(x_n)$ is increasing, it follows that $x_{n_k} \geq x_n > M$, so $(x_{n_k})$ is not bounded above by $M$, a contradiction. Hence, $(x_n)$ must also be bounded above by $M$, so the Monotone Convergence Theorem guarantees that it also converges. A very similar proof follows if $(x_n)$ is decreasing.
+    \end{enumerate}
+    
+    \exc{2.5.3}
+    \begin{enumerate}
+        \item Let $(b_n)$ be a sequence of natural numbers with $b_1 = 1$ that is strictly increasing ($b_1<b_2<b_3 \dots$). We will use sequences of this kind to define a different grouping of the sum of a sequence $(a_n)$. We define the regrouping of $(a_n)$ under $(b_n)$ as 
+        \begin{equation*}
+            \sum_{i=1}^\infty \sum_{n=b_i}^{b_{i+1}-1} a_n = (a_1 + a_2 + \dots a_{b_{2}-1}) + (a_{b_2} + a_{b_2 + 1} + \dots + a_{b_3-1}) + \dots \, .
+        \end{equation*} We need to show that if $\sum_{n=1}^\infty (a_n)$ converges to $L$, then so does the regrouping of $(a_n)$ under any $(b_n)$. First, we will show that $p_m = s_{b_{m+1}-1}$ for all $m \in \N$, where $(s_m)$ and $(p_m)$ are the partial sums of $(a_n)$ and the regrouping of $(a_n)$ under $(b_n)$. To be clear,
+        \begin{align*}
+            s_m &= \sum_{n=1}^m a_n \\
+            p_m &= \sum_{i=1}^m \sum_{n=b_i}^{b_{i+1}-1} a_n.
+        \end{align*}
+        
+        The base case is 
+        \begin{equation*}
+            p_1 = \sum_{i=1}^1 \sum_{n=b_i}^{b_{i+1}-1} a_n = \sum_{n=b_1}^{b_{2}-1} a_n = \sum_{n=1}^{b_{2}-1} a_n = s_{b_{2}-1}.
+        \end{equation*} Now, assume $p_m = s_{b_{m+1}-1}$. Then, 
+        \begin{align*}
+            p_{m+1} &= \sum_{n=b_{m+1}}^{b_{m+2}-1} a_n + \sum_{i=1}^m \sum_{n=b_i}^{b_{i+1}-1} a_n = \sum_{n=b_{m+1}}^{b_{m+2}-1} a_n + s_{b_{m+1}-1} \\ & = \sum_{n=b_{m+1}}^{b_{m+2}-1} a_n + \sum_{n=1}^{b_{m+1}-1} a_n = \sum_{n=1}^{b_{m+2}-1} a_n = s_{b_{m+2}-1}, 
+        \end{align*} which completes the induction. This means that $(p_m)$ is a subsequence of $(s_m)$ so it must converge to the same value as $(s_m)$ by Theorem 2.5.2. Then,
+        \begin{align*}
+             \lim (p_m) &= \sum_{i=1}^\infty \sum_{n=b_i}^{b_{i+1}-1} a_n = L \\
+             &= (a_1 + a_2 + \dots a_{b_{2}-1}) + (a_{b_2} + a_{b_2 + 1} + \dots + a_{b_3-1}) + \dots \\ &= a_1+a_2+a_3+\dots
+        \end{align*} which is what we wanted to show.
+        
+        \item The proof in $(a)$ doesn't apply because the series being summed over in that example, was $a_n = (-1)^n$, which does not converge, since one of its subsequences converges to $1$ and another to $-1$.
+    \end{enumerate}
+    
+    \exc{2.5.4}
+    \begin{enumerate}
+        \item Let $A$ be a non-empty set of real numbers that is bounded above by $M$. Since $A \neq \emptyset$, we can choose some $a_1 \in A$. Notice that $a_1 \leq M$, and if $a_1 = M$ it would be the least upper bound of $A$, so we consider only the case $a_1 < M$. Then, the interval $I_1 =[a_1, M]$ has a non-zero length. Bisect the interval into $l_1 = [a_1, (a_1+M)/2]$ and $r_1 = [(a_1+M)/2, M]$. If none of the elements of $A$ is in $r_1$, let $I_2 = l_1$, otherwise set $I_2 = r_1$. In general, we construct the interval $I_{k+1}$ by bisecting $I_k = [p, q]$ into $r_k=[p, (p+q)/2]$ and $l_k = [(p+q)/2, q]$, setting $I_{k+1}$ to $r_k$ if some element of $A$ is in $r_k$ and setting it to $l_k$ otherwise. Notice that every $I_k$ must contain at least one element from $A$. Also, the length of $I_k$ is $2 (M-a_1)/2^k$ (this is easily shown by induction), so it gets arbitrarily small, since we assumed $(1/2^k) \ra 0$. By the Nested Interval Property, we can pick an $x \in \R$ that is contained by every $I_k$. We claim that $x = \sup A$.
+        
+        To see that $x$ is an upper bound, assume for contradiction that there is some $a \in A$ with $a > x$. If $a \notin I_1$ then $x \geq a_1 > a$, so we can assume $a \in I_1$. Then, $a-x = \epsilon_0$, where $\epsilon_0 > 0$. We know that there is some $I_k$ whose length is less than $\epsilon_0$, which means it cannot contain both $a$ and $x$, but, since every $I_k$ contains $x$, this means $a \notin I_k$. But, since $a \in I_1$, there must have been some point $n$ where $a \in I_n$ and $a \notin I_{n+1}$. This can only happen when $I_{n+1}$ is the right interval $r_n$ of $I_n$ (otherwise $a$ would be in $I_{n+1}$). Since $a \in l_n$ and $x \in I_{n+1} = r_n$, we must have $x \geq a$, a contradiction. Thus, $x \geq a$, so $x$ is an upper bound for $A$.
+        
+        We show $x$ is the least upper bound of $A$ using Lemma 1.3.8. \lep. We are looking for some element of $A$ which is greater than $x-\epsilon$. Since the length of the $I_k'$s is eventually less than $\epsilon$, there must be some $I_k$ which does not contain $x-\epsilon$, since every $I_k$ contains $x$. Notice that if $x-\epsilon \notin I_1$ then $a_1 > x-\epsilon$ and we would be done, so we can assume $x-\epsilon \in I_1$. By the same reason as before, this means there is some $n$ where $x-\epsilon \in I_n$ and $x-\epsilon \in I_{n+1}$, which again means $r_n$ contains some element $a \in A$, which must then be greater than $x-\epsilon$. Thus, every non-empty set that is bounded above must have a least upper bound.
+        
+        We had to assume that $(1/2^n) \ra 0$ because the Archimedean Property was used to show this, but we used the Axiom of Completeness to prove the Archimedean Property, so not making this assumption would make the proof just given circular.
+    \end{enumerate}
+    
+    \exc{2.5.5}
+    Since no two subsequences of $(a_n)$ converge to different limits, $(a_n)$ cannot diverge, since that would be in contradiction with what we have shown in Exercise 2.5.2 (c). Then, Theorem 2.5.2 guarantees that $(a_n)$ converges to the same limit as its subsequences, namely $a$.
+    
+    \exc{2.5.6}
+    If $b = 0$, then clearly $\lim(0^{1/n}) = 0$, and the case $b=1$ also trivially converges to $1$. Now, assume $0 < b < 1$. It is not hard to see that $(b^{1/n})$ is strictly increasing and bounded above by one, so it must converge to some real number $l$. But Theorem 2.5.2 guarantees that the subsequence $(b^{1/(2n)})$ must also converge to $l$. Also, by the results in Exercise 2.3.1, $(b^{1/(2n)}) = (\sqrt{b^{1/n}}) \ra \sqrt{l}$. Therefore, $l = \sqrt{l}$, which means $l = 1$, since it must be greater than 0.
+    
+    If $b > 1$, it is easy to see that the sequence $(b^{1/n})$ is strictly decreasing and bounded below by one, so it must converge, and we can use the same strategy as before to get $(b^{1/n}) \ra 1$.
+    
+    \exc{2.5.7}
+     We have already shown the forward direction to be true for every case except $-1 < b < 0$, so assume $b$ is in this interval. Notice that $1 > b^2 > 0$, so the sequence $((b^2)^n)$ must converge to $0$, as shown in Example 2.5.3. Also, the subsequence $(b^{2n-1}) = ((b^2)^n/b)$ must also converge to $0$ by the The Algebraic Limit Theorem and Example 2.5.3. Then, $(b_n)$ is the shuffled sequence of $(b^{2n})$ and $(b^{2n-1})$, so Exercise 2.3.5 guarantees $(b_n) \ra 0$.
+    
+    Now, assume $\abs{b} \geq 1$. If $b = 1$, clearly $(b_n) \ra 1 \neq 0$. If $b = -1$, the sequence $(b^n) = (-1,1-1,\dots)$ has a subsequence which converges to $1$ and another with converges to $-1$, so $(b_n)$ diverges in this case. Next, assume $b > 1$. The, we can write $b := 1 + a$ for some $a > 0$. But, it is clear that 
+    \begin{equation*}
+        \sum_{n=1}^\infty a = a + a + a + \dots
+    \end{equation*} diverges, which means
+    \begin{equation} \label{exponentProd}
+        \prod_{n=1}^\infty (1+a)
+    \end{equation} also diverges, as we have shown in Exercise 2.4.10. But the partial products of (\ref{exponentProd}) form the sequence $((1+a)^1, (1+a)^2, \dots) = (b^n)$, so $(b^n)$ must diverge. The last case is $b < -1$. In this case, since $b^2 > 1$, the sequence $((b^2)^n)$ diverges, but this is a subsequence of $(b^n)$, so $(b_n)$ also diverges.
+    
+    \exc{2.5.8}
+    \begin{enumerate}
+        \item 
+        0 peak terms: $(1,2,3,4 \dots)$.
+        
+        1 peak term: \space $(1,0.9,0.99,0.999 \dots)$.
+        
+        2 peak terms: $(2,1,0.9,0.99, 0.999, \dots)$.
+        
+        Infinitely many peak terms but not monotone: $(-1)^n$.
+        
+        \item First, assume a sequence $(a_n)$ has infinitely many peak terms. Choose one of them and label it $a_{n_1}$. In general, in order to construct $a_{n_{k+1}}$, choose a peak term $a_n$ with $n \geq n_k$ and set $a_{n_{k+1}} = a_n$. This can always be done, since the sequence will never stop having peak terms. Since every $a_{n_k}$ is a peak term, we must have $a_{n_k} \geq a_{n_{k+1}}$ for every $k \in \N$, so $(a_{n_k})$ is a decreasing, therefore monotone, subsequence of $(a_n)$.
+        
+        Now, assume there are not infinitely many peak terms in $(a_n)$. Then, there must be some $N \in \N$ such that $a_n$ is not a peak term for every $n \geq N$. Then, let $a_{n_1} = a_N$. Since $a_{n_1}$ is not a peak term, there must be some $a_{n_2} > a_{n_1}$ with $n_2 > n_1 \geq N$. In general, use the fact that $a_{n_k}$ is not a peak term to choose some $n_{k+1} > n_k$ such that $a_{n_{k+1}} > a_{n_k}$. Then, $a_{n_k}$ is an increasing, therefore monotone, subsequence of $(a_n)$.
+        
+        Now, consider some bounded sequence $(x_n)$. We have just shown that is must have some monotone subsequence, but this subsequence will also be bounded, so the Monotone Convergence Theorem guarantees it must converge. 
     \end{enumerate}
 
 \end{enumerate}
