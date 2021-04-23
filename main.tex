@@ -30,7 +30,10 @@
 \newcommand{\lep}[1][L]{#1et $\epsilon > 0$ be arbitrary}
 
 \let\oldlog\log
+\let\oldmax\max
 \renewcommand{\log}[1]{\oldlog \left( #1 \right)}
+\renewcommand{\max}[1]{\oldmax \left( #1 \right)}
+
 
 \title{Real Analysis Exercises}
 \author{Eduardo Freire}
@@ -261,7 +264,7 @@
 		      	f(n-m) & n > m
 		      	\end{cases}
 		      \end{equation*}
-		      where $f : \N \rightarrow A_1$ is a bijection. Now pick two numbers $a, b \in \N$ and assume $a \neq b$. WLOG, we can make $a > b$. If $a > b > m$, then $h(a) = f(a-m)$ and $f(b-m) = h(b)$. Since $f$ is 1-1, $h(a) \neq h(b)$. Next, if $b \leq m$,  then $h(b) = g(b)$. In the case where $a \leq m$, we also have $h(a) = g(a) \neq g(b)$. Otherwise, $h(a) = f(a-m) \in A_1$, and, since $h(b) \notin A_1$, $h(a) \neq h(b)$, therefore $h$ is 1-1.
+		      where $f : \N \rightarrow A_1$ is a bijection. Now pick two numbers $a, b \in \N$ and assume $a \neq b$. Without loss of generality, we can make $a > b$. If $a > b > m$, then $h(a) = f(a-m)$ and $f(b-m) = h(b)$. Since $f$ is 1-1, $h(a) \neq h(b)$. Next, if $b \leq m$,  then $h(b) = g(b)$. In the case where $a \leq m$, we also have $h(a) = g(a) \neq g(b)$. Otherwise, $h(a) = f(a-m) \in A_1$, and, since $h(b) \notin A_1$, $h(a) \neq h(b)$, therefore $h$ is 1-1.
 		      		      		      	      	      	      	        
 		      Now, we need to show that $h$ is onto. Let $t \in A_1 \cup B_2$. We must find an $n \in \N$ such that $h(n) = t$. First, assume $t \in A_1$. Since $f$ is onto, there is a $k \in \N$ such that $f(k) = t$. Setting $n := m + k$, we have that $h(n) = f(k) = t$. Next, assume $t \in B_2$. Since $g$ is onto, there is a $k \in B_2$ such that $g(k) = t$. Setting $n := k$, we have that $h(n)=g(k)=t$, since $k \in B_2 \implies k \leq m$.
 		      		      		      	      	      	      	        
@@ -450,7 +453,7 @@
 	\end{enumerate}
 				      	              
 	\exc{2.2.6}
-	Assume $a \neq b$. Then, there are naturals $N_1, N_2$ such that for every $n_1 \geq N_1$ and every $n_2 \geq N_2$, we have $|a_{n_1} - a| < |a-b|/2$ and $|a_{n_2} - b| < |a-b|/2$. By letting $N = \max (N_1, N_2)$, it is then true that for every $n \geq N$ $|a_n - a| < |a-b|/2$ and $|a_n - b| < |a-b|/2$. Adding both of these equations, we have $|a_n - a| + |a_n - b| < |a-b|$, which contradicts the triangle inequality, so we must have $a = b$.
+	Assume $a \neq b$. Then, there are naturals $N_1, N_2$ such that for every $n_1 \geq N_1$ and every $n_2 \geq N_2$, we have $|a_{n_1} - a| < |a-b|/2$ and $|a_{n_2} - b| < |a-b|/2$. By letting $N = \max{N_1, N_2}$, it is then true that for every $n \geq N$ $|a_n - a| < |a-b|/2$ and $|a_n - b| < |a-b|/2$. Adding both of these equations, we have $|a_n - a| + |a_n - b| < |a-b|$, which contradicts the triangle inequality, so we must have $a = b$.
 				      	              
 	\exc{2.2.7}
 				      	              
@@ -489,7 +492,7 @@
 		      \abs[\Big]{\frac{2x_n-1}{3}-1} = \frac{2}{3}|x_n-2| < \epsilon \, .
 		\end{equation*}
 							      		      	            
-		\item Let $\epsilon > 0$ be arbitrary. Since $(x_n) \rightarrow 2$, we can choose a natural number $N_1$ such that $|x_n-2| < 2\epsilon$ for all $n \geq N_1$. We can also find a natural $N_2$ such that $\abs{2-x_n} < 1$, for all $n \geq N_2$, which implies $|x_n| > 1$. Let $N := \max(N_1, N_2)$. Then, for all $n \geq N$, we have \begin{equation*}
+		\item Let $\epsilon > 0$ be arbitrary. Since $(x_n) \rightarrow 2$, we can choose a natural number $N_1$ such that $|x_n-2| < 2\epsilon$ for all $n \geq N_1$. We can also find a natural $N_2$ such that $\abs{2-x_n} < 1$, for all $n \geq N_2$, which implies $|x_n| > 1$. Let $N := \max{N_1, N_2}$. Then, for all $n \geq N$, we have \begin{equation*}
 		      \abs[\Big]{\frac{1}{x_n}-\frac{1}{2}} = \abs[\Big]{\frac{2-x_n}{2x_n}} < \abs[\Big]{\frac{x_n-2}{2}} < \epsilon.
 		\end{equation*}
 	\end{enumerate}
@@ -498,7 +501,7 @@
 	    If $(x_n), (y_n) \rightarrow L$ for some real number $L$, then for every $\epsilon > 0$ there is some natural $N$ such that $\abs{x_n-y_n} < \epsilon$ for all $n \geq N$.
 	\end{shortlemma}
 	\begin{proof}
-    \lep \space and use the fact that both the sequences converge to find $N_1, N_2 \in \N$ such that $\abs{x_n - L} < \epsilon/2$ for all $n \geq N_1$ and $\abs{y_m-L} < \epsilon/2$ for all $m \geq N_2$. Setting $N := \max(N_1, N_2)$ we have $\abs{x_n-L} < \epsilon/2$ $\abs{y_n-L} < \epsilon/2$ for all $n \geq N$. Summing the two inequalities, we get $\abs{x_n-L} + \abs{y_n-L} < \epsilon$, and we can use the triangle inequality to see that $\abs{x_n-y_n} \leq \abs{x_n-L} + \abs{y_n-L} < \epsilon$, as we wanted to show.
+    \lep \space and use the fact that both the sequences converge to find $N_1, N_2 \in \N$ such that $\abs{x_n - L} < \epsilon/2$ for all $n \geq N_1$ and $\abs{y_m-L} < \epsilon/2$ for all $m \geq N_2$. Setting $N := \max{N_1, N_2}$ we have $\abs{x_n-L} < \epsilon/2$ $\abs{y_n-L} < \epsilon/2$ for all $n \geq N$. Summing the two inequalities, we get $\abs{x_n-L} + \abs{y_n-L} < \epsilon$, and we can use the triangle inequality to see that $\abs{x_n-y_n} \leq \abs{x_n-L} + \abs{y_n-L} < \epsilon$, as we wanted to show.
 	\end{proof}
 				      	              
 	\exc{2.3.3}
@@ -614,7 +617,7 @@
 		\abs{y_n-x} \leq \sum\limits_{k=1}^{N_1-1} \frac{\abs{x_k-x}}{n} + \sum\limits_{k=N_1}^{n} \frac{\abs{x_k-x}}{n} ~ .
 		\end{equation*} Now, use the fact that the first term converges to $0$ to choose a natural number $N_2$ such that \begin{equation*}
 		\sum\limits_{k=1}^{N_1-1} \frac{\abs{x_k-x}}{n} < \frac{\epsilon}{2}
-		\end{equation*} for all $n \geq N_2$. By letting $N := \max (N_1, N_2)$, we can write \begin{equation*}
+		\end{equation*} for all $n \geq N_2$. By letting $N := \max{N_1, N_2}$, we can write \begin{equation*}
 		\abs{y_n-x} \leq \frac{\epsilon}{2} + \sum\limits_{k=N_1}^{n} \frac{\abs{x_k-x}}{n} \leq \frac{\epsilon}{2} + \sum\limits_{k=N_1}^{n} \frac{\epsilon}{4n}
 		\end{equation*} for all $n \geq N$. Notice that \begin{equation*}
 		\sum\limits_{k=N_1}^{n} \frac{\epsilon}{4n} = \frac{n-N_1+1}{n} \cdot \frac{\epsilon}{4}
@@ -653,7 +656,7 @@
 	      Every Cauchy sequence is bounded.
 	\end{shortlemma}
 	\begin{proof}
-		Let $(a_n)$ be a Cauchy sequence. Choose $N \in \N$ such that $\abs{a_n-a_m} < 1$ for all $n \geq N$. Then, $\abs{a_n} - \abs{a_N} \leq \abs{a_n-a_N} < 1$, therefore $\abs{a_n} < \abs{a_N} + 1$ for all $n \geq N$. Since every finite sequence is bounded, there is some real number $M_1$ such that $M_1 \geq \abs{a_n}$ for every $n < N$, so if we define $M := \max (M_1, \abs{a_N} + 1)$ we will have $M \geq \abs{a_n}$ for every natural $n$, therefore $(a_n)$ is bounded by $M$.  
+		Let $(a_n)$ be a Cauchy sequence. Choose $N \in \N$ such that $\abs{a_n-a_m} < 1$ for all $n \geq N$. Then, $\abs{a_n} - \abs{a_N} \leq \abs{a_n-a_N} < 1$, therefore $\abs{a_n} < \abs{a_N} + 1$ for all $n \geq N$. Since every finite sequence is bounded, there is some real number $M_1$ such that $M_1 \geq \abs{a_n}$ for every $n < N$, so if we define $M := \max{M_1, \abs{a_N} + 1}$ we will have $M \geq \abs{a_n}$ for every natural $n$, therefore $(a_n)$ is bounded by $M$.  
 	\end{proof}
 	\item \begin{shorttheorem}{thm_convergCauchy}
 	      A sequence $(a_n)$ converges if and only if for all $\epsilon > 0$ there is a $N \in \N$ such that $\abs{a_n-a_m} < \epsilon$ for all $n,m \geq N$ (this is the definition of a Cauchy Sequence).
@@ -821,7 +824,7 @@
         
         The sequence defined by $a_n = (0,1,0,1 \dots)$ has $\limsup{a_n} = 1$ and $\liminf{a_n} = 0$, so $\limsup{a_n} > \liminf{a_n}$.
         
-        \item First, assume $\lim a_n = a$ and \lep[l]. Then, we use Theorem \ref{thm_convergCauchy} to find $N_1, N_2 \in \N$ such that $\abs{a_n-a} < \epsilon/2$ for all $n \geq N_1$ and $\abs{a_n-a_m} < \epsilon/4$ for all $n, m \geq N_2$. Also, define $N := \max\left(N_1, N_2\right)$. Since the $y_n'$s are least upper bounds, for every $n \geq N$, we can find $a_L$ with $L \geq N$ such that $y_n-\epsilon/4 < a_L$, which implies $\abs{y_n-a_L} < \epsilon/4$. Then, 
+        \item First, assume $\lim a_n = a$ and \lep[l]. Then, we use Theorem \ref{thm_convergCauchy} to find $N_1, N_2 \in \N$ such that $\abs{a_n-a} < \epsilon/2$ for all $n \geq N_1$ and $\abs{a_n-a_m} < \epsilon/4$ for all $n, m \geq N_2$. Also, define $N := \max{N_1, N_2}$. Since the $y_n'$s are least upper bounds, for every $n \geq N$, we can find $a_L$ with $L \geq N$ such that $y_n-\epsilon/4 < a_L$, which implies $\abs{y_n-a_L} < \epsilon/4$. Then, 
         \begin{equation*}
             \abs{y_n-a_n} \leq \abs{y_n-a_L} + \abs{a_L-a_n} < \frac{\epsilon}{4} + \frac{\epsilon}{4} = \frac{\epsilon}{2}
         \end{equation*} for all $n \geq N$. Then,
@@ -984,7 +987,65 @@
         
         Now, consider some bounded sequence $(x_n)$. We have just shown that is must have some monotone subsequence, but this subsequence will also be bounded, so the Monotone Convergence Theorem guarantees it must converge. 
     \end{enumerate}
+    
+    \exc{2.5.9}
+    Since $(a_n)$ is bounded, every term in the sequence is in $[-M, M]$ for some $M \in \R$, so $-M-1 < a_n$ for all the $(a_n)$, hence $-M-1 \in S$. Also, if $x \in S$, then $x \leq M$, otherwise $x$ would be greater than every in $a_n$, which contradicts the fact that $x \in S$. Since $S$ is non-empty and bounded above, we are justified in setting $s := \sup S$.
+    
+    Now let $k \in \N$. We know that $s-1/k < x$ for some $x \in S$. This means that $s-1/k < a_n$ for infinitely many $a_n$. Also, $s + 1/k \notin S$, therefore there are only finitely many $a_n$ such that $ s + 1/k < a_n$. This means that for every $k \in N$ there must be infinitely many terms of $(a_n)$ such that $s-1/k < a_n \leq s+1/k$. To construct $a_{n_1}$, pick one $a_n$ such that $s-1 < a_n \leq s+1$, and to construct $a_{n_{k+1}}$, choose some $s-1/(k+1) < a_n \leq s+1/(k+1)$. Since there are infinitely many such $a_n$, it can be chosen to make sure $n > n_{k+1}$.
+    
+    To see that $(a_{n_k}) \ra 0$, \lep[l]. Choose $N \in \N$ such that $N > 1/\epsilon$. Since $s-1/k < a_{n_k} \leq s+1/k$ for every $k \in \N$, then $\abs{a_{n_k} - s} \leq 1/k$. Letting $k \geq N$, we have $\abs{a_{n_k}-s} \leq 1/k < \epsilon$, and we are done.
 
+    \exc{2.6.1}
+    Assume $(x_n) \ra x$ and \lep[l]. Choose $N \in \N$ such that $\abs{x_n-x} < \epsilon/2$ for all $n \geq N$. Then, $\abs{x_n-x_m} \leq \abs{x_n-x} + \abs{x_m-x} < \epsilon$ for all $n,m \geq N$.
+    
+    \exc{2.6.2}
+    \begin{enumerate}
+        \item $(-1)^n/n$.
+        
+        \item This is not possible, since if a subsequence is unbounded then so is the original sequence, but every Cauchy sequence is bounded.
+        
+        \item Let $(a_n)$ be a divergent increasing sequence. If $(a_n)$ were bounded it would converge (Monotone Convergence Theorem), so it must be unbounded, in particular, $(a_n)$ is not bounded above. Now, assume $(a_{n_k})$ is a Cauchy subsequence of $(a_n)$. By the Cauchy Criterion, it must converge to some real number $L$. Then, there must be some $N_1 \in \N$ such that $\abs{a_n - L} < 1$ for all $n \geq N_1$. Since $a_n$ is unbounded and increasing, there is also some $N_2 \in \N$ such that $a_n > \abs{L}+1$ for all $n \geq N_2$. Taking $N := \max{N_1, N_2}$, we have $a_N > \abs{L} + 1$ and $\abs{a_N-L} < 1$. But the second equation implies $\abs{a_N} < \abs{L} + 1$, a contradiction. Therefore $(a_n)$ cannot have a Cauchy subsequence. The proof is similar if $(a_n)$ is decreasing.
+        
+        \item $(1, 1, 2, 1, 3, 1, 4, 1, \dots)$
+    \end{enumerate}
+    
+    \exc{2.6.3}
+    \begin{enumerate}
+        \item \lep. Choose $N \in \N$ such that $\abs{x_n-x_m}, \abs{y_n-y_m} \leq \epsilon/2$ for all $n,m \geq N$. Then, $\abs{x_n+y_n-(x_m+y_m)} \leq \abs{x_n-x_m} + \abs{y_n-y_m} < \epsilon$ for all $n,m \geq N$, so $(x_n + y_n)$ is Cauchy.
+        
+        \item \lep. Since both sequences are Cauchy, we can pick some positive $M_1, M_2 \in \R$ such that $\abs{x_n} \leq M_1$ and $\abs{y_n} \leq M_2$ for all $n \in \N$. Choose $N \in \N$ such that $\abs{x_n-x_m} < \epsilon/(2M_2)$ and $\abs{y_n-y_m} < \epsilon/(2M_1)$ for all $n, m \geq N$. Then,
+        \begin{align*}
+            \abs{x_n y_n - x_m y_m} &= \abs{x_n y_n - x_n y_m + x_n y_m - x_m y_m} \\
+            &\leq \abs{x_n} \abs{y_n - y_m} + \abs{y_m} \abs{x_n - x_m} \\ &\leq M_1 \abs{y_n-y_m} + M_2 \abs{x_n - x_m} < \epsilon
+        \end{align*} for all $n,m \geq N$, so $(x_n y_n)$ is Cauchy.
+    \end{enumerate}
+    
+    \exc{2.6.4}
+    \begin{enumerate}
+        \item By Exercise $2.6.3$, $(a_n - b_n) = (a_n + (-b_n))$ is Cauchy, so it must converge. We've already shown that if a sequence $(x_n)$ converges, then so does $(\abs{x_n})$, therefore $(\abs{a_n-b_n})$ must converge, which means it is also Cauchy.
+        
+        \item Not necessarily. If $(a_n) = (-1)^n/n$, then $(c_n) = 1/n$ which is Cauchy. However, if $(a_n) = (1,1,1\dots)$, $(c_n) = (-1)^n$ which is not Cauchy.
+        
+        \item Not necessarily. If $(a_n) = (1,1,1,\dots)$, then $(c_n) = (a_n)$ which is Cauchy. However, if $(a_n) = (-1)^n/n$, $(c_n) = (-1, 0,-1, 0, \dots)$ which is not Cauchy.
+    \end{enumerate}
+    
+    \exc{2.6.5}
+    Consider the sequence 
+    \begin{equation*}
+        (a_n) = (\frac{1}{1}, \frac{1}{2}, \frac{1}{2}, \frac{1}{3}, \frac{1}{3}, \frac{1}{3}, \frac{1}{4}, \dots)
+    \end{equation*} of $1$ appearance of $1/1$, followed by $2$ $1/2'$s, then $3$ $1/3's$ and so on. Since $(a_n)$ is decreasing and bounded by $1$, it must converge. Also, it is clear that $(1/n)$ is a subsequence of $(a_n)$ which means $(a_n) \ra 0$. Now, define the sequence $(s_m)$ by
+    \begin{equation*}
+        (s_m) = (\sum_{n=1}^m a_n) = (1, \frac{3}{2}, 2, \frac{7}{3}, \frac{8}{3}, 3, \dots).
+    \end{equation*} To see that $(s_m)$ is pseudo-Cauchy, \lep[l]. Since $(a_n) \ra 0$, we can choose $N \in \N$ such that $a_{m+1} \leq \epsilon$ for all $m+1 \geq N$. Then, it is easy to see that $\abs{s_{m+1}-s_m} = a_{m+1} < \epsilon$, which means $(s_m)$ is pseudo-Cauchy. However, $(m)$ is a subsequence of $(s_m)$ which is not bounded above, therefore $(s_m)$ is also not bounded above, which means the first claim in the exercise is false.
+    
+    To verify the second claim, \lep[l]. Since $(x_n)$ and $(y_n)$ are pseudo-Cauchy, we can choose $N \in \N$ such that $\abs{x_{n+1}-x_n}, \abs{y_{n+1}-y_n} < \epsilon/2$ for all $n \geq N$. Then, \begin{equation*}
+        \abs{(x_{n+1}+y_{n+1}) - (x_n + y_n)} \leq \abs{x_{n+1}-x_n} + \abs{y_{n+1}-y_n} < \epsilon
+    \end{equation*} for all $n \geq N$, therefore $(x_n + y_n)$ is also pseudo-Cauchy. 
+    
+    \exc{2.6.6}
+    \begin{enumerate}
+        \item 
+    \end{enumerate}
 \end{enumerate}
 
 
