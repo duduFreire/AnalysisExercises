@@ -6,6 +6,7 @@
 \usepackage{mathtools}
 \usepackage{amsfonts}
 \usepackage{indentfirst}
+\usepackage{hyperref}
 
 \setlength\parindent{24pt}
 
@@ -14,9 +15,16 @@
 
 \newcounter{lemmaCounter}
 \newcounter{theoremCounter}
-\newenvironment{shortlemma}[1]{\refstepcounter{lemmaCounter}\label{#1}\textbf{Lemma~\thelemmaCounter.}\em}
+\newcounter{definitionCounter}
 
-\newenvironment{shorttheorem}[1]{\refstepcounter{theoremCounter}\label{#1}\textbf{Theorem~\thetheoremCounter.}\em}
+\newenvironment{shortlemma}[1]{\refstepcounter{lemmaCounter}
+\label{#1}\textbf{Lemma~\thelemmaCounter.}\em}
+
+\newenvironment{shorttheorem}[1]{\refstepcounter{theoremCounter}
+\label{#1}\textbf{Theorem~\thetheoremCounter.}\em}
+
+\newenvironment{shortdefinition}[1]{\refstepcounter{definitionCounter}
+\label{#1}\textbf{Definition~\thedefinitionCounter.}\em}
 
 \DeclarePairedDelimiter\abs{\lvert}{\rvert}
 
@@ -1044,7 +1052,71 @@
     
     \exc{2.6.6}
     \begin{enumerate}
+        \item Let $(a_n) = (-1)^n/n$. To see that $(a_n)$ is quasi-increasing, \lep[l]. It is easy to see that 
+        \begin{equation*}
+            \lim_{n \ra \infty} \left(\frac{2n+k}{n(n+k)}\right) = 0,
+        \end{equation*} for any $k \in \N$, therefore we can choose $N \in \N$ such that
+        \begin{equation*}
+            \frac{2n+k}{n(n+k)} < \epsilon
+        \end{equation*} for all $n \geq N$ and $k \in \N$. Then, 
+        \begin{equation*}
+            \frac{(-1)^n}{n} - \frac{(-1)^{n+k}}{n+k} \leq \frac{1}{n} + \frac{1}{n+k} = \frac{2n+k}{n(n+k)} < \epsilon.
+        \end{equation*} This means that $a_{m}-a_{m+k} < \epsilon$ which implies $a_n > a_m - \epsilon$ for all natural $n > m \geq N$, as we wanted to show.
+        
+        \item Let $(a_n)$ be defined by 
+        \begin{equation*}
+            a_n = \begin{cases}
+            \frac{n+1}{2} & n \text{ is odd} \\
+            \frac{n}{2} - \frac{1}{n} & n \text{ is even}
+            \end{cases}.
+        \end{equation*} To see that $(a_n)$ is quasi-increasing, \lep[l]. Choose $N \in \N$ such that $N > 1/\epsilon$. Then, we need to show that $a_m - a_{m+k} < \epsilon$ for every $m+k > m \geq N$. There are four cases, depending on the parity of $a_m$ and $a_{m+k}$. It is easy to verify that $a_m-a_{m+k} < 0 < \epsilon$ in every case except possibly when $a_m$ is odd and $a_{m+k}$ is even. In that case, 
+        \begin{equation*}
+            a_m-a_{m+k} = \frac{1-k}{2} + \frac{1}{m+k} \leq \frac{1}{m+k} < \frac{1}{m} < \epsilon
+        \end{equation*} therefore $(a_n)$ is quasi-increasing. It is also easy to verify that $(a_n)$ is not eventually monotone or bounded above.
+        
         \item 
+    \end{enumerate}
+    
+    \exc{2.6.7}
+    \begin{enumerate}
+        \item Let $(x_n)$ be an increasing bounded sequence. 
+        
+        By the Bolzano-Weierstrass Theorem, there we can construct a subsequence $(x_{n_k})$ which converges to some $x \in \R$. To prove that $(x_n) \ra x$, \lep[l]. Choose $N_1 \in \N$ such that $\abs{x_{n_k}-x} < \epsilon$ for all $k \geq N_1$. Now, set $N := n_{N_1}$ and let $n \geq N$ be arbitrary. Since $(x_n)$ is increasing, we have $x_{n_{N_1}} \leq x_n \leq x_{n_m}$ for some $n_m \geq n$. Using the fact that $-\epsilon< x_{n_k} -x < \epsilon$ for all $k \geq N_1$, 
+        \begin{align*}
+            x_{n_{N_1}} \leq &x_n \leq x_{n_m} \implies \\
+            x_{n_{N_1}}-x \leq x_n&-x \leq x_{n_m}-x \implies \\
+            -\epsilon < x_{n_{N_1}}-x \leq x_n&-x \leq x_{n_m}-x < \epsilon \implies
+            \abs{x_n-x} < \epsilon,
+        \end{align*} therefore $(x_n) \ra x$.
+        
+        \item Let $(x_n)$ be bounded by $M$. Then, every $x_n$ is in the interval $I_1 = [-M,M]$, so we can choose one of them, labeled $x_{n_1}$. Bisect $I_1$ into $[-M, 0]$ and $[0, M]$. At least one of this intervals must contain infinitely many terms in $(x_n)$, so select one such interval and label it $I_2$. In general, we construct the closed interval $I_{k+1}$ by taking a half of $I_k$ containing an infinite number of terms $(x_n)$ and then select $n_{k+1} > n_k > n_{k-1} \dots > n_1$ so that $x_{n_{k+1}} \in I_k$ (This is the same construction as the one in the BW proof given in the book). To prove that $(x_{n_k})$ converges, \lep[l]. If we assume the Archimedean Property, it is easy to see that the length of the $I_k'$s gets arbitrarily close to $0$, so we can choose $N \in \N$ such that the length of $I_k$ is less than $\epsilon$ for all $k \geq N$. Since the $I_k'$s are nested, and $x_{n_k} \in I_k$, we also have $x_{n_m} \in I_k$ for all $m \geq k$. Thus, choosing arbitrary $a,b \geq N$, we have $x_{n_a},x_{n_b} \in I_N$. Since the length of $I_N$ is less than $\epsilon$, we must have $\abs{x_{n_a}-x_{n_b}} < \epsilon$, therefore $(x_{n_k})$ is Cauchy. By the Cauchy Criterion, we can conclude that $(x_{n_k})$ converges.
+        
+        \item The Archimedean Property holds in the rational numbers, in the sense that given any $x \in \Q$, there exists an $n \in \N$ satisfying $n > x$, and given any positive $y \in \Q$, there exists an $n \in \N$ satisfying $1/n < y$. Since we know the rational analogue of AoC is not true, this means we cannot use the Archimedean Property to prove it.
+    \end{enumerate}
+    
+    \item 
+    \begin{shortdefinition}{def_equivSequences}
+        Two sequences $(a_n)$ and $(b_n)$ are equivalent if and only if for all $\epsilon > 0$ there exists a $N \in \N$ such that $\abs{a_n-b_n} < \epsilon$ for all $n \geq N$.
+    \end{shortdefinition}
+    
+    \begin{shortlemma}{lem_equivCauchySequences}
+        If $(a_n)$ is equivalent to $(b_n)$ and $(b_n) \ra b$, it follows that $(a_n) \ra b$.
+    \end{shortlemma}
+    \begin{proof}
+        Let $(a_n)$ and $(b_n)$ be equivalent sequences. \lep \space and choose $N \in \N$ such that $\abs{a_n-b_n},\abs{b_n-b} < \epsilon/2$ for all $n \geq N$. Then, 
+        \begin{equation*}
+            \abs{a_n-b} \leq \abs{a_n-b_n} + \abs{b_n-b} < \epsilon
+        \end{equation*} for all $n \geq N$. Thus, $(a_n)$ also converges to $b$.
+    \end{proof}
+    
+    \exc{2.7.1}
+    \begin{enumerate}
+        \item Let $I_n = [S_{2n}, S_{2n-1}]$. The length of $I_n$ is $a_{2n}$, a subsequence of $(a_n)$, therefore it must converge to $0$. Also, we can use the fact that $S_{2n}$ is increasing and $S_{2n-1}$ is decreasing to show that $I_n \supseteq I_{n+1}$. \lep. Choose $N \in \N$ such that $\abs{a_{2n}} < \epsilon$ for all $n \geq N$ and define $M := 2N-1$. Then, since $S_n,S_m \in I_N$ for all $n,m \geq M$, and the length of $I_N$ is less than $\epsilon$, we must have $\abs{S_n-S_m} < \epsilon$ for all $n \geq M$, so $(S_n)$ is Cauchy, therefore converges.
+        
+        \item This is almost identical to the previous proof. Construct the intervals $I_n$ just as before. By the Nested Interval Property, we can choose some $x \in \R$ such that $x \in I_n$ for every $n$. To prove that $(S_n) \ra x$, \lep[l]. Choose $N \in \N$ such that $\abs{a_{2n}} < \epsilon$ for all $n \geq N$ and define $M := 2N-1$. Then, since $S_n,x \in I_N$ for all $n \geq M$, and the length of $I_N$ is less than $\epsilon$, we must have $\abs{S_n-x} < \epsilon$ for all $n \geq M$.
+        
+        
+        \item It is easy to see with induction that $a_1 \geq S_n \geq 0$ for all $n \in \N$. Since $S_{2n}$ is increasing and bounded above by $a_1$, the Monotone Convergence Theorem guarantees its convergence. Also, ${S_{2n-1}}$ is decreasing and bounded below by $0$, so it must also converge. Now, we show that $(S_{2n})$ and $(S_{2n-1})$ are equivalent (Definition \ref{def_equivSequences}). \lep. Choose $N \in N$ such that $\abs{a_n} < \epsilon$ for all $n \geq N$. Then, $\abs{S_{2n}-S_{2n-1}} = \abs{a_{2n}} \leq \abs{a_n} < \epsilon$ for all $n \geq N$, so the sequences are equivalent. By Lemma \ref{lem_equivCauchySequences}, they must converge to the same real number $a$, and we've already shown in Exercise 2.3.5 that this means $(S_n) \ra a$ as well, since $(S_n)$ is the shuffled sequence of $(S_{2n-1})$ and $(S_{2n})$. 
     \end{enumerate}
 \end{enumerate}
 
