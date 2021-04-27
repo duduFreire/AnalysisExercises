@@ -6,7 +6,7 @@
 \usepackage{mathtools}
 \usepackage{amsfonts}
 \usepackage{indentfirst}
-\usepackage{hyperref}
+\usepackage[colorlinks=true,linkcolor=blue]{hyperref}%
 
 \setlength\parindent{24pt}
 
@@ -667,13 +667,11 @@
 		Let $(a_n)$ be a Cauchy sequence. Choose $N \in \N$ such that $\abs{a_n-a_m} < 1$ for all $n \geq N$. Then, $\abs{a_n} - \abs{a_N} \leq \abs{a_n-a_N} < 1$, therefore $\abs{a_n} < \abs{a_N} + 1$ for all $n \geq N$. Since every finite sequence is bounded, there is some real number $M_1$ such that $M_1 \geq \abs{a_n}$ for every $n < N$, so if we define $M := \max{M_1, \abs{a_N} + 1}$ we will have $M \geq \abs{a_n}$ for every natural $n$, therefore $(a_n)$ is bounded by $M$.  
 	\end{proof}
 	\item \begin{shorttheorem}{thm_convergCauchy}
-	      A sequence $(a_n)$ converges if and only if for all $\epsilon > 0$ there is a $N \in \N$ such that $\abs{a_n-a_m} < \epsilon$ for all $n,m \geq N$ (this is the definition of a Cauchy Sequence).
+        Every convergent sequence is Cauchy.
 	\end{shorttheorem}
 				 
 	\begin{proof}
 		First, assume $(a_n) \rightarrow L$ for some $L \in \R$. Let $\epsilon > 0$ be arbitrary and choose $N \in \N$ such that $\abs{a_t - L} \leq \epsilon/2$ for all $t \geq N$. Then, for all $n,m \geq N$ we have $\abs{a_n - a_m} = \abs{a_n - L + L - a_m} \leq \abs{a_n-L} + \abs{a_m - L} < \epsilon/2 + \epsilon/2 = \epsilon$, so $(a_n)$ is Cauchy.
-							     
-		For the converse direction, assume $(a_n)$ is Cauchy. Now, let $\epsilon > 0$ be arbitrary and choose $N \in \N$ such that $\abs{a_n-a_m} < \epsilon/2$ for all $n,m \geq N$. Since every Cauchy sequence is bounded, we can define $s := \sup \set{a_n :n \in \N \text{ and } n \geq N}$. Since $s$ is a least upper bound, there is some $a_{n_0}$ with $n_0 \geq N$ such that $s-\epsilon/2 < a_{n_0}$, which implies $\abs{s-a_{n_0}} < \epsilon/2$. Then, $\abs{s-a_n} = \abs{s-a_{n_0} + a_{n_0}-a_n} \leq \abs{s-a_{n_0}} + \abs{a_{n_0}-a_n} < \epsilon/2 + \epsilon/2 = \epsilon$, so $(a_n) \ra s$.
 	\end{proof}
 			
 	\exc{2.3.13} \begin{enumerate}
@@ -1117,6 +1115,217 @@
         
         
         \item It is easy to see with induction that $a_1 \geq S_n \geq 0$ for all $n \in \N$. Since $S_{2n}$ is increasing and bounded above by $a_1$, the Monotone Convergence Theorem guarantees its convergence. Also, ${S_{2n-1}}$ is decreasing and bounded below by $0$, so it must also converge. Now, we show that $(S_{2n})$ and $(S_{2n-1})$ are equivalent (Definition \ref{def_equivSequences}). \lep. Choose $N \in N$ such that $\abs{a_n} < \epsilon$ for all $n \geq N$. Then, $\abs{S_{2n}-S_{2n-1}} = \abs{a_{2n}} \leq \abs{a_n} < \epsilon$ for all $n \geq N$, so the sequences are equivalent. By Lemma \ref{lem_equivCauchySequences}, they must converge to the same real number $a$, and we've already shown in Exercise 2.3.5 that this means $(S_n) \ra a$ as well, since $(S_n)$ is the shuffled sequence of $(S_{2n-1})$ and $(S_{2n})$. 
+    \end{enumerate}
+    
+    \exc{2.7.2}
+    \begin{enumerate}
+        \item Notice that 
+        \begin{equation*}
+            0 \leq \frac{1}{2^n+n} \leq \frac{1}{2^n}
+        \end{equation*} for all $n \in \N$. Also, $\sum_{n=0}^\infty 1/2^n$ is a geometric series with $a = 1$ and $r = 1/2$, so it converges, which clearly means $\sum_{n=1}^\infty 1/2^n$ also converges. By the Comparison Test, our original sum must also converge.
+        
+        \item For every $n \in \N$ we have 
+        \begin{equation*}
+            0 \leq \abs[\Big]{\frac{\sin{n}}{n}} \leq \frac{1}{n^2},
+        \end{equation*} and, since $\sum_{n=1}^\infty 1/n^2$ converges, so must 
+        \begin{equation*}
+            \sum_{n=1}^\infty \abs[\Big]{\frac{\sin{n}}{n}}.
+        \end{equation*} By the Absolute Convergence Test, or original sum also converges.
+        
+        \item The original sum is equal to 
+        \begin{equation*}
+            1 - \sum_{n=3}^\infty \frac{n}{2(n-1)} (-1)^{n+1}.
+        \end{equation*} Notice that 
+        \begin{equation*}
+            a_{2n+1} = \frac{2n+1}{4n} > \frac{1}{2}
+        \end{equation*} for every $n$. Therefore, by Theorem 2.7.3, the series diverges.
+        
+        \item We can write this sum as 
+        \begin{equation*}
+            \sum_{n=1}^\infty \frac{1}{3n-2}+\frac{1}{3n-1}-\frac{1}{3n}.
+        \end{equation*} Also, 
+        \begin{equation*}
+             \frac{1}{3n-2}+\frac{1}{3n-1}-\frac{1}{3n} \geq \frac{1}{3n-2} \geq 0.
+        \end{equation*} By the Cauchy condensation test, we have
+        \begin{equation*}
+            \sum_{n=1}^\infty \frac{1}{3n-2} \text{ converges} \iff 
+            \sum_{n=1}^\infty \frac{2^n}{3\cdot2^n-2} \text{ converges.}
+        \end{equation*} But, 
+        \begin{equation*}
+            \lim\left({\frac{2^n}{3\cdot2^n-2}}\right) = \frac{1}{3} \implies 
+            \sum_{n=1}^\infty \frac{2^n}{3\cdot2^n-2} \text{ diverges.}
+        \end{equation*} By the comparison test, the original sum also diverges.
+        
+        \item By the Alternating Series Test, the series converges.
+    \end{enumerate}
+    
+    \exc{2.7.3}
+    \begin{enumerate}
+        \item To prove (i), assume $\sum_{n=1}^\infty (b_n)$ converges and $0 \leq a_n \leq b_n$ for all $n \in \N$. \lep. Then, the Cauchy Criterion for Series lets us choose $N \in \N$ such that $\abs{b_{m+1}+b_{m+2} + \dots + b_{n}} < \epsilon$ whenever $n > m \geq M$. But, since every $a_n$ is non-negative and less than or equal to $b_n$, we have 
+        \begin{equation*}
+           \abs{a_{m+1}+a_{m+2} + \dots + a_{n}} \leq \abs{b_{m+1}+b_{m+2} + \dots + b_{n}} < \epsilon
+        \end{equation*} therefore $\sum_{n=1}^\infty a_n$ converges, by the Cauchy Criterion for Series. Also, (ii) is the contrapositive of (i), therefore we only need to prove (i).
+        
+        \item Assume $\sum_{n=1}^\infty (b_n) = t$ and $0 \leq a_k \leq b_k$ for all $k \in \N$. Also, let $(s_n), (t_n)$ be the partial sum sequences of $(a_n)$ and $(b_n)$ respectively. Then, $0 \leq s_k \leq t_k$ for every $k \in \N$. This implies $0 \leq s_k \leq t$ for all $k \in \N$, therefore, $s_k$ is bounded. Thus, it must converge by the Monotone Convergence Theorem.
+    \end{enumerate}
+    
+    \exc{2.7.4}
+    \begin{enumerate}
+        \item $(x_n) = 1/n$, $(y_n) = 1/n$.
+        
+        \item $(x_n) = (-1)^{n+1}/n$, $(y_n) = (-1)^{n+1}$.
+        
+        \item Notice that $\sum y_n = \sum ((x_n + y_n) - x_n)$, which, by the Algebraic Limit Theorem for Series, implies $\sum y_n = \sum  (x_n + y_n) - \sum x_n$, therefore $\sum y_n$ necessarily converges, therefore the request is impossible.
+        
+        \item Notice that $1/n$ is decreasing and $(1/n) \ra 0$, therefore $\sum (-1)^n/n$ converges by the Alternating Series Test. Then, we can apply the Comparison test to see that $\sum x_n$ converges, therefore the request is impossible.
+    \end{enumerate}
+    
+    \exc{2.7.5} By the Cauchy Condensation Test, we have 
+    \begin{equation*}
+        \sum_{n=1}^\infty \frac{1}{n^p} \text{ converges } \iff 
+        \sum_{n=0}^\infty 2^n \frac{1}{2^{n p}} \text{ converges.} 
+    \end{equation*} But, the second sum is a geometric series with $r = 2/2^p$, therefore it converges if and only if $2/2^p < 1$, therefore 
+    \begin{equation*}
+        \sum_{n=1}^\infty \frac{1}{n^p} \text{ converges} \iff p > 1.
+    \end{equation*}
+    
+    \exc{2.7.6}
+    \begin{enumerate}
+        \item $(a_n) = (1,1,1,\dots)$ is a counterexample.
+        
+        \item If a series converges then by definition the sequence of partial sums also converges, thus all of its subsequences converge.
+        
+        \item Since $\abs{a_n} \geq 0$ for all $n \in \N$, the partial sums sequence of $(\abs{a_n})$ is increasing. Since $\sum \abs{a_n}$ subverges, the partial sums have some convergent subsequence. By Exercise 2.5.2 (d), this means the partial sums sequence converges, therefore $\sum \abs{a_n}$ converges, which means $\sum a_n$ also converges by the Absolute Convergence Test. Since every convergent series subverges, $\sum a_n$ subverges as well.
+        
+        \item $(a_n) = (1,-1,2,-2,3,-3, \dots)$ is a counterexample.
+    \end{enumerate}
+    
+    \exc{2.7.7}
+    \begin{enumerate}
+        \item Notice that $(2^n a_{2^n})$ is a subsequence of $(n a_n)$, therefore it also converges to $l$. Since $l \neq 0$, $\sum 2^n a_{2^n}$ diverges, therefore $\sum a_n$ also diverges, by the Cauchy Condensation Test.
+        
+        \item Since $\lim(n^2 a_n)$ exists, there is some $L \in \R$ and some $N \in \N$ such that $\abs{n^2 a_n - L} < 1$ for all $n \geq N$. This implies $0 < a_n < (1+\abs{L})/n^2$. Since 
+        \begin{equation*}
+            \sum_{n = N}^\infty \frac{1+\abs{L}}{n^2}
+        \end{equation*} converges, the Comparison Test guarantees that 
+        \begin{equation*}
+            \sum_{n = N}^\infty a_n 
+        \end{equation*} also converges, which clearly means that $\sum a_n$ converges.
+    \end{enumerate}
+    
+    \exc{2.7.8}
+    \begin{enumerate}
+        \item Since $\sum (a_n)$ converges, we can choose $N \in \N$ such that $\abs{a_n} < 1$ for all $n \geq N$. Then, $0 \leq \abs{a_n}^2 = \abs{a_n^2} < \abs{a_n}$ for all $n \geq N$. By the Comparison test, since $\sum \abs{a_n}$ converges, $\sum \abs{a_n^2}$ also converges.
+        
+        \item $(a_n) = (b_n) = ((-1)^n/\sqrt{n}))$ is a counterexample.
+        
+        \item We prove the contrapositive of the statement. Assume $\sum n^2 a_n$ converges. We need to show that $\sum a_n$ does not converge conditionally. Since $\lim (n^2 a_n) = 0$, $\sum a_n$ must converge by Exercise 2.7.7 (b). This means that we need to show that $\sum \abs{a_n}$ converges. Since $(n^2 a_n) \ra 0$, there is some $M \in \R$ such that $\abs{k^2 a_k} \leq M$ for every $k \in \N$. It follows that $0 \leq \abs{a_k} \leq M/k^2$ for every natural $k$, so $\sum a_k$ converges absolutely by the Comparison Test.
+    \end{enumerate}
+    
+    \exc{2.7.9}
+    \begin{enumerate}
+        \item Choose $N \in \N$ such that $\abs{a_{n+1}/a_n - r} < r'- r$ for all $n \geq N$. Applying the triangle inequality, we get $\abs{a_{n+1}/a_n} < r' -r + \abs{r}$. But, a simple application of the Order Limit Theorem reveals that $r \geq 0$, therefore $\abs{r}=r$. Then, the inequality becomes $\abs{a_{n+1}/a_n} < r'$, for all $n \geq N$, therefore $\abs{a_n+1} \leq \abs{a_n} r'$ for every $n \geq N$.
+        
+        \item $\sum (r')^n$ is a geometric series with, $0 < r' < 1$, so it converges.
+        
+        \item By (a), we can choose some $N \in \N$ such that $\abs{a_{n+1}} \leq \abs{a_n} r'$ for every $n \geq N$. It follows easily by induction that for every $n \in N$, $0 \leq \abs{a_{N+n}} \leq \abs{a_N} (r')^n$. Since we have shown in (b) that $\sum \abs{a_N} (r')^n$ converges, we can apply the comparison test to get that 
+        \begin{equation*}
+            \sum_{n=N+1}^\infty \abs{a_n}
+        \end{equation*} converges, then the Absolute Convergence Test guarantees the convergence of $\sum a_n$.
+    \end{enumerate} 
+    
+    \item \begin{shortlemma}{lem_1OverInfinityIsZero}
+        Let $(x_n)$ be a sequence such that for all $n \in \N$ $x_n \neq 0$.
+        If $(x_n)$ is increasing and not bounded above, then $(1/x_n) \ra 0$. Similarly, if $(x_n)$ is decreasing and not bounded below, then $(1/x_n) \ra 0$.
+    \end{shortlemma}
+    \begin{proof}
+        Assume $(x_n)$ is increasing and not bounded above and \lep[l]. By assumption, we can choose $N \in \N$ such that $x_n \geq 1/\epsilon$ for all $n \geq N$. It follows that $\abs{1/x_n} < \epsilon$ for all $n \geq N$, therefore $(1/x_n) \ra 0$. The proof for the case where $(x_n)$ is decreasing and not bounded below is very similar.
+    \end{proof}
+    
+    \exc{2.7.10}
+    \begin{enumerate}
+        \item We can write this product as 
+        \begin{equation*}
+            2  \prod_{n=1}^\infty (1 + \frac{1}{2^n})
+        \end{equation*} which, as was shown in Exercise 2.4.10 (b), converges if and only if 
+        \begin{equation} \label{sum_2.7.10}
+            \sum_{n=1}^\infty \frac{1}{2^n}
+        \end{equation} converges. But, (\ref{sum_2.7.10}) is a geometric series with $r = 1/2$, so it must converge, therefore the original product also converges.
+        
+        \item Since every term in the product is less than $1$, the partial product sequence is decreasing and bounded below by $0$, so it must converge by the Monotone Convergence Theorem.
+        
+        Consider the sequence $(1/p_m)$, consisting of the inverse partial products. We can write it as 
+        \begin{equation*}
+            \frac{1}{p_m}= \frac{1}{\prod_{n=1}^m \frac{2n-1}{2n}} = 
+            \prod_{n=1}^m \frac{2n}{2n-1} = \prod_{n=1}^m (1 + \frac{1}{2n-1}).
+        \end{equation*} It is easy to see by the Cauchy Condensation Test that 
+        \begin{equation*}
+            \sum_{n=1}^\infty \frac{1}{2n-1}
+        \end{equation*} diverges, therefore $(1/p_m)$ also diverges. Since every term in the product defining $(1/p_m)$ is greater than one, the sequence increases. Thus, it cannot be bounded above, because in that case the Monotone Convergence Theorem would imply its convergence. Therefore, we can apply Lemma \ref{lem_1OverInfinityIsZero} to conclude that $(1/(1/p_m)) = (p_m) \ra 0$.
+        
+        \item The original product can be written as 
+        \begin{equation*}
+            \prod_{n=1}^\infty (1+\frac{1}{(2n)^2-1})
+        \end{equation*} which we have shown to converge if and only if 
+        \begin{equation} \label{sum2_2.7.10}
+            \sum_{n=1}^\infty \frac{1}{(2n)^2-1}
+        \end{equation} converges (Exercise 2.4.10 (b)). It is easy to see by the Comparison Test with $1/n^2$ that (\ref{sum2_2.7.10}) converges, therefore the original product also converges.
+    \end{enumerate}
+    
+    \exc{2.7.11}
+    One example where neither $(a_n)$ nor $(b_n)$ are monotone is 
+    \begin{align*}
+        (a_n) &= (\frac{1}{1^2}, 1, \frac{1}{3^2}, 1, \frac{1}{5^2}, 1, \dots) \\ 
+        (b_n) &= (1, \frac{1}{2^2}, 1, \frac{1}{4^2}, 1, \dots).
+    \end{align*}
+    
+    \exc{2.7.12}
+    It is straightforward to verify this with induction.
+    
+    \exc{2.7.13}
+    \begin{enumerate}
+        \item This is exactly the formula in Exercise 2.7.12 with $m$ set to $1$.
+        
+        \item Notice that $(y_n)$ is decreasing and bounded below by $0$, so it must converge to some real number $y$. Also, $(s_n)$ converges, so there is some $M \in \R$ such that $\abs{s_k} \leq M$ for all $k \in \N$. Consider the series
+        \begin{equation}\label{sum1_2.7.13}
+            \sum_{n=1}^\infty M (y_k - y_{k+1}).
+        \end{equation} It is easy to verify with induction that the partial sum sequence of (\ref{sum1_2.7.13}) is $(p_m) = (M(y_1-y_m))$. Applying the Algebraic Limit Theorem, we can conclude that $(p_m) \ra M(y_1-y)$. Now, notice that 
+        \begin{equation*}
+            0 \leq \abs{s_k (y_k-y_{k+1})} = \abs{s_k} (y_k-y_{k+1}) \leq 
+            M (y_k-y_{k+1}),
+        \end{equation*} therefore 
+        \begin{equation} \label{sum2_2.7.13}
+            \sum_{n=1}^\infty s_k (y_k-y_{k+1})
+        \end{equation} converges absolutely by the Comparison Test. Then, the Absolute convergence test guarantees the convergence of (\ref{sum2_2.7.13}).
+        
+        Since both $(y_n)$ and $(s_n)$ converge, $(s_n y_{n+1})$ also converges, by the Algebraic Limit Theorem. By the Absolute Convergence test, the series 
+        \begin{equation*}
+            \sum_{k=1}^\infty s_k(y_k-y_{k+1})
+        \end{equation*} also converges, so we can apply the Algebraic Limit Theorem again to conclude that 
+        \begin{equation*}
+           s_n y_{n+1} + \sum_{k=1}^n s_k(y_k-y_{k+1})
+        \end{equation*} also converges, which finally implies the convergence of 
+        \begin{equation*}
+            \sum_{k=1}^\infty x_k y_k. 
+        \end{equation*}
+    \end{enumerate}
+    
+    \exc{2.7.14}
+    \begin{enumerate}
+        \item Abel's test requires $\sum x_k$ to converge, whereas Dirichlet's Test makes the weaker assumption that the partial sums are bounded. While both tests assume $(y_n)$ is decreasing and bounded below by zero, Abel's test does not require that $(y_n) \ra 0$, which is in contrast to the other test.
+        
+        While in the previous proof we used the fact that $(s_n)$ converges to prove that
+        \begin{equation*}
+            \sum_{k=1}^\infty s_k(y_k-y_{k+1})
+        \end{equation*} converges, we really only needed $(s_n)$ to be bounded, so the same proof applies. The other slight difference is when we applied the Algebraic Limit Theorem to show that $s_n y_{n+1}$ converges. This does not work here, since $(s_n)$ does not necessarily converge. To see that this is not a problem, \lep. Let $M \in \R$ be a bound for $(s_n)$. Use the fact that $(y_n) \ra 0$ to choose $N \in \N$ such that $\abs{y_n} < \epsilon/M$ for all $n \geq M$. Then, $\abs{s_n y_{n+1}} \leq M \abs{y_{n+1}} < \epsilon$, therefore $(s_n y_{n+1}) \ra 0$. For the same reason as before, this means that
+        \begin{equation*}
+            \sum_{k=1}^\infty x_k y_k
+        \end{equation*} converges.
+        
+        \item Let $(x_k) = (-1)^{k+1}$ and $(y_n) \ra 0$ be decreasing. Notice that the partial sums of $(x_k)$ are bounded by $1$. By Dirichlet's Test, 
+        \begin{equation*}
+            \sum_{k=1}^\infty (-1)^{k+1} y_n
+        \end{equation*} converges.
     \end{enumerate}
 \end{enumerate}
 
