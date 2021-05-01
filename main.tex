@@ -33,6 +33,7 @@
 \newcommand{\Q}{\mathbb{Q}}
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\ra}{\rightarrow}
+\newcommand{\paren}[1]{\left( #1 \right)}
 \newcommand{\set}[1]{\{#1\}}
 \newcommand{\exc}[2][Abbott]{\item \textbf{#1, Exercise #2.}}
 \newcommand{\lep}[1][L]{#1et $\epsilon > 0$ be arbitrary}
@@ -908,7 +909,6 @@
         \item This is not possible. Let $(a_n)$ be a sequence that contains a subsequence converging to $1/m$ for every $m \in \N$. We will show that $(a_n)$ must have a subsequence which converges to zero. \lep. Then, $(a_n)$ must have infinitely many elements which are in the $\epsilon/2$-neighborhood of $1/1$. Pick one of those elements and call it $a_{n_1}$. In general, $(a_n)$ has infinitely many members which are $\epsilon/2$-close to $1/(k+1)$, so we can pick one called $a_{n_{k+1}}$ with $n_{k+1} > n_k$. By the construction of $(a_{n_k})$, it follows that $\abs{a_{n_k} - 1/k} < \epsilon/2$ for all $k \in \N$. Now, choose $N \in \N$ such that $N > 2/\epsilon$ and notice that $k \geq N \implies \abs{1/k} < \epsilon/2$. Next, for all $k \geq N$ we have that $\abs{a_{n_k}-0} \leq \abs{a_{n_k}-1/k}+\abs{1/k} < \epsilon/2 + \epsilon/2 = \epsilon$, so $(a_{n_k}) \ra 0$, which is outside the set mentioned in the exercise.
     \end{enumerate}
     
-    \newpage
     \exc{2.5.2}
     \begin{enumerate}
         \item True. Since every proper subsequence converges, the subsequence containing all but the first element also converges, but this clearly implies the convergence of the whole sequence.
@@ -1327,6 +1327,147 @@
             \sum_{k=1}^\infty (-1)^{k+1} y_n
         \end{equation*} converges.
     \end{enumerate}
+    
+    \exc{3.2.1}
+    \begin{enumerate}
+        \item In Theorem 3.2.3, we set $\epsilon := \min{\epsilon_1, \epsilon_2, \dots 
+        \epsilon_N}$, which we may not be able to do if there are infinitely many $\epsilon'$s, as infinite sets do not always have minimums, such as the set $\set{1/n : n \in \N}$.
+        
+        \item Let $O_n := (-1/n, 1/n)$ for every natural $n$, and define $O := \bigcap_{n=1}^\infty O_n$. It is easy to verify that $0 \in O$. Now, let $x \in O$.. If $x > 0$, we can pick a natural $N$ such that $N > 1/x$. Then, $x > 1/N$, therefore $x \notin O_N$ which contradicts our assumption that $x \in O$. A similar contradiction arises when $x < 0$, which means $x$ can only be zero, so we have $O = \set{0}$. The only sequence that is contained in $A$ is $(0, 0, 0, \dots) \ra 0$, so $O$ has no limit points, therefore it is closed.
+    \end{enumerate}
+    
+    \item \begin{shortlemma}{lem_openSetCountable}
+        No open subset of the reals is countable.
+    \end{shortlemma}
+    
+    \begin{proof}
+        Let $A \subseteq \R$ be an open set and assume $A$ is countable. Let $a \in A$ and choose some $\epsilon$ such that $V_\epsilon(a) \subseteq A$. Since $A$ is countable, $V_\epsilon(a)$ must be empty, finite or countable. However, $V_\epsilon(a) = (a-\epsilon, a+\epsilon)$ is an open interval of the reals, and we have already shown these are always uncountable, which is a contradiction. Thus $A$ cannot be countable.
+    \end{proof}
+    
+    \exc{3.2.2}
+    \begin{enumerate}
+        \item $1$ and $-1$ are limit points of $A$, meanwhile any number in $[0, 1]$ is a limit point of $B$.
+        
+        \item $A$ is clearly countable, so Lemma \ref{lem_openSetCountable} guarantees it cannot be open. $A$ is also not closed, since the limit point $1$ is not in $A$. $B$ has the same cardinality of the rationals, so it must be countable, therefore not open. Also, $0$ is a limit point of $B$, but $0 \notin B$, so $B$ is also not closed.
+        
+        \item $2$ is an isolated point of $A$, but $B$ contains no isolated points.
+        
+        \item $\overline{A} = -1$, $\overline{B} = \set{0, 1}$.
+    \end{enumerate}
+    
+    \exc{3.2.3}
+    \begin{enumerate}
+        \item $\Q$ is countable, so it is not open (Lemma \ref{lem_openSetCountable}). Also, every real number is a limit point of $\Q$ but not every real number is rational, so $\Q$ is not closed. For example $\sqrt{2}$ is a limit point of $\Q$ but $\sqrt{2} \notin \Q$. No element of $\Q$ has an $\epsilon$-neighborhood contained in $\Q$.
+        
+        \item $\N$ is countable, so it is not open (Lemma \ref{lem_openSetCountable}). Assume $x \in \R$ is a limit point of $\N$. Then, $x = \lim(a_n)$ for some Cauchy sequence of naturals $a_n$ where no $a_n$ is equal to $x$. This means that there is some $N \in \N$ such that $\abs{a_n-a_m} < 1/2$ for all $n,m \geq N$, but this cannot happen unless $a_n = a_m = x$ for all $n,m \geq N$, which is a contradiction. Therefore, $\N$ has no limit points, so it is closed.
+        
+        \item To see that the set $A = \set{x \in \R : x \neq 0}$ is open, let $a \in A$ be arbitrary. Then, $V_{\abs{a}}(a) \subseteq A$, therefore $A$ is open. The sequence $a_n = 1/n$ shows that $0$ is a limit point of $A$, but $0 \notin A$, therefore $A$ is not closed.
+        
+        \item The set $A := \set{\sum_{k=1}^n 1/k^2 : n \in \N}$ is countable, therefore not open. Consider the sequence 
+        \begin{equation*}
+            s_n = \sum_{k=1}^n \frac{1}{k^2},
+        \end{equation*} which is contained in $A$. We have previously shown that $\lim s_n$ converges, so we can say that 
+        \begin{equation*}
+            \sum_{k=1}^n \frac{1}{k^2} \leq \sum_{k=1}^\infty \frac{1}{k^2} = I.
+        \end{equation*} for every $n \in \N$, therefore $I$ is an upper bound for $A$. Now, assume there is some $x_1 \in A$ such that $x_1 = I$. Then, $x_1 = \sum_{k=1}^N 1/k^2$ for some $N \in \N$. But $\sum_{k=1}^{N+1} 1/k^2 > x_1 = I$ is also an element of $A$, which contradicts the fact that $I$ is an upper bound for $A$. Thus, there is no $x \in A$ such that $x = I$. This means that $I$ is a limit point of $A$ that is not contained in $A$, therefore $A$ is not closed.
+        
+        \item The set $A := \set{\sum_{k=1}^n 1/k : n \in \N}$ is countable, therefore not open. Since the harmonic series diverges, this set contains no Cauchy sequences, therefore it is closed (Theorem 3.2.8).
+    \end{enumerate}
+    
+    \exc{3.2.4}
+    \begin{enumerate}
+        \item If $s \in A$, then clearly $s \in \overline{A}$ so assume $s \notin A$. Then, for every $\epsilon > 0$ we can find $a \in A$ such that $s-\epsilon < a$. Since $s$ is an upper bound, we also have $a < s+\epsilon$, therefore $a \in (s-\epsilon, s+\epsilon)$, which means $s$ is a limit point of $A$, so it must be an the closure of $A$.
+        
+        \item Let $A$ be open. \lep \space and consider the neighborhood $V_\epsilon(s) = (s-\epsilon, s+\epsilon)$. Clearly $s + \epsilon/2 \in V_\epsilon(s)$, but it cannot be an element of $A$, since $s + \epsilon/2 > s$. Thus, no $\epsilon$-neighborhood around $s$ is contained in $A$, which means $s$ cannot be an element of $A$. In conclusion, an open set cannot contain its supremum.
+    \end{enumerate}
+    
+    \exc{3.2.5}
+    \begin{enumerate}
+        \item ($\Rightarrow$) Assume $F \subseteq \R$ is closed. Let $(a_n)$ be an arbitrary Cauchy sequence contained in $F$. By the Cauchy Criterion, $(a_n) \ra L$ for some $L \in \R$, which we must show to be contained in $F$. If there is some $n_0 \in \N$ such that $a_{n_0} = L$, then $L \in F$, which is what we wanted to show. On the other hand, if none of the $a_n'$s are equal to $L$, then, by Theorem 3.2.5, $L$ is a limit point of $F$. Since $F$ is closed, we must have $L \in F$.
+        
+        ($\Leftarrow$) For the reverse implication we assume that every Cauchy sequence contained in $F$ has a limit that is also an element of $F$. If $F$ has no limit points, then it is closed and we are done. Otherwise, let $x$ be a limit point of $F$. By Theorem 3.2.5, $x = \lim(a_n)$ for some sequence $(a_n)$ contained in $F$. Since $(a_n)$ converges, it is Cauchy. By assumption, we can conclude that its limit, namely $x$, is an element of $F$.
+    \end{enumerate}
+    
+    \exc{3.2.6}
+    \begin{enumerate}
+        \item Define $O_n := (\sqrt(2)+n,\sqrt{2}+n+1)$ for all $n \in \Z$ and let $O = \bigcup_{n=-\infty}^\infty O_n$. By Theorem 3.2.3, $O$ is an open set. Now, assume there is some $k \in \Z$ such that $\sqrt{2} \in O_k$. Then, $\sqrt{2}+n<\sqrt{2} < \sqrt{2}+n+1$, which implies $0 < -n < 1$, but this is a contradiction since there are no integers strictly between $0$ and $1$. Therefore, $\sqrt{2} \notin O$, thus $O \neq \R$. Now let $x \in \Q$ be arbitrary. Find some $N \in \Z$ such that $N \leq x-\sqrt{2} < N+1$. Since $x-\sqrt{2}$ is irrational and $N$ is rational, the previous inequality can be made strict. Then, we have $\sqrt{2} + N < x < \sqrt{2} + N + 1$, thus $x \in O_N$. This means that $O$ is an open set that contains every rational number but is not equal to $\R$.
+        
+        \item Notice that $\emptyset \supseteq \emptyset \supseteq \emptyset \dots$, and the intersection of all these sets is of course empty. Since $\emptyset$ is closed, this is a counterexample.
+        
+        \item Let $A$ be a nonempty open set. Choose some $a \in A$. Then, there is some $V_\epsilon(a) = (a-\epsilon, a+\epsilon) \subseteq A$. But we can always choose some rational number strictly between $a-\epsilon$ and $a + \epsilon$, so $A$ must contain a rational number.
+        
+        \item Define $A := \set{\sqrt{2} + 1/k : k \in \N} \cup \sqrt{2}$. The only limit point of $A$ is $\sqrt{2}$, so $A$ is closed, bounded and infinite but contains no rational numbers.
+        
+        \item The Cantor set is an intersection of closed sets, so it must be closed, by Theorem 3.2.14.
+    \end{enumerate}
+    
+    \exc{3.2.7}
+    \begin{enumerate}
+        \item Let $x$ be a limit point of $L$. We want to show that $x \in L$, which amounts to showing that $x$ is a limit point of $A$. \lep. Since $x$ is a limit point of $L$, there is some $l \in L$ such that $l \neq x$ and $l \in V_\epsilon(x)$. This means that $l$ is either in $(x, x+\epsilon)$ or $(x-\epsilon, x)$, which are both open intervals, which means we can find some $\epsilon'$-neighborhood contained in the interval. Then, we have $V_\epsilon'(l) \subseteq V_\epsilon(x)$. Since $l$ is a limit point of $A$, there is some $a \in A$ such that $a \neq l$ and $a \in V_\epsilon'(l)$, which implies $a \neq x$ and $a \in V_\epsilon(x)$, therefore $x$ is a limit point of $A$, thus $x \in L$.
+        
+        \item Let $x$ be a limit point of $A \cup L$. \lep. Then, there is some $a_1 \in A \cup L$ such that $a_1 \neq x$ and $a_1 \in V_\epsilon(x)$. If $a_1 \in A$ we would be done, so assume $a_1 \notin A$. Then, $a_1$ must be a limit point of $A$. Thus, we can choose some $\epsilon'$ such that $a_2 \in V_\epsilon'(a_1) \subseteq V_\epsilon(x)$ where $a_2 \in A$ and $a_2 \neq x$, therefore $x$ is a limit point of $A$.
+        
+        Now, assume $x$ is a limit point of  $\overline{A}$. Then, $x$ is also a limit point of $A$, therefore $x \in L$, which implies $x \in A \cup L = \overline{A}$, therefore $\overline{A}$ is closed.
+    \end{enumerate}
+    
+    \exc{3.2.8}
+    \begin{enumerate}
+        \item Definitely closed (Theorem 3.2.12), but not necessarily open. If $A = \R$ and $B = \emptyset$, then $\overline{A \cup B} = \R$ which is open, but if $A = (1, 2)$ and $B = [1,2]$ then $\overline{A \cup B} = B$ which is not open.
+        
+        \item Definitely open. To see this, choose some arbitrary $a \in A \backslash B$ (if $A$ is empty then $A \backslash B = \emptyset$, which is open). Since $a \in A$, there is some $V_{\epsilon_0}(a) \subseteq A$. Since $a \notin B$, it is not a limit point of $B$, so there is some $V_{\epsilon_1}(a)$ which does not intersect $B$. Now, set $\epsilon := \min (\epsilon_0, \epsilon_1)$, then $V_\epsilon(a)$ is contained in $A$ and has no intersection with $B$, therefore $A\backslash B$ is open.
+        
+        If $A = (0,1)$ and $B = [1/3, 2/3]$ then $A \backslash B$ is open and not closed, but if $A = (0,1)$ and $B = [0, 1]$ then $A\backslash B$ is both open and closed.
+        
+        \item By Theorem 3.2.13, $A^c$ is closed, and Theorem 3.2.14 guarantees that the union of two closed sets is closed, therefore $A^c \cup B$ is closed, so $(A^c \cup B)^c$ is open. This set may or may not be closed.
+        
+        \item Neither.
+        
+        \item $A^c$ is closed, therefore $\overline{A^c} = A^c$. Then, $\overline{A}^c \cap \overline{A^c} = \overline{A}^c \cap A^c = (\overline{A} \cup A)^c$. But, $\overline{A} = A \cup L$ where $L$ are the limit points of $A$. Then, 
+        $\overline{A}^c \cap \overline{A^c} = (A \cup L \cup A)^c = \overline{A}^c$, which must be open, by Theorem 3.2.13.
+    \end{enumerate}
+    
+    \exc{3.2.9}
+    \begin{enumerate}
+        \item For the first equality, 
+        \begin{gather*}
+            x \in \left (\bigcup_{\lambda \in \Lambda} E_\lambda \right)^c \iff
+             \neg(x \in \bigcup_{\lambda \in \Lambda} E_\lambda) \iff \\
+             \neg(\exists \lambda \in \Lambda (x \in E_\lambda)) \iff \forall \lambda \in \Lambda (x \in E_\lambda^c) \iff x \in \bigcap_{\lambda \in \Lambda} E_\lambda^c.
+        \end{gather*} For the second one,
+        \begin{gather*}
+            x \in \left( \bigcap_{\lambda \in \Lambda} E_\lambda \right)^c \iff 
+            \neg (x \in \bigcap_{\lambda \in \Lambda} E_\lambda) \iff \\
+            \neg(\forall \lambda \in \Lambda (x \in E_\lambda)) \iff 
+            \exists \lambda \in \Lambda (x \in E_\lambda^c) \iff 
+            x \in \bigcup_{\lambda \in \Lambda} E_\lambda^c.
+        \end{gather*}
+        
+        \item For (i), let $\set{E_\lambda : \lambda \in \Lambda}$ be a finite collection of closed sets. Then, 
+        \begin{equation*} 
+            \left(\bigcup_{\lambda \in \Lambda} E_\lambda \right)^c =
+            \bigcap_{\lambda \in \Lambda} E_\lambda^c,
+        \end{equation*} but, by Theorem 3.2.13, each $E_\lambda^c$ is open, so a finite intersection of them is also open (Theorem 3.2.3), thus
+        \begin{equation*}
+            \bigcup_{\lambda \in \Lambda} E_\lambda
+        \end{equation*} is closed, again by Theorem 3.2.13. A very similar proof follows for (ii).
+    \end{enumerate}
+    
+    \exc{3.2.10}
+    (i) Is not possible. Let $A \subseteq [0, 1]$ be countable. Then, we can form some sequence $(a_n)$ contained in $A$ such that no two $a_n$ are the same. Since $(a_n)$ is bounded, it must have a convergent subsequence $(b_n) \ra b$, by the Bolzano-Weierstrass Theorem. If none of the $b_n'$s are equal to $b$, then $b$ is a limit point of $A$, by Theorem 3.2.5. Otherwise, there can only be a single $b_N$ which is equal to $b$, since no two $b_n'$s are the same. Hence, we can form a new sequence $(c_n)$ in the following way:
+    \begin{equation*}
+        c_n = \begin{cases}
+        b_n & n \neq N \\
+        b_{N+1} & n = N
+        \end{cases}
+    \end{equation*} which is contained in $A$, converges to $b$ and satisfies $c_n \neq b$ for all $n \in \N$. This means that $b$ is a limit point of $A$. Thus, every countable subset of $[0, 1]$ contains at least one limit point.
+    
+    (ii) Is possible. Consider the countable set $A = \set{x \in [0, 1]: x \in \Q}$. We need to show that $A$ has no isolated points, which is the same as showing that every point of $A$ is also a limit point of $A$. To do this, choose some $x \in A$ and \lep[l]. Then, by Theorem 1.4.3, we can find some rational $q \in [0, 1]$ not equal to $x$ such that $q \in V_\epsilon(x)$, therefore $x$ is a limit point of $A$.
+    
+    (iii) Is not possible. Let $A \subseteq \R$ and $B \subseteq A$ be the subset of all isolated points of $A$. Assume for contradiction that $B$ is uncountable. Then, given any $b \in B$, there must be some $V_{\epsilon_b}(b)$ that intersects $A$ only at $b$, since $b$ is an isolated point of $A$. But then, the collection of each on of those open disjoint neighborhoods would be uncountable, but this is a contradiction as shown in Exercise 1.5.6 (b). Therefore, $B$ is not uncountable.
+    
+    \exc{3.2.13}
+    Let $A \subseteq \R$ be both open and closed. If $A = \emptyset$ then we are done, so assume $A$ is not empty. Now, choose some $a \in A$ and some $V_{\epsilon_0}(a) \subseteq A$. Consider the set $B = \set{b > a: (a, b] \subseteq A}$. $B$ is not empty, since $a + \epsilon_0/2$ is one of its elements. Now, assume for contradiction that $B$ is bounded above, and set $s = \sup{B}$. Also, notice that $(a, s-\epsilon] \subseteq A$ for any $\epsilon > 0$. This clearly implies that $(a, s) \subseteq A$. Assume for contradiction that $s \in A$. Then, $(a,s] \subseteq A$. Since $A$ is open, we can find some $V_{\epsilon_1}(s) \subseteq A$, in other words $(s-\epsilon_1, s+\epsilon_1) \subseteq A$. But this implies $(a,s+\epsilon_1/2] \subseteq A$. But this would mean $s+\epsilon_1/2$ is an element of $B$ which is greater than $s$, which is a contradiction. Thus, $s \notin A$. Next, we show that $s$ is a limit point of $A$. \lep. Since $s$ is the supremum of $B$, there is some $b \in B$ such that $s-\epsilon < b < s+\epsilon$. Since $B \subseteq A$, we have found an element $b$ of $A$ that intersects $V_\epsilon(s)$, and $b \neq s$ since $s$ is not in $A$. Thus, $s$ is a limit point of $A$. But $A$ is closed, so it must contain $s$, which is a contradiction. This means that $B$ is not bounded above, so every interval $[a, b] \subseteq A$. We could similarly construct a set 
+    $C = \set{c < a : [c, a) \subseteq A}$ and use the same strategy to show that $C$ is not bounded below, which would mean every $[c, a] \subseteq A$, thus $A = \R$. 
 \end{enumerate}
 
 
