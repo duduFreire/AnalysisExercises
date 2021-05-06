@@ -6,9 +6,10 @@
 \usepackage{mathtools}
 \usepackage{amsfonts}
 \usepackage{indentfirst}
+\usepackage{enumitem}
 \usepackage[colorlinks=true,linkcolor=blue]{hyperref}%
 
-\setlength\parindent{24pt}
+\setlist{parsep=0pt,listparindent=\parindent}
 
 \newtheorem{theorem}{Theorem}
 \newtheorem{lemma}{Lemma}
@@ -17,26 +18,30 @@
 \newcounter{theoremCounter}
 \newcounter{definitionCounter}
 
-\newenvironment{shortlemma}[1]{\refstepcounter{lemmaCounter}
-\label{#1}\textbf{Lemma~\thelemmaCounter.}\em}
+\newenvironment{shortlemma}{\refstepcounter{lemmaCounter}
+\noindent\textbf{Lemma~\thelemmaCounter.}\em}
 
-\newenvironment{shorttheorem}[1]{\refstepcounter{theoremCounter}
-\label{#1}\textbf{Theorem~\thetheoremCounter.}\em}
+\newenvironment{shorttheorem}{\refstepcounter{theoremCounter}
+\noindent\textbf{Theorem~\thetheoremCounter.}\em}
 
-\newenvironment{shortdefinition}[1]{\refstepcounter{definitionCounter}
-\label{#1}\textbf{Definition~\thedefinitionCounter.}\em}
+\newenvironment{shortdefinition}{\refstepcounter{definitionCounter}
+\noindent\textbf{Definition~\thedefinitionCounter.}\em}
 
 \DeclarePairedDelimiter\abs{\lvert}{\rvert}
+\DeclarePairedDelimiter\ceil{\lceil}{\rceil}
+\DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
 
 \newcommand{\N}{\mathbb{N}}
 \newcommand{\Z}{\mathbb{Z}}
 \newcommand{\Q}{\mathbb{Q}}
+\newcommand{\I}{\mathbf{I}}
 \newcommand{\R}{\mathbb{R}}
-\newcommand{\ra}{\rightarrow}
 \newcommand{\paren}[1]{\left( #1 \right)}
 \newcommand{\set}[1]{\{#1\}}
 \newcommand{\exc}[2][Abbott]{\item \textbf{#1, Exercise #2.}}
 \newcommand{\lep}[1][L]{#1et $\epsilon > 0$ be arbitrary}
+\newcommand{\seq}[1]{\left(#1\right)_{n=1}^\infty}
+\newcommand{\LIM}[1]{\text{LIM}_{n \to \infty} #1}
 
 \let\oldlog\log
 \let\oldmax\max
@@ -78,6 +83,7 @@
 		This is a contradiction, since we have already shown that $a_N - b_N \geq c_1 + c_2$ 
 							      		      	 
 	\end{proof}
+	
 				      	      
 	\exc[Tao]{5.5.2} Let $E$ be a non-empty subset of $\R$, let $n \geq 1$ be an integer, and
 	let $L<K$ be integers. Suppose that $K/n$ is an upper bound for $E$, but that
@@ -233,7 +239,7 @@
 	\exc{1.4.7}
 	Let $C_1 = \{n \in \N : f(n) \in A\}$ and $C_{k+1} = C_k \backslash \{n_k\}$ for all $k \in \N$, where $n_k := \min C_k$. Then, let $g : \N \rightarrow A$ be defined as $g(k) = f(n_k)$. First we prove a couple of useful lemmas.
 				      	        
-	\begin{shortlemma}{lem147_1}
+	\begin{shortlemma} \label{lem147_1}
 		For all natural $k$, $n_{k+1} > n_k$. Also, $a \neq b \implies n_a \neq n_b$.
 	\end{shortlemma} \begin{proof}
 	In the first part, since $n_{k+1} \in C_{k+1}$, we have that $n_{k+1} \in \{n \in C_k : n \neq n_k\}$, therefore $n_{k+1} \in C_k$, so $n_{k+1} > n_k$, since $n_k$ is the minimum of $C_k$ and $n_{k+1} \neq n_k$.
@@ -241,7 +247,7 @@
 	Now, assume $a,b \in \N$ and $a \neq b$. Without loss of generality, also assume that $a > b$. Then $n_a > n_b$, therefore $n_a \neq n_b$.
 	\end{proof}
 					  
-	\begin{shortlemma}{lem147_2}
+	\begin{shortlemma} \label{lem147_2}
 		For every $L \in \N$ such that $f(L) \in A$, there is some $k \in \N$ such that $n_k = L$.
 	\end{shortlemma}
 	\begin{proof}
@@ -506,7 +512,7 @@
 		\end{equation*}
 	\end{enumerate}
 	
-	\begin{shortlemma}{lem_convergEquiv}
+	\begin{shortlemma} \label{lem_convergEquiv}
 	    If $(x_n), (y_n) \rightarrow L$ for some real number $L$, then for every $\epsilon > 0$ there is some natural $N$ such that $\abs*{x_n-y_n} < \epsilon$ for all $n \geq N$.
 	\end{shortlemma}
 	\begin{proof}
@@ -518,7 +524,7 @@
 	\begin{equation*}
 	    x_n \leq y_n \leq z_n \implies 0 \leq y_n-x_n \leq z_n-x_n \implies 
 	    \abs*{y_n-x_n} \leq \abs*{z_n-x_n} < \frac{\epsilon}{2}.
-	\end{equation*} Then, $\abs*{y_n-l} \leq \abs*{y_n-x_n} + \abs*{x_n-l} < \epsilon/2 + \epsilon/2 = \epsilon$, which means $(y_n) \ra l$, as we wanted to show.
+	\end{equation*} Then, $\abs*{y_n-l} \leq \abs*{y_n-x_n} + \abs*{x_n-l} < \epsilon/2 + \epsilon/2 = \epsilon$, which means $(y_n) \to l$, as we wanted to show.
 	 
 	\exc{2.3.4}
 	\begin{enumerate}
@@ -661,13 +667,15 @@
 		\item We have already shown that given any two real numbers, there is a rational number strictly between them. Therefore, we can make the sequence $(a_n)$ by choosing each $a_n$ such that $\sqrt{2} < a_n < \sqrt{2} + 1/n$ and $a_n \in \Q$. Every $a_n$ is rational by construction, but we claim $(a_n) \rightarrow \sqrt{2}$, which is irrational. To see this, let $\epsilon > 0$ be arbitrary and choose $N \in \N$ such that $N > 1/\epsilon$. Then, for every $n \geq N$, $a_n < \sqrt{2}+1/n < \sqrt{2}+\epsilon$, therefore $0 < a_n-\sqrt{2} = \abs*{a_n-\sqrt{2}} < \epsilon$ for all $n \geq N$, so $(a_n) \rightarrow \sqrt{2}.$
 	\end{enumerate} 
 				 
-	\item \begin{shortlemma}{CauchyBounded}
+	\item \begin{shortlemma} \label{CauchyBounded}
 	      Every Cauchy sequence is bounded.
 	\end{shortlemma}
 	\begin{proof}
-		Let $(a_n)$ be a Cauchy sequence. Choose $N \in \N$ such that $\abs*{a_n-a_m} < 1$ for all $n \geq N$. Then, $\abs*{a_n} - \abs*{a_N} \leq \abs*{a_n-a_N} < 1$, therefore $\abs*{a_n} < \abs*{a_N} + 1$ for all $n \geq N$. Since every finite sequence is bounded, there is some real number $M_1$ such that $M_1 \geq \abs*{a_n}$ for every $n < N$, so if we define $M := \max{M_1, \abs*{a_N} + 1}$ we will have $M \geq \abs*{a_n}$ for every natural $n$, therefore $(a_n)$ is bounded by $M$.  
+		Let $(a_n)$ be a Cauchy sequence. Choose $N \in \N$ such that
+		
+		\noindent $\abs*{a_n-a_m} < 1$ for all $n \geq N$. Then, $\abs*{a_n} - \abs*{a_N} \leq \abs*{a_n-a_N} < 1$, therefore $\abs*{a_n} < \abs*{a_N} + 1$ for all $n \geq N$. Since every finite sequence is bounded, there is some real number $M_1$ such that $M_1 \geq \abs*{a_n}$ for every $n < N$, so if we define $M := \max{M_1, \abs*{a_N} + 1}$ we will have $M \geq \abs*{a_n}$ for every natural $n$, therefore $(a_n)$ is bounded by $M$.  
 	\end{proof}
-	\item \begin{shorttheorem}{thm_convergCauchy}
+	\item \begin{shorttheorem} \label{thm_convergCauchy}
         Every convergent sequence is Cauchy.
 	\end{shorttheorem}
 				 
@@ -679,23 +687,23 @@
 	\item Since \begin{equation*}
 	      a_{mn} = \frac{1}{1+\frac{n}{m}} ~ ,
 	\end{equation*} we have \begin{equation*}
-	\lim_{n \ra \infty} \left(\lim_{m \ra \infty} a_{mn} \right) = \lim_{n \ra \infty} 1 = 1,
+	\lim_{n \to \infty} \left(\lim_{m \to \infty} a_{mn} \right) = \lim_{n \to \infty} 1 = 1,
 	\end{equation*} whereas \begin{equation*}
-	\lim_{m \ra \infty} \left(\lim_{n \ra \infty} a_{mn} \right) = \lim_{m \ra \infty} 0 = 0.
+	\lim_{m \to \infty} \left(\lim_{n \to \infty} a_{mn} \right) = \lim_{m \to \infty} 0 = 0.
 	\end{equation*}
 			    
 	\item \begin{enumerate}
 	\item Let $a_{mn} = 1/(m+n)$. We claim that \begin{equation*}
-	      \lim_{m, n \ra \infty} a_{mn} = 0.
+	      \lim_{m, n \to \infty} a_{mn} = 0.
 	\end{equation*} \lep \space and choose $N \in \N$ such that $N > 1/(2\epsilon)$. Then, \begin{equation*}
 	\abs*{\frac{1}{m+n} - 0} = \frac{1}{m+n} < \epsilon
 	\end{equation*} for all $m,n \geq N$. It is easy to see that both the iterated limits are also equal to $0$.
 			        
-	\item Let $a_{mn}= mn/(m^2+n^2)$. Then, $a_{mn} = m/(m^2/n+n)$, which is easily seen to equal zero when taking the limit as $n \ra \infty$ (just set $N > m/\epsilon$). By symmetry, both the iterated limits are equal to $0$. Now, assume for contradiction that $\lim_{m,n \ra \infty} a_{mn}= a$ for some $a \in \R$. Then, there is a $N \in \N$ such that $\abs*{a_{mn} - a}  < 1/20$ for all $m,n \geq N$. In particular, $\abs*{a_{NN}-a} = \abs*{1/2-a} < 1/20$ and $\abs*{a_{2N N} - a} = \abs*{2/5-a} < 1/20$. Summing these equations and applying the triangle inequality we have $\abs*{1/2-2/5}\leq \abs*{1/2-a}+\abs*{2/5-a}<1/10$, which simplifies to $1/10 < 1/10$, a contradiction. In summary, both the iterated limits are zero but $\lim_{m,n \ra \infty} a_{mn}$ does not exist.
+	\item Let $a_{mn}= mn/(m^2+n^2)$. Then, $a_{mn} = m/(m^2/n+n)$, which is easily seen to equal zero when taking the limit as $n \to \infty$ (just set $N > m/\epsilon$). By symmetry, both the iterated limits are equal to $0$. Now, assume for contradiction that $\lim_{m,n \to \infty} a_{mn}= a$ for some $a \in \R$. Then, there is a $N \in \N$ such that $\abs*{a_{mn} - a}  < 1/20$ for all $m,n \geq N$. In particular, $\abs*{a_{NN}-a} = \abs*{1/2-a} < 1/20$ and $\abs*{a_{2N N} - a} = \abs*{2/5-a} < 1/20$. Summing these equations and applying the triangle inequality we have $\abs*{1/2-2/5}\leq \abs*{1/2-a}+\abs*{2/5-a}<1/10$, which simplifies to $1/10 < 1/10$, a contradiction. In summary, both the iterated limits are zero but $\lim_{m,n \to \infty} a_{mn}$ does not exist.
 \end{enumerate}
 	    
     \item \begin{equation*}
-    a_{mn} = \begin{cases}
+    a_{m n} = \begin{cases}
     0 & n,m \geq 2 \\
     n & m = 1 \\
     m & n = 1 \\
@@ -703,7 +711,9 @@
     \end{cases}
     \end{equation*}
     	        
-    \item \lep \space and choose $N \in \N$ such that for all $m,n \geq N$, $\abs*{b_n-a_{mn}}, \abs*{a-a_{mn}} < \epsilon/2$. Then, $\abs*{b_m-a} = \abs*{b_m-a_{mn} + a_{mn} - a} \leq \abs*{b_m-a_{mn}} + \abs*{a_{mn}-a} < \epsilon$, therefore $(b_m) \ra a$.
+    \item \lep \space and choose $N \in \N$ such that for all $m,n \geq N$, $\abs*{b_n-a_{mn}}, \abs*{a-a_{mn}} < \epsilon/2$. Then, $\abs*{b_m-a} = \abs*{b_m-a_{mn} + a_{mn} - a}$ 
+    
+    \noindent $\leq \abs*{b_m-a_{mn}} + \abs*{a_{mn}-a} < \epsilon$, therefore $(b_m) \to a$.
     \end{enumerate}
     	
     \exc{2.4.1}
@@ -743,7 +753,7 @@
         \item The given sequence can be defined recursively as $a_1 = \sqrt{2}$ and
         \begin{equation*}
             a_{n+1} = \sqrt{2 + a_n}.
-        \end{equation*} Induction can be easily used to verify that the sequence is increasing and bounded above, therefore it converges to some real number $a$. Using the strategy presented in the previous exercise, we have $a = \sqrt{2 + a}$, and $a=2$ is the only solution to this equation, therefore $(a_n) \ra 2$.
+        \end{equation*} Induction can be easily used to verify that the sequence is increasing and bounded above, therefore it converges to some real number $a$. Using the strategy presented in the previous exercise, we have $a = \sqrt{2 + a}$, and $a=2$ is the only solution to this equation, therefore $(a_n) \to 2$.
         
         \item The given sequence can be defined recursively as $a_1 = \sqrt{2}$ and
         \begin{equation*}
@@ -755,7 +765,7 @@
     \begin{enumerate}
         \item Assume for contradiction that the naturals are bounded above. Then, the sequence $a_n = n$ is bounded above and increasing, so it converges to some real number $x$, by the Monotone Convergence Theorem. Then, there is some natural $N$ such that $\abs*{n-x}, \abs*{n+2-x} < 1$ for all $n \geq N$. Adding the inequalities and using the Triangle Inequality we have $\abs*{(n+2)-n} \leq \abs*{n-x}+\abs*{n+2-x} < 2$, therefore $\abs*{2}=2 < 2$, a contradiction. Thus, for every real number $x$ there is some $n \in \N$ such that $n > x$
         
-        \item Since $I_{n} \supseteq I_{n+1}$ for every natural $n$, we have $a_{n+1} \geq a_n$ for every $n \in \N$. Also, $b_1$ is an upper bound for $(a_n)$, so the Monotone Convergence Theorem guarantees that $(a_n)$ converges to some real number $a$. Since $a_{n+m} \geq a_n$ for every $n,m \in \N$, we can use the Order Limit Theorem to see that $\lim_{m \ra \infty} a_{m+n} = a \geq a_n$ for every $n \in \N$. We also have $a_m \leq b_n$ for every $n, m \in \N$, which also implies $a \leq b_n$. Therefore, $a_n \leq a \leq b_n$ for every natural $n$, so all the $I_n'$s contain $a$, which means their intersection cannot be empty.
+        \item Since $I_{n} \supseteq I_{n+1}$ for every natural $n$, we have $a_{n+1} \geq a_n$ for every $n \in \N$. Also, $b_1$ is an upper bound for $(a_n)$, so the Monotone Convergence Theorem guarantees that $(a_n)$ converges to some real number $a$. Since $a_{n+m} \geq a_n$ for every $n,m \in \N$, we can use the Order Limit Theorem to see that $\lim_{m \to \infty} a_{m+n} = a \geq a_n$ for every $n \in \N$. We also have $a_m \leq b_n$ for every $n, m \in \N$, which also implies $a \leq b_n$. Therefore, $a_n \leq a \leq b_n$ for every natural $n$, so all the $I_n'$s contain $a$, which means their intersection cannot be empty.
     \end{enumerate}
     
     \exc{2.4.5}
@@ -785,7 +795,7 @@
         \item Let $x_1 = c$ for some $c \geq 0$, and define
         \begin{equation*}
             x_{n+1} = \frac{1}{2} \left(x_n + \frac{c}{x_n} \right).
-        \end{equation*} To prove that $(x_n) \ra \sqrt{c}$, we first show that $x_n^2 \geq c$ and then use this fact to show that $x_n \geq x_{n+1}$ for every $n \in \N$. This implies the convergence of the sequence, in particular to $\sqrt{c}$. All of this is achieved almost identically to the previous exercise simply by switching the appropriate $2'$s with $c'$s. The case $c = 0$ can be easily be verified separately.
+        \end{equation*} To prove that $(x_n) \to \sqrt{c}$, we first show that $x_n^2 \geq c$ and then use this fact to show that $x_n \geq x_{n+1}$ for every $n \in \N$. This implies the convergence of the sequence, in particular to $\sqrt{c}$. All of this is achieved almost identically to the previous exercise simply by switching the appropriate $2'$s with $c'$s. The case $c = 0$ can be easily be verified separately.
     \end{enumerate}
     
     \exc{2.4.6}
@@ -806,7 +816,7 @@
 
     \exc{2.4.7}
     First we prove a useful lemma. \newline
-    \begin{shortlemma}{lem_2.4.7}
+    \begin{shortlemma} \label{lem_2.4.7}
         Let $A$ and $B$ be two bounded non-empty sets of real numbers with $A \subseteq B$. Then, $\sup{A} \leq \sup{B}$ and $\inf{A} \geq \inf{B}$.
     \end{shortlemma}
     
@@ -846,7 +856,7 @@
     \begin{enumerate}
         \item It is easy to verify with induction that the sequence of partial sums is \begin{equation*}
             s_n = 1-\frac{1}{2^n}.
-        \end{equation*} We can then apply the Algebraic Limit Theorem together with the fact that $(1/2^n) \ra 0$ to get $(s_n) \ra 1$. Therefore the sum converges, in particular
+        \end{equation*} We can then apply the Algebraic Limit Theorem together with the fact that $(1/2^n) \to 0$ to get $(s_n) \to 1$. Therefore the sum converges, in particular
         \begin{equation*}
             \sum_{n=1}^\infty \frac{1}{2^n} = 1.
         \end{equation*}
@@ -906,7 +916,7 @@
             (1, 1, \frac{1}{2}, 1, \frac{1}{2}, \frac{1}{3}, 1, \frac{1}{2}, \frac{1}{3}, \frac{1}{4}, 1, \dots)
         \end{equation*}
         
-        \item This is not possible. Let $(a_n)$ be a sequence that contains a subsequence converging to $1/m$ for every $m \in \N$. We will show that $(a_n)$ must have a subsequence which converges to zero. \lep. Then, $(a_n)$ must have infinitely many elements which are in the $\epsilon/2$-neighborhood of $1/1$. Pick one of those elements and call it $a_{n_1}$. In general, $(a_n)$ has infinitely many members which are $\epsilon/2$-close to $1/(k+1)$, so we can pick one called $a_{n_{k+1}}$ with $n_{k+1} > n_k$. By the construction of $(a_{n_k})$, it follows that $\abs*{a_{n_k} - 1/k} < \epsilon/2$ for all $k \in \N$. Now, choose $N \in \N$ such that $N > 2/\epsilon$ and notice that $k \geq N \implies \abs*{1/k} < \epsilon/2$. Next, for all $k \geq N$ we have that $\abs*{a_{n_k}-0} \leq \abs*{a_{n_k}-1/k}+\abs*{1/k} < \epsilon/2 + \epsilon/2 = \epsilon$, so $(a_{n_k}) \ra 0$, which is outside the set mentioned in the exercise.
+        \item This is not possible. Let $(a_n)$ be a sequence that contains a subsequence converging to $1/m$ for every $m \in \N$. We will show that $(a_n)$ must have a subsequence which converges to zero. \lep. Then, $(a_n)$ must have infinitely many elements which are in the $\epsilon/2$-neighborhood of $1/1$. Pick one of those elements and call it $a_{n_1}$. In general, $(a_n)$ has infinitely many members which are $\epsilon/2$-close to $1/(k+1)$, so we can pick one called $a_{n_{k+1}}$ with $n_{k+1} > n_k$. By the construction of $(a_{n_k})$, it follows that $\abs*{a_{n_k} - 1/k} < \epsilon/2$ for all $k \in \N$. Now, choose $N \in \N$ such that $N > 2/\epsilon$ and notice that $k \geq N \implies \abs*{1/k} < \epsilon/2$. Next, for all $k \geq N$ we have that $\abs*{a_{n_k}-0} \leq \abs*{a_{n_k}-1/k}+\abs*{1/k} < \epsilon/2 + \epsilon/2 = \epsilon$, so $(a_{n_k}) \to 0$, which is outside the set mentioned in the exercise.
     \end{enumerate}
     
     \exc{2.5.2}
@@ -948,27 +958,27 @@
     
     \exc{2.5.4}
     \begin{enumerate}
-        \item Let $A$ be a non-empty set of real numbers that is bounded above by $M$. Since $A \neq \emptyset$, we can choose some $a_1 \in A$. Notice that $a_1 \leq M$, and if $a_1 = M$ it would be the least upper bound of $A$, so we consider only the case $a_1 < M$. Then, the interval $I_1 =[a_1, M]$ has a non-zero length. Bisect the interval into $l_1 = [a_1, (a_1+M)/2]$ and $r_1 = [(a_1+M)/2, M]$. If none of the elements of $A$ is in $r_1$, let $I_2 = l_1$, otherwise set $I_2 = r_1$. In general, we construct the interval $I_{k+1}$ by bisecting $I_k = [p, q]$ into $r_k=[p, (p+q)/2]$ and $l_k = [(p+q)/2, q]$, setting $I_{k+1}$ to $r_k$ if some element of $A$ is in $r_k$ and setting it to $l_k$ otherwise. Notice that every $I_k$ must contain at least one element from $A$. Also, the length of $I_k$ is $2 (M-a_1)/2^k$ (this is easily shown by induction), so it gets arbitrarily small, since we assumed $(1/2^k) \ra 0$. By the Nested Interval Property, we can pick an $x \in \R$ that is contained by every $I_k$. We claim that $x = \sup A$.
+        \item Let $A$ be a non-empty set of real numbers that is bounded above by $M$. Since $A \neq \emptyset$, we can choose some $a_1 \in A$. Notice that $a_1 \leq M$, and if $a_1 = M$ it would be the least upper bound of $A$, so we consider only the case $a_1 < M$. Then, the interval $I_1 =[a_1, M]$ has a non-zero length. Bisect the interval into $l_1 = [a_1, (a_1+M)/2]$ and $r_1 = [(a_1+M)/2, M]$. If none of the elements of $A$ is in $r_1$, let $I_2 = l_1$, otherwise set $I_2 = r_1$. In general, we construct the interval $I_{k+1}$ by bisecting $I_k = [p, q]$ into $r_k=[p, (p+q)/2]$ and $l_k = [(p+q)/2, q]$, setting $I_{k+1}$ to $r_k$ if some element of $A$ is in $r_k$ and setting it to $l_k$ otherwise. Notice that every $I_k$ must contain at least one element from $A$. Also, the length of $I_k$ is $2 (M-a_1)/2^k$ (this is easily shown by induction), so it gets arbitrarily small, since we assumed $(1/2^k) \to 0$. By the Nested Interval Property, we can pick an $x \in \R$ that is contained by every $I_k$. We claim that $x = \sup A$.
         
         To see that $x$ is an upper bound, assume for contradiction that there is some $a \in A$ with $a > x$. If $a \notin I_1$ then $x \geq a_1 > a$, so we can assume $a \in I_1$. Then, $a-x = \epsilon_0$, where $\epsilon_0 > 0$. We know that there is some $I_k$ whose length is less than $\epsilon_0$, which means it cannot contain both $a$ and $x$, but, since every $I_k$ contains $x$, this means $a \notin I_k$. But, since $a \in I_1$, there must have been some point $n$ where $a \in I_n$ and $a \notin I_{n+1}$. This can only happen when $I_{n+1}$ is the right interval $r_n$ of $I_n$ (otherwise $a$ would be in $I_{n+1}$). Since $a \in l_n$ and $x \in I_{n+1} = r_n$, we must have $x \geq a$, a contradiction. Thus, $x \geq a$, so $x$ is an upper bound for $A$.
         
         We show $x$ is the least upper bound of $A$ using Lemma 1.3.8. \lep. We are looking for some element of $A$ which is greater than $x-\epsilon$. Since the length of the $I_k'$s is eventually less than $\epsilon$, there must be some $I_k$ which does not contain $x-\epsilon$, since every $I_k$ contains $x$. Notice that if $x-\epsilon \notin I_1$ then $a_1 > x-\epsilon$ and we would be done, so we can assume $x-\epsilon \in I_1$. By the same reason as before, this means there is some $n$ where $x-\epsilon \in I_n$ and $x-\epsilon \in I_{n+1}$, which again means $r_n$ contains some element $a \in A$, which must then be greater than $x-\epsilon$. Thus, every non-empty set that is bounded above must have a least upper bound.
         
-        We had to assume that $(1/2^n) \ra 0$ because the Archimedean Property was used to show this, but we used the Axiom of Completeness to prove the Archimedean Property, so not making this assumption would make the proof just given circular.
+        We had to assume that $(1/2^n) \to 0$ because the Archimedean Property was used to show this, but we used the Axiom of Completeness to prove the Archimedean Property, so not making this assumption would make the proof just given circular.
     \end{enumerate}
     
     \exc{2.5.5}
     Since no two subsequences of $(a_n)$ converge to different limits, $(a_n)$ cannot diverge, since that would be in contradiction with what we have shown in Exercise 2.5.2 (c). Then, Theorem 2.5.2 guarantees that $(a_n)$ converges to the same limit as its subsequences, namely $a$.
     
     \exc{2.5.6}
-    If $b = 0$, then clearly $\lim(0^{1/n}) = 0$, and the case $b=1$ also trivially converges to $1$. Now, assume $0 < b < 1$. It is not hard to see that $(b^{1/n})$ is strictly increasing and bounded above by one, so it must converge to some real number $l$. But Theorem 2.5.2 guarantees that the subsequence $(b^{1/(2n)})$ must also converge to $l$. Also, by the results in Exercise 2.3.1, $(b^{1/(2n)}) = (\sqrt{b^{1/n}}) \ra \sqrt{l}$. Therefore, $l = \sqrt{l}$, which means $l = 1$, since it must be greater than 0.
+    If $b = 0$, then clearly $\lim(0^{1/n}) = 0$, and the case $b=1$ also trivially converges to $1$. Now, assume $0 < b < 1$. It is not hard to see that $(b^{1/n})$ is strictly increasing and bounded above by one, so it must converge to some real number $l$. But Theorem 2.5.2 guarantees that the subsequence $(b^{1/(2n)})$ must also converge to $l$. Also, by the results in Exercise 2.3.1, $(b^{1/(2n)}) = (\sqrt{b^{1/n}}) \to \sqrt{l}$. Therefore, $l = \sqrt{l}$, which means $l = 1$, since it must be greater than 0.
     
-    If $b > 1$, it is easy to see that the sequence $(b^{1/n})$ is strictly decreasing and bounded below by one, so it must converge, and we can use the same strategy as before to get $(b^{1/n}) \ra 1$.
+    If $b > 1$, it is easy to see that the sequence $(b^{1/n})$ is strictly decreasing and bounded below by one, so it must converge, and we can use the same strategy as before to get $(b^{1/n}) \to 1$.
     
     \exc{2.5.7}
-     We have already shown the forward direction to be true for every case except $-1 < b < 0$, so assume $b$ is in this interval. Notice that $1 > b^2 > 0$, so the sequence $((b^2)^n)$ must converge to $0$, as shown in Example 2.5.3. Also, the subsequence $(b^{2n-1}) = ((b^2)^n/b)$ must also converge to $0$ by the The Algebraic Limit Theorem and Example 2.5.3. Then, $(b_n)$ is the shuffled sequence of $(b^{2n})$ and $(b^{2n-1})$, so Exercise 2.3.5 guarantees $(b_n) \ra 0$.
+     We have already shown the forward direction to be true for every case except $-1 < b < 0$, so assume $b$ is in this interval. Notice that $1 > b^2 > 0$, so the sequence $((b^2)^n)$ must converge to $0$, as shown in Example 2.5.3. Also, the subsequence $(b^{2n-1}) = ((b^2)^n/b)$ must also converge to $0$ by the The Algebraic Limit Theorem and Example 2.5.3. Then, $(b_n)$ is the shuffled sequence of $(b^{2n})$ and $(b^{2n-1})$, so Exercise 2.3.5 guarantees $(b_n) \to 0$.
     
-    Now, assume $\abs*{b} \geq 1$. If $b = 1$, clearly $(b_n) \ra 1 \neq 0$. If $b = -1$, the sequence $(b^n) = (-1,1-1,\dots)$ has a subsequence which converges to $1$ and another with converges to $-1$, so $(b_n)$ diverges in this case. Next, assume $b > 1$. The, we can write $b := 1 + a$ for some $a > 0$. But, it is clear that 
+    Now, assume $\abs*{b} \geq 1$. If $b = 1$, clearly $(b_n) \to 1 \neq 0$. If $b = -1$, the sequence $(b^n) = (-1,1-1,\dots)$ has a subsequence which converges to $1$ and another with converges to $-1$, so $(b_n)$ diverges in this case. Next, assume $b > 1$. The, we can write $b := 1 + a$ for some $a > 0$. But, it is clear that 
     \begin{equation*}
         \sum_{n=1}^\infty a = a + a + a + \dots
     \end{equation*} diverges, which means
@@ -999,10 +1009,10 @@
     
     Now let $k \in \N$. We know that $s-1/k < x$ for some $x \in S$. This means that $s-1/k < a_n$ for infinitely many $a_n$. Also, $s + 1/k \notin S$, therefore there are only finitely many $a_n$ such that $ s + 1/k < a_n$. This means that for every $k \in N$ there must be infinitely many terms of $(a_n)$ such that $s-1/k < a_n \leq s+1/k$. To construct $a_{n_1}$, pick one $a_n$ such that $s-1 < a_n \leq s+1$, and to construct $a_{n_{k+1}}$, choose some $s-1/(k+1) < a_n \leq s+1/(k+1)$. Since there are infinitely many such $a_n$, it can be chosen to make sure $n > n_{k+1}$.
     
-    To see that $(a_{n_k}) \ra 0$, \lep[l]. Choose $N \in \N$ such that $N > 1/\epsilon$. Since $s-1/k < a_{n_k} \leq s+1/k$ for every $k \in \N$, then $\abs*{a_{n_k} - s} \leq 1/k$. Letting $k \geq N$, we have $\abs*{a_{n_k}-s} \leq 1/k < \epsilon$, and we are done.
+    To see that $(a_{n_k}) \to 0$, \lep[l]. Choose $N \in \N$ such that $N > 1/\epsilon$. Since $s-1/k < a_{n_k} \leq s+1/k$ for every $k \in \N$, then $\abs*{a_{n_k} - s} \leq 1/k$. Letting $k \geq N$, we have $\abs*{a_{n_k}-s} \leq 1/k < \epsilon$, and we are done.
 
     \exc{2.6.1}
-    Assume $(x_n) \ra x$ and \lep[l]. Choose $N \in \N$ such that $\abs*{x_n-x} < \epsilon/2$ for all $n \geq N$. Then, $\abs*{x_n-x_m} \leq \abs*{x_n-x} + \abs*{x_m-x} < \epsilon$ for all $n,m \geq N$.
+    Assume $(x_n) \to x$ and \lep[l]. Choose $N \in \N$ such that $\abs*{x_n-x} < \epsilon/2$ for all $n \geq N$. Then, $\abs*{x_n-x_m} \leq \abs*{x_n-x} + \abs*{x_m-x} < \epsilon$ for all $n,m \geq N$.
     
     \exc{2.6.2}
     \begin{enumerate}
@@ -1017,7 +1027,8 @@
     
     \exc{2.6.3}
     \begin{enumerate}
-        \item \lep. Choose $N \in \N$ such that $\abs*{x_n-x_m}, \abs*{y_n-y_m} \leq \epsilon/2$ for all $n,m \geq N$. Then, $\abs*{x_n+y_n-(x_m+y_m)} \leq \abs*{x_n-x_m} + \abs*{y_n-y_m} < \epsilon$ for all $n,m \geq N$, so $(x_n + y_n)$ is Cauchy.
+        \item \lep. Choose $N \in \N$ such that 
+         $\abs*{x_n-x_m}, \abs*{y_n-y_m} \leq \epsilon/2$ for all $n,m \geq N$. Then, $\abs*{x_n+y_n-(x_m+y_m)} \leq \abs*{x_n-x_m} + \abs*{y_n-y_m} < \epsilon$ for all $n,m \geq N$, so $(x_n + y_n)$ is Cauchy.
         
         \item \lep. Since both sequences are Cauchy, we can pick some positive $M_1, M_2 \in \R$ such that $\abs*{x_n} \leq M_1$ and $\abs*{y_n} \leq M_2$ for all $n \in \N$. Choose $N \in \N$ such that $\abs*{x_n-x_m} < \epsilon/(2M_2)$ and $\abs*{y_n-y_m} < \epsilon/(2M_1)$ for all $n, m \geq N$. Then,
         \begin{align*}
@@ -1039,10 +1050,10 @@
     Consider the sequence 
     \begin{equation*}
         (a_n) = (\frac{1}{1}, \frac{1}{2}, \frac{1}{2}, \frac{1}{3}, \frac{1}{3}, \frac{1}{3}, \frac{1}{4}, \dots)
-    \end{equation*} of $1$ appearance of $1/1$, followed by $2$ $1/2'$s, then $3$ $1/3's$ and so on. Since $(a_n)$ is decreasing and bounded by $1$, it must converge. Also, it is clear that $(1/n)$ is a subsequence of $(a_n)$ which means $(a_n) \ra 0$. Now, define the sequence $(s_m)$ by
+    \end{equation*} of $1$ appearance of $1/1$, followed by $2$ $1/2'$s, then $3$ $1/3's$ and so on. Since $(a_n)$ is decreasing and bounded by $1$, it must converge. Also, it is clear that $(1/n)$ is a subsequence of $(a_n)$ which means $(a_n) \to 0$. Now, define the sequence $(s_m)$ by
     \begin{equation*}
         (s_m) = (\sum_{n=1}^m a_n) = (1, \frac{3}{2}, 2, \frac{7}{3}, \frac{8}{3}, 3, \dots).
-    \end{equation*} To see that $(s_m)$ is pseudo-Cauchy, \lep[l]. Since $(a_n) \ra 0$, we can choose $N \in \N$ such that $a_{m+1} \leq \epsilon$ for all $m+1 \geq N$. Then, it is easy to see that $\abs*{s_{m+1}-s_m} = a_{m+1} < \epsilon$, which means $(s_m)$ is pseudo-Cauchy. However, $(m)$ is a subsequence of $(s_m)$ which is not bounded above, therefore $(s_m)$ is also not bounded above, which means the first claim in the exercise is false.
+    \end{equation*} To see that $(s_m)$ is pseudo-Cauchy, \lep[l]. Since $(a_n) \to 0$, we can choose $N \in \N$ such that $a_{m+1} \leq \epsilon$ for all $m+1 \geq N$. Then, it is easy to see that $\abs*{s_{m+1}-s_m} = a_{m+1} < \epsilon$, which means $(s_m)$ is pseudo-Cauchy. However, $(m)$ is a subsequence of $(s_m)$ which is not bounded above, therefore $(s_m)$ is also not bounded above, which means the first claim in the exercise is false.
     
     To verify the second claim, \lep[l]. Since $(x_n)$ and $(y_n)$ are pseudo-Cauchy, we can choose $N \in \N$ such that $\abs*{x_{n+1}-x_n}, \abs*{y_{n+1}-y_n} < \epsilon/2$ for all $n \geq N$. Then, \begin{equation*}
         \abs*{(x_{n+1}+y_{n+1}) - (x_n + y_n)} \leq \abs*{x_{n+1}-x_n} + \abs*{y_{n+1}-y_n} < \epsilon
@@ -1052,7 +1063,7 @@
     \begin{enumerate}
         \item Let $(a_n) = (-1)^n/n$. To see that $(a_n)$ is quasi-increasing, \lep[l]. It is easy to see that 
         \begin{equation*}
-            \lim_{n \ra \infty} \left(\frac{2n+k}{n(n+k)}\right) = 0,
+            \lim_{n \to \infty} \left(\frac{2n+k}{n(n+k)}\right) = 0,
         \end{equation*} for any $k \in \N$, therefore we can choose $N \in \N$ such that
         \begin{equation*}
             \frac{2n+k}{n(n+k)} < \epsilon
@@ -1079,13 +1090,13 @@
     \begin{enumerate}
         \item Let $(x_n)$ be an increasing bounded sequence. 
         
-        By the Bolzano-Weierstrass Theorem, there we can construct a subsequence $(x_{n_k})$ which converges to some $x \in \R$. To prove that $(x_n) \ra x$, \lep[l]. Choose $N_1 \in \N$ such that $\abs*{x_{n_k}-x} < \epsilon$ for all $k \geq N_1$. Now, set $N := n_{N_1}$ and let $n \geq N$ be arbitrary. Since $(x_n)$ is increasing, we have $x_{n_{N_1}} \leq x_n \leq x_{n_m}$ for some $n_m \geq n$. Using the fact that $-\epsilon< x_{n_k} -x < \epsilon$ for all $k \geq N_1$, 
+        By the Bolzano-Weierstrass Theorem, there we can construct a subsequence $(x_{n_k})$ which converges to some $x \in \R$. To prove that $(x_n) \to x$, \lep[l]. Choose $N_1 \in \N$ such that $\abs*{x_{n_k}-x} < \epsilon$ for all $k \geq N_1$. Now, set $N := n_{N_1}$ and let $n \geq N$ be arbitrary. Since $(x_n)$ is increasing, we have $x_{n_{N_1}} \leq x_n \leq x_{n_m}$ for some $n_m \geq n$. Using the fact that $-\epsilon< x_{n_k} -x < \epsilon$ for all $k \geq N_1$, 
         \begin{align*}
             x_{n_{N_1}} \leq &x_n \leq x_{n_m} \implies \\
             x_{n_{N_1}}-x \leq x_n&-x \leq x_{n_m}-x \implies \\
             -\epsilon < x_{n_{N_1}}-x \leq x_n&-x \leq x_{n_m}-x < \epsilon \implies
             \abs*{x_n-x} < \epsilon,
-        \end{align*} therefore $(x_n) \ra x$.
+        \end{align*} therefore $(x_n) \to x$.
         
         \item Let $(x_n)$ be bounded by $M$. Then, every $x_n$ is in the interval $I_1 = [-M,M]$, so we can choose one of them, labeled $x_{n_1}$. Bisect $I_1$ into $[-M, 0]$ and $[0, M]$. At least one of this intervals must contain infinitely many terms in $(x_n)$, so select one such interval and label it $I_2$. In general, we construct the closed interval $I_{k+1}$ by taking a half of $I_k$ containing an infinite number of terms $(x_n)$ and then select $n_{k+1} > n_k > n_{k-1} \dots > n_1$ so that $x_{n_{k+1}} \in I_k$ (This is the same construction as the one in the BW proof given in the book). To prove that $(x_{n_k})$ converges, \lep[l]. If we assume the Archimedean Property, it is easy to see that the length of the $I_k'$s gets arbitrarily close to $0$, so we can choose $N \in \N$ such that the length of $I_k$ is less than $\epsilon$ for all $k \geq N$. Since the $I_k'$s are nested, and $x_{n_k} \in I_k$, we also have $x_{n_m} \in I_k$ for all $m \geq k$. Thus, choosing arbitrary $a,b \geq N$, we have $x_{n_a},x_{n_b} \in I_N$. Since the length of $I_N$ is less than $\epsilon$, we must have $\abs*{x_{n_a}-x_{n_b}} < \epsilon$, therefore $(x_{n_k})$ is Cauchy. By the Cauchy Criterion, we can conclude that $(x_{n_k})$ converges.
         
@@ -1093,12 +1104,12 @@
     \end{enumerate}
     
     \item 
-    \begin{shortdefinition}{def_equivSequences}
+    \begin{shortdefinition} \label{def_equivSequences}
         Two sequences $(a_n)$ and $(b_n)$ are equivalent if and only if for all $\epsilon > 0$ there exists a $N \in \N$ such that $\abs*{a_n-b_n} < \epsilon$ for all $n \geq N$.
     \end{shortdefinition}
     
-    \begin{shortlemma}{lem_equivCauchySequences}
-        If $(a_n)$ is equivalent to $(b_n)$ and $(b_n) \ra b$, it follows that $(a_n) \ra b$.
+    \begin{shortlemma} \label{lem_equivCauchySequences}
+        If $(a_n)$ is equivalent to $(b_n)$ and $(b_n) \to b$, it follows that $(a_n) \to b$.
     \end{shortlemma}
     \begin{proof}
         Let $(a_n)$ and $(b_n)$ be equivalent sequences. \lep \space and choose $N \in \N$ such that $\abs*{a_n-b_n},\abs*{b_n-b} < \epsilon/2$ for all $n \geq N$. Then, 
@@ -1111,10 +1122,10 @@
     \begin{enumerate}
         \item Let $I_n = [S_{2n}, S_{2n-1}]$. The length of $I_n$ is $a_{2n}$, a subsequence of $(a_n)$, therefore it must converge to $0$. Also, we can use the fact that $S_{2n}$ is increasing and $S_{2n-1}$ is decreasing to show that $I_n \supseteq I_{n+1}$. \lep. Choose $N \in \N$ such that $\abs*{a_{2n}} < \epsilon$ for all $n \geq N$ and define $M := 2N-1$. Then, since $S_n,S_m \in I_N$ for all $n,m \geq M$, and the length of $I_N$ is less than $\epsilon$, we must have $\abs*{S_n-S_m} < \epsilon$ for all $n \geq M$, so $(S_n)$ is Cauchy, therefore converges.
         
-        \item This is almost identical to the previous proof. Construct the intervals $I_n$ just as before. By the Nested Interval Property, we can choose some $x \in \R$ such that $x \in I_n$ for every $n$. To prove that $(S_n) \ra x$, \lep[l]. Choose $N \in \N$ such that $\abs*{a_{2n}} < \epsilon$ for all $n \geq N$ and define $M := 2N-1$. Then, since $S_n,x \in I_N$ for all $n \geq M$, and the length of $I_N$ is less than $\epsilon$, we must have $\abs*{S_n-x} < \epsilon$ for all $n \geq M$.
+        \item This is almost identical to the previous proof. Construct the intervals $I_n$ just as before. By the Nested Interval Property, we can choose some $x \in \R$ such that $x \in I_n$ for every $n$. To prove that $(S_n) \to x$, \lep[l]. Choose $N \in \N$ such that $\abs*{a_{2n}} < \epsilon$ for all $n \geq N$ and define $M := 2N-1$. Then, since $S_n,x \in I_N$ for all $n \geq M$, and the length of $I_N$ is less than $\epsilon$, we must have $\abs*{S_n-x} < \epsilon$ for all $n \geq M$.
         
         
-        \item It is easy to see with induction that $a_1 \geq S_n \geq 0$ for all $n \in \N$. Since $S_{2n}$ is increasing and bounded above by $a_1$, the Monotone Convergence Theorem guarantees its convergence. Also, ${S_{2n-1}}$ is decreasing and bounded below by $0$, so it must also converge. Now, we show that $(S_{2n})$ and $(S_{2n-1})$ are equivalent (Definition \ref{def_equivSequences}). \lep. Choose $N \in N$ such that $\abs*{a_n} < \epsilon$ for all $n \geq N$. Then, $\abs*{S_{2n}-S_{2n-1}} = \abs*{a_{2n}} \leq \abs*{a_n} < \epsilon$ for all $n \geq N$, so the sequences are equivalent. By Lemma \ref{lem_equivCauchySequences}, they must converge to the same real number $a$, and we've already shown in Exercise 2.3.5 that this means $(S_n) \ra a$ as well, since $(S_n)$ is the shuffled sequence of $(S_{2n-1})$ and $(S_{2n})$. 
+        \item It is easy to see with induction that $a_1 \geq S_n \geq 0$ for all $n \in \N$. Since $S_{2n}$ is increasing and bounded above by $a_1$, the Monotone Convergence Theorem guarantees its convergence. Also, ${S_{2n-1}}$ is decreasing and bounded below by $0$, so it must also converge. Now, we show that $(S_{2n})$ and $(S_{2n-1})$ are equivalent (Definition \ref{def_equivSequences}). \lep. Choose $N \in N$ such that $\abs*{a_n} < \epsilon$ for all $n \geq N$. Then, $\abs*{S_{2n}-S_{2n-1}} = \abs*{a_{2n}} \leq \abs*{a_n} < \epsilon$ for all $n \geq N$, so the sequences are equivalent. By Lemma \ref{lem_equivCauchySequences}, they must converge to the same real number $a$, and we've already shown in Exercise 2.3.5 that this means $(S_n) \to a$ as well, since $(S_n)$ is the shuffled sequence of $(S_{2n-1})$ and $(S_{2n})$. 
     \end{enumerate}
     
     \exc{2.7.2}
@@ -1177,7 +1188,7 @@
         
         \item Notice that $\sum y_n = \sum ((x_n + y_n) - x_n)$, which, by the Algebraic Limit Theorem for Series, implies $\sum y_n = \sum  (x_n + y_n) - \sum x_n$, therefore $\sum y_n$ necessarily converges, therefore the request is impossible.
         
-        \item Notice that $1/n$ is decreasing and $(1/n) \ra 0$, therefore $\sum (-1)^n/n$ converges by the Alternating Series Test. Then, we can apply the Comparison test to see that $\sum x_n$ converges, therefore the request is impossible.
+        \item Notice that $1/n$ is decreasing and $(1/n) \to 0$, therefore $\sum (-1)^n/n$ converges by the Alternating Series Test. Then, we can apply the Comparison test to see that $\sum x_n$ converges, therefore the request is impossible.
     \end{enumerate}
     
     \exc{2.7.5} By the Cauchy Condensation Test, we have 
@@ -1219,7 +1230,7 @@
         
         \item $(a_n) = (b_n) = ((-1)^n/\sqrt{n}))$ is a counterexample.
         
-        \item We prove the contrapositive of the statement. Assume $\sum n^2 a_n$ converges. We need to show that $\sum a_n$ does not converge conditionally. Since $\lim (n^2 a_n) = 0$, $\sum a_n$ must converge by Exercise 2.7.7 (b). This means that we need to show that $\sum \abs*{a_n}$ converges. Since $(n^2 a_n) \ra 0$, there is some $M \in \R$ such that $\abs*{k^2 a_k} \leq M$ for every $k \in \N$. It follows that $0 \leq \abs*{a_k} \leq M/k^2$ for every natural $k$, so $\sum a_k$ converges absolutely by the Comparison Test.
+        \item We prove the contrapositive of the statement. Assume $\sum n^2 a_n$ converges. We need to show that $\sum a_n$ does not converge conditionally. Since $\lim (n^2 a_n) = 0$, $\sum a_n$ must converge by Exercise 2.7.7 (b). This means that we need to show that $\sum \abs*{a_n}$ converges. Since $(n^2 a_n) \to 0$, there is some $M \in \R$ such that $\abs*{k^2 a_k} \leq M$ for every $k \in \N$. It follows that $0 \leq \abs*{a_k} \leq M/k^2$ for every natural $k$, so $\sum a_k$ converges absolutely by the Comparison Test.
     \end{enumerate}
     
     \exc{2.7.9}
@@ -1234,12 +1245,12 @@
         \end{equation*} converges, then the Absolute Convergence Test guarantees the convergence of $\sum a_n$.
     \end{enumerate} 
     
-    \item \begin{shortlemma}{lem_1OverInfinityIsZero}
+    \item \begin{shortlemma} \label{lem_1OverInfinityIsZero}
         Let $(x_n)$ be a sequence such that for all $n \in \N$ $x_n \neq 0$.
-        If $(x_n)$ is increasing and not bounded above, then $(1/x_n) \ra 0$. Similarly, if $(x_n)$ is decreasing and not bounded below, then $(1/x_n) \ra 0$.
+        If $(x_n)$ is increasing and not bounded above, then $(1/x_n) \to 0$. Similarly, if $(x_n)$ is decreasing and not bounded below, then $(1/x_n) \to 0$.
     \end{shortlemma}
     \begin{proof}
-        Assume $(x_n)$ is increasing and not bounded above and \lep[l]. By assumption, we can choose $N \in \N$ such that $x_n \geq 1/\epsilon$ for all $n \geq N$. It follows that $\abs*{1/x_n} < \epsilon$ for all $n \geq N$, therefore $(1/x_n) \ra 0$. The proof for the case where $(x_n)$ is decreasing and not bounded below is very similar.
+        Assume $(x_n)$ is increasing and not bounded above and \lep[l]. By assumption, we can choose $N \in \N$ such that $x_n \geq 1/\epsilon$ for all $n \geq N$. It follows that $\abs*{1/x_n} < \epsilon$ for all $n \geq N$, therefore $(1/x_n) \to 0$. The proof for the case where $(x_n)$ is decreasing and not bounded below is very similar.
     \end{proof}
     
     \exc{2.7.10}
@@ -1261,7 +1272,7 @@
         \end{equation*} It is easy to see by the Cauchy Condensation Test that 
         \begin{equation*}
             \sum_{n=1}^\infty \frac{1}{2n-1}
-        \end{equation*} diverges, therefore $(1/p_m)$ also diverges. Since every term in the product defining $(1/p_m)$ is greater than one, the sequence increases. Thus, it cannot be bounded above, because in that case the Monotone Convergence Theorem would imply its convergence. Therefore, we can apply Lemma \ref{lem_1OverInfinityIsZero} to conclude that $(1/(1/p_m)) = (p_m) \ra 0$.
+        \end{equation*} diverges, therefore $(1/p_m)$ also diverges. Since every term in the product defining $(1/p_m)$ is greater than one, the sequence increases. Thus, it cannot be bounded above, because in that case the Monotone Convergence Theorem would imply its convergence. Therefore, we can apply Lemma \ref{lem_1OverInfinityIsZero} to conclude that $(1/(1/p_m)) = (p_m) \to 0$.
         
         \item The original product can be written as 
         \begin{equation*}
@@ -1289,7 +1300,7 @@
         \item Notice that $(y_n)$ is decreasing and bounded below by $0$, so it must converge to some real number $y$. Also, $(s_n)$ converges, so there is some $M \in \R$ such that $\abs*{s_k} \leq M$ for all $k \in \N$. Consider the series
         \begin{equation}\label{sum1_2.7.13}
             \sum_{n=1}^\infty M (y_k - y_{k+1}).
-        \end{equation} It is easy to verify with induction that the partial sum sequence of (\ref{sum1_2.7.13}) is $(p_m) = (M(y_1-y_m))$. Applying the Algebraic Limit Theorem, we can conclude that $(p_m) \ra M(y_1-y)$. Now, notice that 
+        \end{equation} It is easy to verify with induction that the partial sum sequence of (\ref{sum1_2.7.13}) is $(p_m) = (M(y_1-y_m))$. Applying the Algebraic Limit Theorem, we can conclude that $(p_m) \to M(y_1-y)$. Now, notice that 
         \begin{equation*}
             0 \leq \abs*{s_k (y_k-y_{k+1})} = \abs*{s_k} (y_k-y_{k+1}) \leq 
             M (y_k-y_{k+1}),
@@ -1312,17 +1323,17 @@
     
     \exc{2.7.14}
     \begin{enumerate}
-        \item Abel's test requires $\sum x_k$ to converge, whereas Dirichlet's Test makes the weaker assumption that the partial sums are bounded. While both tests assume $(y_n)$ is decreasing and bounded below by zero, Abel's test does not require that $(y_n) \ra 0$, which is in contrast to the other test.
+        \item Abel's test requires $\sum x_k$ to converge, whereas Dirichlet's Test makes the weaker assumption that the partial sums are bounded. While both tests assume $(y_n)$ is decreasing and bounded below by zero, Abel's test does not require that $(y_n) \to 0$, which is in contrast to the other test.
         
         While in the previous proof we used the fact that $(s_n)$ converges to prove that
         \begin{equation*}
             \sum_{k=1}^\infty s_k(y_k-y_{k+1})
-        \end{equation*} converges, we really only needed $(s_n)$ to be bounded, so the same proof applies. The other slight difference is when we applied the Algebraic Limit Theorem to show that $s_n y_{n+1}$ converges. This does not work here, since $(s_n)$ does not necessarily converge. To see that this is not a problem, \lep. Let $M \in \R$ be a bound for $(s_n)$. Use the fact that $(y_n) \ra 0$ to choose $N \in \N$ such that $\abs*{y_n} < \epsilon/M$ for all $n \geq M$. Then, $\abs*{s_n y_{n+1}} \leq M \abs*{y_{n+1}} < \epsilon$, therefore $(s_n y_{n+1}) \ra 0$. For the same reason as before, this means that
+        \end{equation*} converges, we really only needed $(s_n)$ to be bounded, so the same proof applies. The other slight difference is when we applied the Algebraic Limit Theorem to show that $s_n y_{n+1}$ converges. This does not work here, since $(s_n)$ does not necessarily converge. To see that this is not a problem, \lep. Let $M \in \R$ be a bound for $(s_n)$. Use the fact that $(y_n) \to 0$ to choose $N \in \N$ such that $\abs*{y_n} < \epsilon/M$ for all $n \geq M$. Then, $\abs*{s_n y_{n+1}} \leq M \abs*{y_{n+1}} < \epsilon$, therefore $(s_n y_{n+1}) \to 0$. For the same reason as before, this means that
         \begin{equation*}
             \sum_{k=1}^\infty x_k y_k
         \end{equation*} converges.
         
-        \item Let $(x_k) = (-1)^{k+1}$ and $(y_n) \ra 0$ be decreasing. Notice that the partial sums of $(x_k)$ are bounded by $1$. By Dirichlet's Test, 
+        \item Let $(x_k) = (-1)^{k+1}$ and $(y_n) \to 0$ be decreasing. Notice that the partial sums of $(x_k)$ are bounded by $1$. By Dirichlet's Test, 
         \begin{equation*}
             \sum_{k=1}^\infty (-1)^{k+1} y_n
         \end{equation*} converges.
@@ -1333,10 +1344,10 @@
         \item In Theorem 3.2.3, we set $\epsilon := \min{\epsilon_1, \epsilon_2, \dots 
         \epsilon_N}$, which we may not be able to do if there are infinitely many $\epsilon'$s, as infinite sets do not always have minimums, such as the set $\set{1/n : n \in \N}$.
         
-        \item Let $O_n := (-1/n, 1/n)$ for every natural $n$, and define $O := \bigcap_{n=1}^\infty O_n$. It is easy to verify that $0 \in O$. Now, let $x \in O$.. If $x > 0$, we can pick a natural $N$ such that $N > 1/x$. Then, $x > 1/N$, therefore $x \notin O_N$ which contradicts our assumption that $x \in O$. A similar contradiction arises when $x < 0$, which means $x$ can only be zero, so we have $O = \set{0}$. The only sequence that is contained in $A$ is $(0, 0, 0, \dots) \ra 0$, so $O$ has no limit points, therefore it is closed.
+        \item Let $O_n := (-1/n, 1/n)$ for every natural $n$, and define $O := \bigcap_{n=1}^\infty O_n$. It is easy to verify that $0 \in O$. Now, let $x \in O$.. If $x > 0$, we can pick a natural $N$ such that $N > 1/x$. Then, $x > 1/N$, therefore $x \notin O_N$ which contradicts our assumption that $x \in O$. A similar contradiction arises when $x < 0$, which means $x$ can only be zero, so we have $O = \set{0}$. The only sequence that is contained in $A$ is $(0, 0, 0, \dots) \to 0$, so $O$ has no limit points, therefore it is closed.
     \end{enumerate}
     
-    \item \begin{shortlemma}{lem_openSetCountable}
+    \item \begin{shortlemma} \label{lem_openSetCountable}
         No open subset of the reals is countable.
     \end{shortlemma}
     
@@ -1383,7 +1394,7 @@
     
     \exc{3.2.5}
     \begin{enumerate}
-        \item ($\Rightarrow$) Assume $F \subseteq \R$ is closed. Let $(a_n)$ be an arbitrary Cauchy sequence contained in $F$. By the Cauchy Criterion, $(a_n) \ra L$ for some $L \in \R$, which we must show to be contained in $F$. If there is some $n_0 \in \N$ such that $a_{n_0} = L$, then $L \in F$, which is what we wanted to show. On the other hand, if none of the $a_n'$s are equal to $L$, then, by Theorem 3.2.5, $L$ is a limit point of $F$. Since $F$ is closed, we must have $L \in F$.
+        \item ($\Rightarrow$) Assume $F \subseteq \R$ is closed. Let $(a_n)$ be an arbitrary Cauchy sequence contained in $F$. By the Cauchy Criterion, $(a_n) \to L$ for some $L \in \R$, which we must show to be contained in $F$. If there is some $n_0 \in \N$ such that $a_{n_0} = L$, then $L \in F$, which is what we wanted to show. On the other hand, if none of the $a_n'$s are equal to $L$, then, by Theorem 3.2.5, $L$ is a limit point of $F$. Since $F$ is closed, we must have $L \in F$.
         
         ($\Leftarrow$) For the reverse implication we assume that every Cauchy sequence contained in $F$ has a limit that is also an element of $F$. If $F$ has no limit points, then it is closed and we are done. Otherwise, let $x$ be a limit point of $F$. By Theorem 3.2.5, $x = \lim(a_n)$ for some sequence $(a_n)$ contained in $F$. Since $(a_n)$ converges, it is Cauchy. By assumption, we can conclude that its limit, namely $x$, is an element of $F$.
     \end{enumerate}
@@ -1453,7 +1464,7 @@
     \end{enumerate}
     
     \exc{3.2.10}
-    (i) Is not possible. Let $A \subseteq [0, 1]$ be countable. Then, we can form some sequence $(a_n)$ contained in $A$ such that no two $a_n$ are the same. Since $(a_n)$ is bounded, it must have a convergent subsequence $(b_n) \ra b$, by the Bolzano-Weierstrass Theorem. If none of the $b_n'$s are equal to $b$, then $b$ is a limit point of $A$, by Theorem 3.2.5. Otherwise, there can only be a single $b_N$ which is equal to $b$, since no two $b_n'$s are the same. Hence, we can form a new sequence $(c_n)$ in the following way:
+    (i) Is not possible. Let $A \subseteq [0, 1]$ be countable. Then, we can form some sequence $(a_n)$ contained in $A$ such that no two $a_n$ are the same. Since $(a_n)$ is bounded, it must have a convergent subsequence $(b_n) \to b$, by the Bolzano-Weierstrass Theorem. If none of the $b_n'$s are equal to $b$, then $b$ is a limit point of $A$, by Theorem 3.2.5. Otherwise, there can only be a single $b_N$ which is equal to $b$, since no two $b_n'$s are the same. Hence, we can form a new sequence $(c_n)$ in the following way:
     \begin{equation*}
         c_n = \begin{cases}
         b_n & n \neq N \\
@@ -1470,7 +1481,7 @@
     $C = \set{c < a : [c, a) \subseteq A}$ and use the same strategy to show that $C$ is not bounded below, which would mean every $[c, a] \subseteq A$, thus $A = \R$. 
     
     \exc{3.3.1}
-    $K$ is nonempty and compact, hence bounded, so both $s := \sup K$ and $t := \inf K$ exist. Then for every $n \in \N$ there is some $k_n \in K$ such t hat $s - 1/n < k_n < s+1/n$, since $s$ is a least upper bound. Then, it is easy to see that $(k_n) \ra s$. But, since $K$ is compact, there is some subsequence $(k_{n_a})$ contained in $K$ which converges to a limit $x \in K$. By Theorem 2.5.2, we know $(k_{n_a})$ converges to the same limit as $(k_n)$, therefore $s = x \in K$. A similar argument shows that $t \in K$.
+    $K$ is nonempty and compact, hence bounded, so both $s := \sup K$ and $t := \inf K$ exist. Then for every $n \in \N$ there is some $k_n \in K$ such t hat $s - 1/n < k_n < s+1/n$, since $s$ is a least upper bound. Then, it is easy to see that $(k_n) \to s$. But, since $K$ is compact, there is some subsequence $(k_{n_a})$ contained in $K$ which converges to a limit $x \in K$. By Theorem 2.5.2, we know $(k_{n_a})$ converges to the same limit as $(k_n)$, therefore $s = x \in K$. A similar argument shows that $t \in K$.
     
     \exc{3.3.2}
     \begin{enumerate}
@@ -1527,14 +1538,14 @@
     
     \exc{4.2.1}
     \begin{enumerate}
-        \item Let $(x_n) \ra c$ and $(y_n) \ra c$ be arbitrary sequences satisfying $x_n,y_n \neq c$. By Theorem 4.2.3, we must have $\lim{f(x_n)} = L$ and 
-        $\lim{g(y_n)} = M$, which implies $\lim{f(x_n)} + \lim {g(y_n)} = L + M = \lim(f(x_n) + g(y_n))$, by the Algebraic Limit Theorem. By Theorem 4.2.3 again, this means $\lim_{x \ra c} [f(x)+g(x)] = L + M$.
+        \item Let $(x_n) \to c$ and $(y_n) \to c$ be arbitrary sequences satisfying $x_n,y_n \neq c$. By Theorem 4.2.3, we must have $\lim{f(x_n)} = L$ and 
+        $\lim{g(y_n)} = M$, which implies $\lim{f(x_n)} + \lim {g(y_n)} = L + M = \lim(f(x_n) + g(y_n))$, by the Algebraic Limit Theorem. By Theorem 4.2.3 again, this means $\lim_{x \to c} [f(x)+g(x)] = L + M$.
         
         \item \lep. Choose $\delta_1$ such that $\abs*{f(x)-L} < \epsilon/2$ whenever $0 < \abs*{x-c} < \delta_1$. Similarly, choose $\delta_2$ such that $\abs*{g(x)-M} < \epsilon/2$ whenever $0 < \abs*{x-c} < \delta_2$. Now, set $\delta = \min(\delta_1, \delta_2)$. Then, whenever $0 < \abs*{x-c} < \delta$ we have
         \begin{equation*}
             \abs*{f(x)+g(x)-L-M} \leq \abs*{f(x)-L} + \abs*{g(x)-M} <
             \frac{\epsilon}{2} + \frac{\epsilon}{2} = \epsilon,
-        \end{equation*} so we can conclude that $\lim_{x \ra c} [f(x) + g(x)] = L + M$.
+        \end{equation*} so we can conclude that $\lim_{x \to c} [f(x) + g(x)] = L + M$.
         
         \item The sequential version of the argument is very similar to the one given in (a), so we show only the proof using Definition 4.2.1 directly.
         \begin{enumerate}
@@ -1544,9 +1555,9 @@
                 \abs*{f(x)g(x) - L M} &= \abs*{f(x)g(x) -L g(x) + L g(x)- L M} \\
                 &\leq \abs*{g(x)}\abs*{f(x)-L} + \abs*{L}\abs*{g(x)-M} \\
                 & < (1 + \abs*{M}) \frac{\epsilon}{2(1+\abs*{M})} + \abs*{L} \frac{\epsilon}{2 \abs*{L}} \\ &= \epsilon
-            \end{align*} whenever $0 < \abs*{x-c} < \delta$, therefore $\lim_{x \ra c} [f(x)g(x)] = L M$.
+            \end{align*} whenever $0 < \abs*{x-c} < \delta$, therefore $\lim_{x \to c} [f(x)g(x)] = L M$.
             
-            \item It is sufficient to show that $\lim_{x \ra c} 1/g(x) = 1/M$. \lep. Choose $\delta_1 > 0$ such that $\abs*{g(x)-M} < \abs*{M}/2$ for all $0 < \abs*{x-c}<\delta_1$. It follows that $\abs*{g(x)} > \abs*{M}/2 > 0$ for the appropriate $x$. Now, choose $\delta_2 > 0$ such that $\abs*{g(x) - M} < \epsilon \abs*{M}^2/2$ for $x$ in the expected interval. Setting $\delta := \min (\delta_1, \delta_2)$, it follows that 
+            \item It is sufficient to show that $\lim_{x \to c} 1/g(x) = 1/M$. \lep. Choose $\delta_1 > 0$ such that $\abs*{g(x)-M} < \abs*{M}/2$ for all $0 < \abs*{x-c}<\delta_1$. It follows that $\abs*{g(x)} > \abs*{M}/2 > 0$ for the appropriate $x$. Now, choose $\delta_2 > 0$ such that $\abs*{g(x) - M} < \epsilon \abs*{M}^2/2$ for $x$ in the expected interval. Setting $\delta := \min (\delta_1, \delta_2)$, it follows that 
             \begin{equation*}
                 \abs*{\frac{1}{g(x)}-\frac{1}{M}} = \abs*{\frac{g(x)-M}{g(x)M}} <
                 \frac{2 \abs*{g(x)-M}}{\abs*{M}^2} < \epsilon
@@ -1562,12 +1573,254 @@
         \item $\delta = \pi - 3$.
     \end{enumerate}
     
+    \begin{shortlemma} \label{lem_rationalAproximations}
+        Let $a \in \R$ and $(p_n/q_n) \to a$ be a sequence of rational numbers, satisfying the following conditions for each $n \in \N$:
+        \begin{itemize}
+            \item $p_n, q_n \in \Z$,
+            \item $p_n/q_n \neq a$.
+        \end{itemize} Then, the sequence $(1/q_n)$ converges to zero.
+    \end{shortlemma}
+    
+    \begin{proof}
+         Let $(p_n/q_n)$ be a sequence that follows the the required conditions. It is sufficient to show that $(q_n)$ is not bounded. Assume for contradiction that $(q_n)$ is bounded, in other words, there is some $M \in \R$ such that $\abs*{q_n} \leq M$ for all $n \in \N$. Since $(p_n/q_n)$ is Cauchy, there is some $N \in \N$ such that $\abs*{p_n/q_n-p_m/q_m} < 1/M^2$ for all $n,m \geq N$. Also, there must be some $N_1, N_2 \geq N$ such that $p_{N_1}/q_{N_1} \neq p_{N_2}/q_{N_2}$, if that were not the case it would mean that the sequence is eventually constant, which would contradict the fact that none of its terms are equal to $a$. Then, we have 
+         \begin{equation*}
+             \abs*{\frac{p_{N_1}}{q_{N_1}}-\frac{p_{N_2}}{q_{N_2}}} = 
+             \abs*{\frac{p_{N_1} q_{N_2}-p_{N_2}q_{N_1}}{q_{N_1} q_{N_2}}}.
+         \end{equation*} Notice that $p_{N_1} q_{N_2}-p_{N_2}q_{N_1}$ is an integer different than zero,
+         
+        \noindent since $p_{N_1}/q_{N_1} \neq p_{N_2}/q_{N_2}$, therefore its absolute value must be greater than or equal to one. Using the fact that $\abs*{q_{N_1} q_{N_2}} \leq M^2$, 
+         \begin{equation*}
+             \abs*{\frac{p_{N_1} q_{N_2}-p_{N_2}q_{N_1}}{q_{N_1} q_{N_2}}} \geq 
+             \frac{1}{\abs*{q_{N_1} q_{N_2}}} \geq \frac{1}{M^2}
+         \end{equation*} which contradicts the fact that $\abs*{p_{N_1}/q_{N_1}-p_{N_2}/q_{N_2}} < 1/M^2$. Thus, $(q_n)$ is not bounded, so it must converge to zero.
+    \end{proof}
+    
     
     \exc{4.2.3}
     \begin{enumerate}
+        \item $(x_n) = (1+1/n)$, $(y_n) = (1+(-1)^n/n)$, $(z_n) = (1+\sqrt{2}/n)$.
+        
+        \item $\lim(t(x_n)) = \lim(t(y_n)) = \lim(t(z_n)) = 0$.
+        
+        \item We claim that $\lim_{x \to 1} t(x) = 0$. \lep. If $\epsilon > 1$, then $\abs{t(x)} = t(x) < \epsilon$ for all $x$, so we can set $\delta$ to any positive real number. Otherwise, choose some arbitrary $a \in A = \set{x \in \R : t(x) \geq \epsilon}$. Notice that every $b \in A$ is rational, otherwise we would have $t(b) = 0 < \epsilon$. Assume $a$ is a limit point of $A$. Then, for every $n \in \N$ there is some $x_n \in A$ such that $x_n \in V_{1/n}(a)$ and $x_n \neq a$. Since $x_n \in \Q$, we can write it as $p_n/q_n$ for integers $p_n/q_n$ in the lowest terms, such that $q_n > 0$. Then, Lemma (\ref{lem_rationalAproximations}) guarantees that there is some $N \in \N$ such that $1/q_N < \epsilon$. But, $t(x_N) = t(p_N/q_N) = 1/q_N$ which should be greater than or equal to $\epsilon$, since $x_N \in A$. This contradiction means that $A$ has no limit points, only isolated points.
+        
+        Notice that $1 \in A$, since $t(1) = t(1/1) = 1 \geq 1$ (recall that we are assuming that $\epsilon \leq 1$). By our previous discussion, $1$ must be an isolated point of $A$. This means that there is some $V_\delta(1)$ which does not intersect $A$, except possibly at $1$. In other words, for every $x \in V_\delta(1)$ (except $x = 1$), we must have $t(x) = \abs*{t(x)-0} < \epsilon$, which we can also write as $t(x) \in V_\epsilon(0)$. By definition 4.2.1B, we can conclude that $\lim_{x \to 1} t(x) = 0$, just as we conjectured.
+    \end{enumerate}
+    
+    \exc{4.2.4}
+    \begin{enumerate}
+        \item $\delta = 8$.
+        \item $\delta = 1$.
+        \item $\delta = 1/9-1/10$.
+    \end{enumerate}
+    
+    \exc{4.2.5}
+    \begin{enumerate}
+        \item \lep. Choose $\delta = \epsilon/3$. Then, $\abs*{x-2} < \delta = \epsilon/3$ implies $\abs*{3x-6} = \abs*{(3x+4) - 10} < \epsilon$.
+        
+        \item \lep. Set $\delta = \min(1, \epsilon)$. Then, $\abs*{x-0} < \delta$ implies $\abs{x} < 1$, therefore $\abs{x}^3 < \abs{x}^2 < \abs{x} < \delta$, which also implies $\abs{x^3 - 0} < \epsilon$.
+        
+        \item \lep. Choose $\delta = \min(1, \epsilon/6)$. Now, choose an arbitrary $x$ such that $0 < \abs{x-2} < \delta$. It follows that $\abs{x+3} < 6$. Then, $\abs{(x^2+x-1)-5} = \abs{x+3}\abs{x-2} < 6\abs{x-2} < \epsilon$.
+        
+        \item \lep. Choose $\delta = \min(1, 6\epsilon)$. Now, choose an arbitrary $x$ such that $0 < \abs{x-3} < \delta$. It follows that $\abs{3x} > 6$. Then,
+        \begin{equation*}
+            \abs*{\frac{1}{x}-\frac{1}{3}} = \abs*{\frac{x-3}{3x}} < \frac{\abs{x-3}}{6} < \epsilon.
+        \end{equation*}
+    \end{enumerate}
+    
+    \exc{4.2.6}
+    \begin{enumerate}
+        \item True, since $0 < \abs{x-c} < \delta' \implies 0 < \abs{x-c} < \delta$, for any $0 < \delta' < \delta$.
+        
+        \item False. For example, consider the function $f : \R \to \R$ that satisfies
+        \begin{equation*}
+            f(x) = \begin{cases}
+            1 & x = 0 \\
+            0 & x \neq 0.
+            \end{cases}
+        \end{equation*}Then, $f(0) = 1$, but $\lim_{x \to 0} f(x) = 0$.
+        
+        \item True, by several applications of the Algebraic Limit Theorem for Functional Limits.
+        
+        \item False. Consider the functions $f(x) = (x-a)/x$ and $g(x) = x/(x-a)$. Then, $\lim_{x \to a} f(x) = 0$, but $\lim_{x \to a} f(x)g(x) = 1$.
+    \end{enumerate}
+    
+    \exc{4.2.7}
+    \lep. Choose $\delta$ such that $\abs{g(x)} < \epsilon/M$ for an arbitrary $x$ satisfying $0 < \abs{x-c} < \delta$. Then, $\abs{f(x)g(x) - 0} \leq M\abs{g(x)} < \epsilon$.
+    
+    \exc{4.2.8}
+    \begin{enumerate}
+        \item The limit does not exist. Let $f(x) = \abs{x-2}/(x-2)$ and consider the sequences $(a_n) = (2+1/n)$ and $(b_n) = (2-1/n)$. Both of them converge to $2$ and none of their terms are equal to $2$. However, $\lim f(a_n) = 1$ but $\lim f(b_n) = -1$. By Corollary 4.2.5, we can conclude that the respective limit does not exist.
+        
+        \item We claim that the limit is $-1$. To see that, \lep[l]. Choose $\delta = 1/4$ and pick an arbitrary $x$ satisfying $0 < \abs{x-7/4} < \delta$. It follows that $x-2 < 0$, therefore $\abs{x-2}/(x-2) = -(x-2)/(x-2) = -1$. Then,
+        \begin{equation*}
+            \abs*{\frac{\abs{x-2}}{x-2} - (-1)} = \abs*{-1 + 1} = 0 < \epsilon.
+        \end{equation*}
+        
+        \item The limit does not exist.  Let $f(x) = (-1)^{\floor*{1/x}}$ and consider the sequences $(a_n) = (1/(2n))$ and $(b_n) = (1/(2n+1))$. Both of them converge to $0$ and none of their terms are equal to $0$. Notice that $\lim f(a_n) =
+        \lim (-1)^{2n} = 1$, whereas $\lim f(b_n) = -1$. By Corollary 4.2.5, the limit does not exist.
+        
+        \item We claim that the limit is $0$. To see that, \lep[l]. Choose $\delta = \epsilon^3$. Then, for an arbitrary $x$ satisfying $0 < \abs{x} < \delta$, we can conclude that $\abs{\sqrt[3]{x}} < \epsilon$.
+    \end{enumerate}
+    
+    \exc{4.2.9}
+    \begin{enumerate}
+        \item Let $M > 0$ be arbitrary. Make $\delta := 1/\sqrt{M}$. Then, for an arbitrary $x$ satisfying $0 < \abs{x} < \delta$, we can conclude that $x^2 <1/M$, which implies $1/x^2 > M$.
+        
+        \item \em{Definition:}\em \space $\lim_{x \to \infty} f(x) = L$ means that for all $\epsilon > 0$, we can find $N > 0$ such that $\abs*{f(x) - L} < \epsilon$ whenever $x > N$.
+        
+        \lep. Choose $N$ such that $N > 1/\epsilon$. Then, for every $x > N$ we can conclude that, $\epsilon > 1/x = \abs{1/x-0}$.
+        
+        \item \em{Definition:}\em \space $\lim_{x \to \infty} f(x) = \infty$ means that for all $M > 0$, we can find $N > 0$ such that $f(x) > M$ whenever $x > N$.
+        
+        To see that $\lim_{x \to \infty} x = \infty$, let $M > 0$ be arbitrary and set $N := M$. Then, $x > N$ implies $x > M$.
+    \end{enumerate}
+    
+    \exc{4.2.10}
+    \begin{enumerate}
+        \item \em{Definition:}\em \space $\lim_{x \to c^+} f(x) = L$ means that for all $\epsilon > 0$, we can find $\delta > 0$ such that whenever  $0 < x-c < \delta$ it follows that $\abs{f(x) - L} < \epsilon$.
+        
+        \noindent \em{Definition:}\em \space $\lim_{x \to c^-} f(x) = L$ means that for all $\epsilon > 0$, we can find $\delta > 0$ such that whenever  $0 < c-x < \delta$ it follows that $\abs{f(x) - L} < \epsilon$.
+        
+        \item Assume $\lim_{x \to c} f(x) = L$ and \lep[l]. By assumption, we can choose $\delta$ such that $\abs{f(x)-L} < \epsilon$ whenever $0 < \abs{x-c} < \delta$. But, $0 < \abs{x-c}<\delta$. But this implies that whenever $0 < x-c < \delta$, then $\abs{f(x)-L} < \epsilon$, which means $\lim_{x \to c^+} f(x) = L$. Similarly, we can conclude that whenever $0 < c-x < \delta$ then $\abs{f(x)-L} < \epsilon$, therefore $\lim_{x \to c^-} f(x) = L$.
+        
+        For the converse, assume both the right ant left-hand limits equal $L$. Now, let $\epsilon > 0$ be arbitrary. Choose $\delta_1$ such that $\abs{f(x)-L} < \epsilon$ whenever $0 < x-c < \delta_1$. Similarly, choose $\delta_2$ such that $\abs{f(x)-L} < \epsilon$ whenever $0 < c-x < \delta_2$. Setting $\delta := \min(\delta_1, \delta_2)$, it follows that $\abs{f(x)-L} < \epsilon$ whenever $0 < \abs{x-c} < \delta$.
+    \end{enumerate}
+    
+    \exc{4.2.11}
+    Let $(x_n) \to c$ be a sequence contained in $A$ such that none of its terms are equal to $c$. By the Sequential Criterion For Functional Limits, it follows that $\lim f(x_n) = \lim h(x_n) = L$. Since for every $n \in \N$ it we have $f(x_n) \leq g(x_n) \leq h(x_n)$, the Squeeze Theorem for Sequences (Exercise 2.3.3) lets us conclude that $\lim h(x_n) = L$. Applying the Sequential Criterion For Functional Limits once again, it follows that $\lim_{x \to c} h(x) = L$.
+    
+    \exc{4.3.1}
+    \begin{enumerate}
+        \item \lep. Set $\delta := \epsilon^3$. Then, $\abs{x} < \delta$ implies 
+        $\abs{\sqrt[3]{x}-0} < \epsilon$.
+        
+        \item Assume $c > 0$. Choose $\delta = \min \left( 1, \epsilon ((c-1)^{2/3} + \sqrt[3]{c^2-c} + c^{2/3})\right)$. It is not hard to check that $x^{2/3} + \sqrt[3]{x c} + c^{2/3} > (c-1)^{2/3} + \sqrt[3]{c^2-c} + c^{2/3}$ whenever $\abs{x-c} < 1 \leq \delta$. Then, 
+        \begin{align*}
+           \abs{\sqrt[3]{x}-\sqrt[3]{c}} &= \abs*{\sqrt[3]{x}-\sqrt[3]{c}} \abs*{\frac{x^{2/3} + \sqrt[3]{x c} + c^{2/3}}{x^{2/3} + \sqrt[3]{x c} + c^{2/3}}} \\
+            &= \frac{\abs{x-c}}{x^{2/3} + \sqrt[3]{x c} + c^{2/3}} \\
+            &< \frac{\abs{x-c}}{(c-1)^{2/3} + \sqrt[3]{c^2-c} + c^{2/3}} < \epsilon
+        \end{align*} whenever $\abs{x-c} < \delta$. Now, assume $c < 0$. Choose $\delta$ such that $\abs{\sqrt[3]{x}-\sqrt[3]{-c}} < \epsilon$ whenever $\abs{x-c} < \delta$. Using the fact that $\sqrt[3]{-y} = -\sqrt[3]{y}$ for any $y \in \R$, we can conclude that $\abs{\sqrt[3]{x}-\sqrt[3]{-c}} = \abs{(-\sqrt[3]{x}) - \sqrt[3]{c}} < \epsilon$. This means that the function $(-1) g(x)$ is continuous at $c$, but Theorem 4.3.4 allows us to conclude that $(-1) (-1) g(x) = g(x)$ must also be continuous at $c$.
+    \end{enumerate}
+    
+    \exc{4.3.2}
+    \begin{enumerate}
+        \item $f(x) = 1$.
+        
+        \item $f(x) = x$.
+        
+        \item There is no such function. If a function $f$ is lesstinuous at $c$, then, by definition, $\abs{f(x)-f(c)} < \epsilon$ whenever $\abs{x-c} < \delta < \epsilon$. But this clearly implies that whenever $\abs{x-c} < \epsilon$ then $\abs{f(x)-f(c)} < \epsilon$, therefore $f$ is equaltinuous at $c$.
+        
+        \item \lep. First assume $f$ is lesstinuous at $c$. Then, there is some $\delta > 0$ such that $\abs{f(x)-f(c)} < \epsilon$ whenever $\abs{x-c} < \delta$. But this is exactly what we mean when saying $f$ is continuous at $c$.
+        
+        Now, assume $f$ is continuous at $c$. Then, there is some $\delta_1 > 0$ such that $\abs{f(x)-f(c)} < \epsilon$ whenever $\abs{x-c} < \delta_1$. Now, set $\delta := \min{\epsilon/2, \delta_1}$. Then, $\abs{f(x)-f(c)} < \epsilon$ whenever $\abs{x-c} < \delta$ and $\delta \leq \epsilon/2 < \epsilon$, therefore $f$ is lesstinuous at $c$.
+        Thus, a function is continuous if and only if it is lesstinuous.
+        
+    \end{enumerate}
+    
+    \exc{4.3.3}
+    \begin{enumerate}
+        \item \lep. Use the continuity of $g$ at $f(c)$ to choose a $\delta_2 > 0$ such that $\abs{g(x)-g(f(c))} < \epsilon$ whenever $\abs{x-f(c)} < \delta_2$. Now, use the continuity of $f$ at $c$ to choose $\delta_1$ such that $\abs{f(x)-f(c)} < \delta_2$ for all $\abs{x-c} < \delta_1$. Choose an arbitrary $x$ such that $\abs{x-c} < \delta_1$. It follows that $\abs{f(x)-f(c)} < \delta_2$. This implies $\abs{g(f(x))-g(f(c))} < \epsilon$, as we wanted to show.
+        
+        \item Let $(x_n) \to c$ be a sequence contained in $A$. We need to show that $\lim g(f(x_n)) = g(f(c))$. Since $f$ is continuous at $c$, it follows that $\lim f(x_n) = f(c)$. Thus, $f(x_n)$ is a sequence contained in $B$ that converges to $f(c)$, which, by the continuity of $g$ at $f(c)$, implies $\lim g(f(x_n)) = c$, as we wanted to show.
+    \end{enumerate}
+    
+    \exc{4.3.4}
+    \begin{enumerate}
+        \item Set $f(x) = 1$ and 
+        \begin{equation*}
+            g(x) = \begin{cases}
+            1 & x = 1 \\
+            0 & x \neq 1.
+            \end{cases}
+        \end{equation*} Then, $\lim_{x \to p} f(x) = 1 = q$ and $\lim_{x \to q} g(x) = 0 = r$, but 
+        
+        \noindent $\lim_{x \to p} g(f(x)) = g(1) = 1 \neq r$.
+        
+        \item Since $\R$ has no isolated points and $f$ is continuous, $\lim_{x \to p} f(x) = f(p)$. For the same reasons, $\lim_{x \to f(p)} g(x) = g(f(p)) = r$. By Theorem 4.3.9, $g(f(x))$ is continuous at $p$, so as long as $p$ is not an isolated point of the range of $f$, it follows that $\lim_{x \to p} g(f(x)) = g(f(p)) = r$. 
+        
+        \item As shown in the example we gave in (a), $f$ being continuous is not enough for the result to hold. Now, assume that $g$ is continuous. We can conclude that $\lim_{x \to q} g(x) = g(q) = r$. Then, to show that the result in (a) holds, it is sufficient to show that $\lim_{x \to p} g(f(x)) = g(q)$. To do that, \lep[l] \space and choose $\delta_1$ such that $\abs{g(x)-g(q)} < \epsilon$ whenever $\abs{x-q} < \delta_1$. Next, pick some $\delta > 0$ such that $\abs{f(x)-q} < \delta_1$ whenever $\abs{x-p} < \delta$. Now, choose an arbitrary $x$ such that $\abs{x-p} < \delta$. It follows that $\abs{f(x)-q} < \delta_1$, which means $\abs{g(f(x))-g(q)} < \epsilon$, therefore $\lim_{x \to p} g(f(x)) = g(q)$, as we wanted to show.
+    \end{enumerate}
+    
+    \exc{4.3.5}
+    \lep. Since $c$ is an isolated point of $A$, there is some $V_\delta (c)$ which only intersects $A$ at $c$. Thus, the only $x$ that satisfies $\abs{x-c} < \delta$ is $c$, so $\abs{f(x)-f(c)} = 0 < \epsilon$ whenever $\abs{x-c} < \delta$.
+    
+    \exc{4.3.6}
+    \begin{enumerate}
         \item 
+        \begin{align*}
+            f(x) &= \begin{cases}
+            2 & x = 0 \\ 
+            1 & x \neq 0
+            \end{cases} \\
+            g(x) &= \begin{cases}
+            1 & x = 0 \\ 
+            2 & x \neq 0
+            \end{cases}
+        \end{align*}
+        
+        \item Not possible. By Theorem 4.3.4, $(f(x)+g(x))-f(x) = g(x)$ must be continuous at zero.
+        
+        \item $f(x) = 0$ and $g(x)= \floor{x}$.
+        
+        \item \begin{equation*}
+            f(x) = \begin{cases}
+            2 & x = 0 \\ 
+            \frac{1}{2} & x \neq 0.
+            \end{cases}
+        \end{equation*}
+    \end{enumerate}
+    
+    \item Not possible. Assume $f(x)^3$ is continuous at $0$. We've shown in Exercise $4.3.1$ that $g(x)=\sqrt[3]{x}$ is continuous at $0$, so Theorem 4.3.9 guarantees that $g(f(x)^3) = f(x)$ is continuous at $0$. The contrapositive of we just proved is that if $f$ is not continuous at $0$, then $f(x)^3$ is also not continuous at $0$.
+    
+    \exc{4.3.7}
+    \begin{enumerate}
+        \item Let $x \in \R$ be arbitrary. If $x \in \Q$, construct a sequence of $(x_n) \to x$ where every $x_n$ is irrational. This can be done since $\I$ is dense in $\R$. Then, $g(x_n) = 0$ for each $n \in \N$, therefore $\lim g(x_n) = 0 \neq g(x)$, since $g(x) = 1$. By Corollary 4.3.3, $g$ is not continuous at $x$. A very similar argument works if $x \notin \Q$.
+        
+        \item Let $x \in \Q$. It is clear that $t(x) > 0$. Now, construct a sequence $(x_n) \to x$ such that every $x_n$ is irrational. Then, $\lim t(x_n) = 0$, but $t(x) \neq 0$, so Corollary 4.3.3 guarantees that $t$ is not continuous at $x$.
+        
+        \item Let $x \notin \Q$ be arbitrary and let $(x_n) \to x$ be a sequence. We need to show that $\lim t(x_n) = t(x) = 0$. To do that, \lep[l] \space and assume for sake of contradiction that there are infinitely many $x_n$ such that $t(x_n) \geq \epsilon$. Then, we can form a subsequence $(x_{n_k})$ of $(x_n)$, which must also converge to $x$, consisting only of the terms in $(x_n)$ that satisfy $t(x_n) \geq \epsilon$. Since $\epsilon > 0$, none of the $x_{n_k}$ are irrational, which means they are all not equal to $x$. Then, we can write $x_{n_k} = p_k/q_k$ for each $k \in \N$, where $p_k, q_k$ are integers with $q_k > 0$. By Lemma (\ref{lem_rationalAproximations}), the sequence $(1/q_k)$ converges to zero. Thus, there is some $M \in \N$ such that $1/q_M < \epsilon$. But, by the construction of $(x_{n_k})$, $t(x_{n_M}) = t(p_M/q_M) = 1/q_M \geq \epsilon$, a contradiction.
+        
+        We can conclude that there are only finitely many $x_n$ for which $t(x_n) \geq \epsilon$. In other words, there is some $N \in \N$ such that $\abs{t(x_n)} = t(x_n) < \epsilon$ for all $n \geq N$, therefore $\lim t(x_n) = 0 = t(x)$, so $t$ is continuous at $x$.
+    \end{enumerate}
+    
+    \exc{4.3.8}
+    \begin{enumerate}
+        \item Since $g$ is continuous, it follows that $\lim_{x \to 1^-} g(x) = g(1)$. \lep. Then, there is a $\delta > 0$ such that $\abs{g(1)-g(x_0)} < \epsilon$ for some $x_0$ where $0 < 1-x_0 < \delta$. Since $x_0 < 1$, we must have $g(x_0) \geq 0$. Then, $\abs{g(1)-g(x_0) } < \epsilon \implies -\epsilon \leq g(x_0)-\epsilon < g(1)$. Thus, we have shown that for any $\epsilon > 0$, it follows that $g(1) > 0 -\epsilon$, which must mean $g(1) \geq 0$.
+        
+        \item Choose some $t \in \R$. If $t \in \Q$, then $g(t) = 0$ by construction, so assume $t \notin \Q$. Since $g$ is continuous, we know that $\lim_{x \to t} g(x) = g(t)$, so our goal is to show that $g(t) = 0$. To do that, \lep[l] \space and choose $\delta > 0$ such that $\abs{g(x)-g(t)} < \epsilon$ whenever $\abs{x-t} < \delta$. Since $\Q$ is dense in $\R$, we can choose $q \in \Q$ such that $\abs{q-t} < \delta$. Then, $g(q) = 0$ by construction, so $\abs{g(q)-g(t)} = \abs{g(t)} < \epsilon$. Since $\abs{g(t)}$ is smaller than any positive number, we must have $g(t) = 0$.
+        
+        \item Since $g$ is continuous at $x_0$, it follows that $\lim_{x \to x_0} g(x) = g(x_0) > 0$. Then, we can find $\delta > 0$ such that $\abs{g(x)-g(x_0)} < g(x_0)$ whenever $0 < \abs{x-x_0} < \delta$. Notice that,  $\abs{g(x)-g(x_0)} < g(x_0) \iff$
+        
+        \noindent $0 < g(x) < 2g(x_0)$. Since there are uncountably many $x$ that satisfy $0 < \abs{x-x_0} < \delta$, the result follows.
+    \end{enumerate}
+    
+    \exc{4.3.9}
+    Let $x$ be a limit point of $K$. Then, there is a sequence $(x_n) \to x$ contained in $K$ such that none of the $x_n$ are equal to $x$. Since $h$ is continuous, Theorem 4.3.2 (iii) guarantees that $(h(x_n)) \to h(x)$. But, $h(x_n) = 0$ for every $n \in \N$, so $(h(x_n)) \to 0$. We can conclude that $h(x) = 0$, therefore $x \in K$, so $K$ is closed.
+    
+    \begin{shortlemma} \label{lem_evenOddContinuous}
+        Let $f$ be an even function (i.e, $f(-x) = f(x)$ for all $x \in \R$) and $g$ be an odd function ($g(-x) = -g(x)$ for all $x \in \R$). Then, if $f$ is continuous at $c \in \R$ for all $c \geq 0$, then $f$ is continuous everywhere. Similarly, if $g$ is continuous at all $c \geq 0$ it is also continuous everywhere.
+    \end{shortlemma}
+    
+    \begin{proof}
+         Let $c \in \R$ be negative. Notice that the function $h(x)=-x$ is continuous at $c$ and $f$ is continuous at $h(c)=-c$. Then, by Theorem 4.3.9, $f \circ g$ is continuous at $c$. But, $f \circ g = f$, so $f$ is continuous everywhere. The proof is similar for $g$.
+    \end{proof}
+    
+    \exc{4.3.10}
+    \begin{enumerate}
+        \item For each $n \in \N$ define $g_n(x) = \max{f_1(x), f_2(x), \dots, f_n(x)}$. We show that every $g_n$ is continuous by induction. Notice that $g_1 = f_1$, which is continuous by assumption. Assume inductively that $g_n$ is continuous. Then, $g_{n+1}(x) = \max{g_n(x),f_{n+1}(x)}$. By the formula given in the exercise, we can write 
+        $$ g_{n+1}(x) = \frac{1}{2} (g_n(x)+f_{n+1}(x) + \abs{g_n(x)-f_{n+1}(x)}).$$ Since $g_n$, $\abs{x}$ and $f_{n+1}$ are all continuous, Theorem 4.3.4 and 4.3.9 guarantee that $g_{n+1}$ is also continuous.
+        
+        \item First, we show that $f_n$ is continuous everywhere for every $n \in \N$. Choose arbitrary $c \in \R$ and $n \in \N$. Since $f$ is even, it is sufficient to show that $f$ is continuous at every non-negative real, by Lemma (\ref{lem_evenOddContinuous}). First, assume $0 < c < 1/n$. Then, $f_n(c) = n c$. \lep. Let $\delta = \min(n \epsilon, c/2)$. Now, choose an arbitrary $x$ such that $\abs{x-c} < \delta$. It follows that $x > c/2 > 0$, so $\abs{x}=x$. Then, $\abs{f_n(x)-f_n(c)} = \abs{n x-n c} = n \abs{x-c} < \epsilon$. Thus, $f_n$ is continuous at $c$. If $c = 1/n$, it is easy to verify with left and right limits that $f$ is continuous at $c$, so assume $c > 1/n$. Then, $\delta = c-1/n$ works for any $\epsilon > 0$.
+        
+        To compute $h(x)$, first assume $\abs{x} = 0$. Then, $\abs{0} < 1/n$ for all $n \in \N$, so $f_n(0) = n 0 = 0$. Thus, $h(0) = 0$. Now, let $\abs{x} > 0$. Choose $N \in \N$ such that $N \geq 1/\abs{x}$. Then, $f_N(x) = 1$, and, since $1$ none of the $f_n$ are ever greater than $1$, it follows that $h(x) = 1$. Thus, 
+        \begin{equation*}
+            h(x) = \begin{cases}
+            0 & x = 0 \\ 
+            1 & x \neq 0.
+            \end{cases}
+        \end{equation*} Therefore $h$ is not continuous at $0$.
     \end{enumerate}
 \end{enumerate}
-
 
 \end{document}
