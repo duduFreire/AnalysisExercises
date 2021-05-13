@@ -31,11 +31,11 @@
 \DeclarePairedDelimiter\ceil{\lceil}{\rceil}
 \DeclarePairedDelimiter\floor{\lfloor}{\rfloor}
 
-\newcommand{\N}{\mathbb{N}}
-\newcommand{\Z}{\mathbb{Z}}
-\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\N}{\mathbf{N}}
+\newcommand{\Z}{\mathbf{Z}}
+\newcommand{\Q}{\mathbf{Q}}
 \newcommand{\I}{\mathbf{I}}
-\newcommand{\R}{\mathbb{R}}
+\newcommand{\R}{\mathbf{R}}
 \newcommand{\paren}[1]{\left( #1 \right)}
 \newcommand{\set}[1]{\{#1\}}
 \newcommand{\exc}[2][Abbott]{\item \textbf{#1, Exercise #2.}}
@@ -45,8 +45,10 @@
 
 \let\oldlog\log
 \let\oldmax\max
+\let\oldsin\sin
 \renewcommand{\log}[1]{\oldlog \left( #1 \right)}
 \renewcommand{\max}[1]{\oldmax \left( #1 \right)}
+\renewcommand{\sin}[1]{\oldsin \left( #1 \right)}
 
 
 \title{Real Analysis Exercises}
@@ -1401,7 +1403,7 @@
     
     \exc{3.2.6}
     \begin{enumerate}
-        \item Define $O_n := (\sqrt(2)+n,\sqrt{2}+n+1)$ for all $n \in \Z$ and let $O = \bigcup_{n=-\infty}^\infty O_n$. By Theorem 3.2.3, $O$ is an open set. Now, assume there is some $k \in \Z$ such that $\sqrt{2} \in O_k$. Then, $\sqrt{2}+n<\sqrt{2} < \sqrt{2}+n+1$, which implies $0 < -n < 1$, but this is a contradiction since there are no integers strictly between $0$ and $1$. Therefore, $\sqrt{2} \notin O$, thus $O \neq \R$. Now let $x \in \Q$ be arbitrary. Find some $N \in \Z$ such that $N \leq x-\sqrt{2} < N+1$. Since $x-\sqrt{2}$ is irrational and $N$ is rational, the previous inequality can be made strict. Then, we have $\sqrt{2} + N < x < \sqrt{2} + N + 1$, thus $x \in O_N$. This means that $O$ is an open set that contains every rational number but is not equal to $\R$.
+        \item Define $O_n := (\sqrt{2}+n,\sqrt{2}+n+1)$ for all $n \in \Z$ and let $O = \bigcup_{n=-\infty}^\infty O_n$. By Theorem 3.2.3, $O$ is an open set. Now, assume there is some $k \in \Z$ such that $\sqrt{2} \in O_k$. Then, $\sqrt{2}+n<\sqrt{2} < \sqrt{2}+n+1$, which implies $0 < -n < 1$, but this is a contradiction since there are no integers strictly between $0$ and $1$. Therefore, $\sqrt{2} \notin O$, thus $O \neq \R$. Now let $x \in \Q$ be arbitrary. Find some $N \in \Z$ such that $N \leq x-\sqrt{2} < N+1$. Since $x-\sqrt{2}$ is irrational and $N$ is rational, the previous inequality can be made strict. Then, we have $\sqrt{2} + N < x < \sqrt{2} + N + 1$, thus $x \in O_N$. This means that $O$ is an open set that contains every rational number but is not equal to $\R$.
         
         \item Notice that $\emptyset \supseteq \emptyset \supseteq \emptyset \dots$, and the intersection of all these sets is of course empty. Since $\emptyset$ is closed, this is a counterexample.
         
@@ -1535,6 +1537,9 @@
     \begin{enumerate}
         \item True for finite and compact sets (Exercise 3.3.1) but false for closed sets, for example, $\R$ has no maximum.
     \end{enumerate}
+    
+    \exc{3.4.6}
+    Let $E \subseteq \R$ be connected.
     
     \exc{4.2.1}
     \begin{enumerate}
@@ -1769,9 +1774,9 @@
             \frac{1}{2} & x \neq 0.
             \end{cases}
         \end{equation*}
+        
+        \item Not possible. Assume $f(x)^3$ is continuous at $0$. We've shown in Exercise $4.3.1$ that $g(x)=\sqrt[3]{x}$ is continuous at $0$, so Theorem 4.3.9 guarantees that $g(f(x)^3) = f(x)$ is continuous at $0$. The contrapositive of we just proved is that if $f$ is not continuous at $0$, then $f(x)^3$ is also not continuous at $0$.
     \end{enumerate}
-    
-    \item Not possible. Assume $f(x)^3$ is continuous at $0$. We've shown in Exercise $4.3.1$ that $g(x)=\sqrt[3]{x}$ is continuous at $0$, so Theorem 4.3.9 guarantees that $g(f(x)^3) = f(x)$ is continuous at $0$. The contrapositive of we just proved is that if $f$ is not continuous at $0$, then $f(x)^3$ is also not continuous at $0$.
     
     \exc{4.3.7}
     \begin{enumerate}
@@ -1821,6 +1826,218 @@
             \end{cases}
         \end{equation*} Therefore $h$ is not continuous at $0$.
     \end{enumerate}
+    
+    \exc{4.3.11}
+    \begin{enumerate}
+        \item Let $a \in \R$ be arbitrary and \lep[l]. Set $\delta = \epsilon/c$. Now, for any $x$ such that $\abs{x-a} < \delta$ if follows that $\abs{f(x)-f(a)} \leq c \abs{x-a} < \epsilon$.
+        
+        \item First, we show that $\abs{y_{n+m}-y_n} \leq c^{n-1}\abs{y_{m+1}-y_1}$. We fix $m \in \N$ and induct on $n \in \N$. The base case is $\abs{y_{m+1}-y_1} \leq \abs{y_m+1-y_1}$, which is trivially true. Now, assume inductively that $\abs{y_{n+m}-y_n} \leq c^{n-1}\abs{y_{m+1}-y_1}$. Then, 
+        \begin{equation*}
+            \abs{y_{n+m+1} - y_{n+1}} = \abs{f(y_{n+m})-f(y_n)} \leq 
+            c \abs{y_n+m-y_n} \leq c^n \abs{y_{m+1}-y_1},
+        \end{equation*} as we wanted to show. Next, we show that $\abs{y_{m+1} - y_1} \leq \abs{y_2-y_1} (1-c^m)/(1-c)$ for all $m \in \N$, again using induction. The base case is trivial, so assume the inductive hypothesis. Then, 
+        \begin{align*}
+            &\abs{y_{m+2}-y_1} \leq \abs{y_{m+2}-y_{m+1}} + \abs{y_{m+1}-y_1} \leq\\
+            &c^m \abs{y_2-y_1} + \abs{y_2-y_1} \frac{1-c^m}{1-c} =
+            \abs{y_2-y_1} \frac{1-c^{m+1}}{1-c}.
+        \end{align*} Combining both results, we can conclude that 
+        \begin{equation*}
+            \abs{y_{n+m}-y_n} \leq c^{n-1} \abs{y_2-y_1} \frac{1-c^m}{1-c}.
+        \end{equation*} Since $\abs{c} < 1$, it is easy to see that the right hand side of the previous inequation gets arbitrarily small as $n$ gets large. In other words, for any $\epsilon > 0$ we can choose $N \in \N$ such that 
+        \begin{equation*}
+            \abs{y_{n+m}-y_n} \leq c^{n-1} \abs{y_2-y_1} \frac{1-c^m}{1-c} \leq \epsilon
+        \end{equation*} for all $n \geq N$ and all $m \in \N$. This shows that $(y_n)$ is Cauchy.
+        
+        \item Since $(y_n) \to y$, $\lim f(y_n) = y$, by the sequential criterion for continuity. Also, $\lim y_{n+1} = \lim y_n = y$, so we can take the limit on both sides of the equation $y_{n+1} = f(y_n)$ to get $y = f(y)$.
+        
+        Now assume there is some $x \in \R$ such that $f(x) = x$. Then, $\abs{f(x)-f(y)} = \abs{x-y} \leq c \abs{x-y}$. Since $c < 1$, this can only happen if $\abs{x-y} = 0$, in other words, $x = y$.
+        
+        \item Choose some arbitrary $x_1 \in \R$. Then, consider the sequence $(x_n)$ defined $x_{n+1} = f(x_n)$. We have already shown that this sequence converges to some real number $x$, and that $f(x) = x$, but, as shown in the previous item, this must mean $x = y$. Thus, $(x_n)$ converges to $y$.
+    \end{enumerate} 
+    
+    \exc{4.3.12}
+    First, we show that $g(x) \in C_x = \set{\abs{x-a} : a \in F}$ for all $x \in \R$. To do that, it is sufficient to show that $C_x$ is closed, since nonempty closed sets that are bounded below contain their infimum and $C_x$ is bounded below by $0$. Let $x \in \R$ be arbitrary and let $c$ be a limit point of $C_x$. Then, for every $n \in \N$ there is some $c_n \in C_x$ such that $c_n \in V_{1/n}(c)$ and $c_n \neq c$. Since $c_n \in C_x$, we can write it as $c_n = \abs{a_n - x}$ for some $a_n \in F$. Then, infinitely many $a_n$ are greater than or equal to $x$ or infinitely many of them are less than $x$. In the second case, form a subsequence $(a_{n_k})$ consisting of all the $a_n$ which are less than $x$. Then, $x - a_{n_k} \in V_{1/n_k}(c)$, which implies $a_{n_k} \in V_{1/n_k}(x-c)$. Since $x-a_n$ was never equal to $c$, it follows that none of the $a_{n_k}$ are equal to $x-c$, so $x-c$ is a limit point of $F$, therefore $x-c \in F$, since $F$ is closed. But, $c = \abs{x-(x-c)}$, which means $c \in C_x$. The argument is nearly identical when infinitely many of the $a_n$ are greater than or equal to $x$. We can conclude that $C_x$ is closed, so it must contain its infimum.
+    
+    Now, let $c \in \R$ be arbitrary and consider a sequence $(x_n) \to c$ where none of its terms are $c$. \lep. We can choose $N \in \N$ such that $\abs{x_n-c} < \epsilon$ whenever $n \geq N$. Since $g(x_n) \in \set{\abs{x_n-a} : a \in F}$, we can write it as $g(x_n) = \abs{x_n-a_n}$ for some $a_n \in F$. Similarly, we can write $g(c) = \abs{c-a_0}$ for some $a_0 \in F$. Then, using the fact that $g(x_n)$ is lower bound, we can conclude that $\abs{x_n-a_n} \leq \abs{x_n-a_0} \leq \abs{x_n-c}+\abs{c-a_0} < \epsilon + g(c)$. Similarly, $\abs{c-a_0} \leq \abs{c-a_n} < \epsilon + g(x_n)$, which implies $g(c)-\epsilon < g(x_n) < g(c) + \epsilon$ whenever $n \geq N$. This means that $g(x_n) \to g(c)$, so $g$ is continuous at $c$.
+    
+    Let $g(x) = \abs{x-a}$ for some $a \in F$ and $x \notin F$. Then, $g(x)$ is only $0$ when $x = a$, but $x \notin F$, so $x \neq a$ and $g(x) \neq 0$.
+    
+    \exc{4.3.13}
+    \begin{enumerate}
+        \item $f(0+0) = f(0) + f(0) = 2f(0) = f(0)$, therefore $f(0) = 0$. Also, $0 = f(0) = f(x-x) = f(x) + f(-x)$, so $f(-x) = -f(x)$.
+        
+        \item We prove $f(n) = k f(n)$ for every $n \in \N$ by induction. The base case is $f(1) = 1 k = f(1)$, so assume $f(n) = k n$. Then, $f(n+1) = f(n) + f(1) = k n + k = (k+1) n$. Now, let $z \in \Z$ be arbitrary. If $z > 0$ then $z \in \N$ so $f(z) = k z$. If $z = 0$ then $f(z) = 0 = 0 k$. Otherwise, $-z \in \N$ so $f(-z) = -k z = -f(z)$, so $f(z) = k z$. 
+        
+        Now, let $n \in \N$ be arbitrary. Then, $f(1) = k = f(\sum_{k=1}^n 1/n) = \sum_{k=1}^n f(1/n) = n f(1/n)$, so $f(1/n) = k/n$ for all $n \in \N$. This result is easily extended to the integers, since $f(-z)=-f(z)$. Using the same method, we can show that $f(n x) = n f(x)$ for all $n \in \N$ and all $x \in \R$. Now, let $r \in \Q$ be arbitrary. Then, we can write it as $r = a/b$ where $a,b \in \Z$. Then, $f(r)=f(a/b)= a f(1/b) = a k /b = k r$.
+        
+        \item Let $c \in \R$ and $(x_n) \to c$ be arbitrary. Then, $(x_n-c) \to 0$, which means, since $f$ is continuous at zero, that $\lim f(x_n -c) = f(0) = 0$. Using the additive property of $f$, we can conclude that $\lim f(x_n-c) = \lim f(x_n) - f(c) = 0$, which implies $\lim f(x_n) = f(c)$, so $f$ is continuous at $c$.
+        
+        Let $x \in \I$ be arbitrary. Since $\Q$ is dense in $\R$, we can form a sequence $(x_n) \to x$ where every $x_n \in \Q$. Then, $\lim f(x_n) = \lim k x_n = k x$ and since $f$ is continuous everywhere, we can conclude that $f(x) = \lim f(x_n) = k x$.
+    \end{enumerate}
+    
+    \exc{4.4.1}
+    \begin{enumerate}
+        \item $g(x)=x$ is continuous on $\R$ so, by the Algebraic Continuity Theorem, $h(x)=x x = x^2$ is also continuous on $\R$. Applying the theorem one more time we get that $f(x) = h(x) x = x^3$ is continuous on $\R$.
+        
+        \item Consider the sequences $(x_n) = (n+1/n^2)$ and $(y_n) = (n)$. Then, $(\abs{x_n-y_n}) = (1/n^2) \to 0$. But $\abs{f(x_n)-f(y_n)} = 3 + 3/n^3 + 1/n^6 \geq 3$, so $x^3$ is not uniformly continuous on $\R$.
+        
+        \item Let $A \subseteq \R$ be bounded by $M > 0$. \lep. Set $\delta := \epsilon/(3M^2)$ and choose arbitrary $x,y \in A$ such that $\abs{x-y} < \delta$. Notice that $\abs{x^2 + x y + y^2} \leq 3M^2$. Then, 
+        \begin{equation*}
+            \abs{x^3-y^3}=\abs{x-y}\abs{x^2+ x y + y^2} \leq \abs{x-y} 3M^2 < \epsilon.
+        \end{equation*}
+    \end{enumerate}
+    
+    \exc{4.4.2}
+    \begin{enumerate}
+       \item Consider the sequences $(1/(n+1))$ and $(1/(n+2))$ contained in $(0, 1)$. It is easy to see that $(\abs{1/(n+1)-1/(n+2)}) \to 0$. Also, $\abs{1/(1/(n+1)) - 1/(1/(n+2))} = 1 \geq 1$ for all $n \in \N$, so, by Theorem 4.4.5, $1/x$ is not uniformly continuous on $(0, 1)$.
+        
+    \item Yes. \lep. Set $\delta := \epsilon$ and choose arbitrary $x,y \in (0, 1)$ such that $\abs{x-y} < \epsilon$. Notice that
+    \begin{equation*}
+        \frac{1}{\sqrt{x^2+1} + \sqrt{y^2+1}} \leq 1/2
+    \end{equation*} and $\abs{x+y} \leq 2$. It follows that 
+    \begin{equation*}
+        \frac{\abs{x+y}}{\sqrt{x^2+1} + \sqrt{y^2+1}} \leq 1.
+    \end{equation*} Then, 
+    \begin{align*}
+        &\abs*{\sqrt{x^2+1}-\sqrt{y^2+1}} = 
+        \abs*{\sqrt{x^2+1}-\sqrt{y^2+1}} \frac{\abs*{\sqrt{x^2+1}+\sqrt{y^2+1}}}{\abs*{\sqrt{x^2+1}+\sqrt{y^2+1}}} =\\
+        &\frac{\abs{x^2-y^2}}{\abs*{\sqrt{x^2+1}+\sqrt{y^2+1}}} =
+        \frac{\abs{x+y}}{\abs*{\sqrt{x^2+1}+\sqrt{y^2+1}}} \abs{x-y} \leq \abs{x-y} < \epsilon.
+    \end{align*}
+    
+    \item Since $x, \sin{x}$ and $1/x$ are continuous on $\R \backslash 0$,  $x \sin{1/x}$ is continuous on $(0, 1]$. Also, we have shown in Example 4.3.6 that 
+    \begin{equation*}
+        g(x) = \begin{cases}
+        x \sin{1/x} & x \neq 0 \\ 
+        0 & x = 0
+        \end{cases}
+    \end{equation*} is continuous at $0$, so $g$ is continuous on $[0, 1]$. Since $[0, 1]$ is compact, $g$ is uniformly continuous on $[0, 1]$, which implies it is uniformly continuous on $(0, 1)$. But on this interval, $g(x) = x \sin{1/x}$, so $x \sin{1/x}$ is uniformly continuous on $(0, 1)$.
+    \end{enumerate}
+    
+    \exc{4.4.3}
+    First, we show that $1/x^2$ is uniformly continuous on $[1, \infty)$. \lep. Set $\delta = \epsilon/2$ and choose arbitrary $x, y \in [1, \infty)$ such that $\abs{x-y} < \delta = \epsilon/2$. Notice that 
+    \begin{equation*}
+        \frac{\abs*{x+y}}{x^2 y^2} = \frac{1}{x y^2} + \frac{1}{x^2 y} \leq 2.
+    \end{equation*} Then, 
+    \begin{equation*}
+        \abs*{\frac{1}{x^2}-\frac{1}{y^2}} = \frac{\abs{x^2-y^2}}{x^2 y^2} =
+        \abs{x-y} \frac{\abs*{x+y}}{x^2 y^2} \leq 2 \abs{x-y} < \epsilon.
+    \end{equation*}
+    
+    Now, consider the sequences $(x_n) = (1/\sqrt{n+1})$ and $(y_n) = (1/\sqrt{n+2})$. Clearly, $(\abs{x_n-y_n}) \to 0$ and both sequences are contained in $(0, 1]$. But $\abs{f(x_n)-f(y_n)} = \abs{(n+1)-(n+2)} = 1 \geq 1$, so Theorem 4.4.5 asserts that $f$ is not uniformly continuous on $(0, 1]$.
+    
+    \exc{4.4.4}
+    \begin{enumerate}
+        \item True. Since $f(x) > 0$ on $[a, b]$, $1/f$ is defined on all of $[a, b]$. Also, $f$ is continuous on this interval, so Theorem 4.3.4 guarantees that $1/f$ is also continuous on $[a, b]$. Since $[a, b]$ is compact, $1/f$ must attain a minimum and a maximum on the interval (Theorem 4.4.2), therefore $1/f$ is bounded on $[a, b]$.
+        
+        \item True. Assume that $f(A)$ is not bounded. Then, there is an $x_1 \in A$ satisfying $\abs{f(x_1)} \geq 1$. In general, for every $n \in \N$ there must be an $x_{n+1} \in A$ such that $\abs{f(x_{n+1})} \geq \abs{f(x_n)} + 1$. Since $(x_n) \subseteq A$, it must be bounded, so there is some convergent subsequence $(x_{n_k})$. Now, consider the sequence $(y_k)$ defined by$y_k = x_{n_{k+1}}$ for each $k \in \N$. Clearly, $(\abs{x_k-y_k}) \to 0$. Then, $\abs{f(y_k)} = \abs{f(x_{n_{k+1}})} \geq \abs{f(x_{n_k})} + 1$ and it follows that $\abs{f(y_k)-f(x_{n_k})} \geq 1$, so $f$ cannot be uniformly continuous, by Theorem 4.4.4. This is a contradiction, so $f(A)$ is bounded.
+        
+        \item Not true. Consider the function $f : \R \to \R$ defined by
+        \begin{equation*}
+            f(x) = \begin{cases}
+            1 & x \geq 0 \\ 
+            -1 & x < 0
+            \end{cases}
+        \end{equation*} Regardless of $K$, $f(K)$ will be $\set{-1}$ or $\set{1}$ or $\emptyset$ or $\set{1, -1}$. Each of these sets is bounded and contain no limit points, therefore they are compact. However, $f$ is obviously discontinuous at $0$.
+        \end{enumerate}
+        
+    \exc{4.4.5}
+    Let $g : (a,c) \to \R$ be uniformly continuous on $(a, b]$ and $[b, c)$. To see that $g$ is uniformly continuous on $(a, c)$, \lep[l]. Since $g$ is uniformly continuous on $(a, b]$, we can choose a $\delta_1 > 0$ such that $\abs{f(x)-f(b)} < \epsilon/2$ as long as $\abs{x-b} < \delta_1$. Similarly, we we can choose $\delta_2 > 0$ such that $\abs{f(y)-f(b)} < \epsilon/2$ if $\abs{y-b} < \delta_2$. We can also find $\delta_3, \delta_4 >0$ that satisfy the uniform continuity properties when $x,y \in (a,b]$ and $x,y \in [b,c)$ respectively. Now, set $\delta = \min(\delta_1, \delta_2, \delta_3, \delta_4)$. Next let $x,y \in (a, c)$ with $\abs{x-y} < \delta$ be arbitrary. The cases $x,y \in (a, b]$ and $x,y \in [b, c)$ are trivial, so assume $x \in (a, b]$ and $y \in [b, c)$. It is easy to see that $\abs{x-b} < \delta \leq \delta_1$ and $\abs{y-b} < \delta \leq \delta_2$. Then, it follows that $\abs{f(x)-f(b)} < \epsilon/2$ and $\abs{f(y)-f(b)} < \epsilon/2$. Summing the inequalities and applying the triangle inequality once again, we get $\abs{f(x)-f(y)} < \epsilon$, so $g$ is uniformly continuous on $(a, c)$.
+    
+    \exc{4.4.6}
+    \begin{enumerate}
+        \item $f(x) = 1/x$ and $(x_n) = 1/n$.
+        
+        \item Impossible. Let $f : (0, 1) \to \R$ be uniformly continuous and $(x_n)$ be a Cauchy sequence. \lep. Then, we can find $\delta > 0$ such that $\abs{f(x)-f(y)} < \epsilon$ whenever $\abs{x-y} < \delta$. Since $(x_n)$ is Cauchy, we can choose $N \in \N$ such that $\abs{x_n-x_m} < \delta$ whenever $n, m \geq N$. Then, we can conclude that $\abs{f(x_n)-f(x_m)} < \epsilon$ for all $n,m \geq N$, so $f((x_n))$ is Cauchy.
+        
+        \item Impossible. Let $f: [0, \infty) \to \R$ be continuous and $(x_n) \to x$ be a Cauchy sequence. Since $[0, \infty)$ is closed, $x \in [0, \infty)$. Thus, by the sequential characterization of continuity, we must have $\lim f(x_n) = f(x)$, so $(f(x_n))$ converges, therefore it is Cauchy.
+    \end{enumerate} 
+    
+    \exc{4.4.7}
+    First, notice that $f$ is continuous on $[0, 1]$, so Theorem 4.4.7 guarantees that $f$ is also uniformly continuous on this interval. To see that $f$ is uniformly continuous on $[1, \infty)$, \lep[l] and set $\delta = 2 \epsilon$. Keeping in mind that $\abs{\sqrt{x}+\sqrt{y}} = \sqrt{x}+\sqrt{y} \geq 2$,
+    \begin{equation*}
+        \abs*{\sqrt{x}-\sqrt{y}} = \abs*{\sqrt{x}-\sqrt{y}} \abs*{\frac{\sqrt{x}+\sqrt{y}}{\sqrt{x}+\sqrt{y}}} = 
+        \frac{\abs{x-y}}{\abs{\sqrt{x}+\sqrt{y}}} \leq \frac{\abs{x-y}}{2} < \epsilon.
+    \end{equation*} A slight modification of Exercise 4.4.5 shows that the uniform continuity of $f$ on $[0, 1]$ and $[1, \infty)$ implies $f$ is uniformly continuous on $[0, \infty)$.
+    
+    \exc{4.4.8}
+    \begin{enumerate}
+        \item Impossible. We know that $f$ is continuous and $[0, 1]$ is compact so $f([0, 1])$ must also be compact (Theorem 4.4.1). Since $(0, 1)$ is open, it is not closed (the only sets that are both open and closed are $\emptyset$ an $\R$) therefore not compact, so we cannot have $f([0, 1]) = (0, 1)$.
+        
+        \item \begin{equation*}
+            \frac{\sin{2 \pi x} + 1}{2}
+        \end{equation*}
+        
+        \item \begin{equation*}
+            \frac{(1-x) \sin{1/x}+1}{2}
+        \end{equation*}
+    \end{enumerate}
+    
+    \exc{4.4.9}
+    \begin{enumerate}
+        \item \lep. Set $\delta := \epsilon/M$ and let $x,y \in A$ such that $\abs{x-y} < \delta$ be arbitrary. Then, 
+        \begin{equation*}
+            \abs*{\frac{f(x)-f(y)}{x-y}} \leq M \implies
+            \abs{f(x)-f(y)} \leq \abs{x-y} M < \epsilon.
+        \end{equation*}
+        
+        \item No. Consider the function $f : [0, \infty) \to \R$ defined by $f(x)=\sqrt{x}$, which is uniformly continuous by Exercise 4.4.7 and let $M > 0$ be arbitrary. Set $y := 0$ and $x = 1/(4M^2)$. Then 
+        \begin{equation*}
+            \abs*{\frac{f(x)-f(y)}{x-y}} = \frac{\sqrt{x}}{x} = 
+            \frac{1}{\sqrt{x}} = \frac{1}{1/(2M)} = 2M > M. 
+        \end{equation*} Thus, $f$ is uniformly continuous on $[0, \infty)$ but not Lipschitz on that interval.
+    \end{enumerate}
+    
+    \exc{4.4.10}
+    \begin{enumerate}
+        \item \lep. Choose $\delta_1 > 0$ such that $\abs{f(x)-f(y)} < \epsilon/2$ when $\abs{x-y} < \delta_1$. Similarly, choose $\delta_2 > 0$ such that $\abs{g(x)-g(y)} < \epsilon/2$ when $\abs{x-y} < \delta_2$. Set $\delta = \min(\delta_1, \delta_2)$ and let choose arbitrary $x,y \in A$ such that $\abs{x-y} < \delta$. Then,
+        \begin{equation*}
+            \abs{(f(x)+g(x)) - (f(y)+g(y))} \leq \abs{f(x)-f(y)} + \abs{g(x)-g(y)}
+            < \epsilon.
+        \end{equation*}
+        
+        \item Set $A := \R$ and $f(x)=g(x) = x$. Both $f$ and $g$ are uniformly continuous on $\R$, but $f(x)g(x) = x^2$ is not.  
+        
+        \item Set $A := (0, 1)$, $f(x) := 1$ and $g(x) := x$. Then, $f(x)/g(x) = 1/x$, which is not uniformly continuous on $A$ by Exercise 4.4.2 (a). 
+        
+        \item Set $A := (1, \infty)$, $f(x) := 1/x$ and $g(x) := x-1$. It is easy to verify that both $f$ and $g$ are uniformly continuous on $A$. However, $f(g(x)) = 1/(x-1)$ is not bounded at $A$, so it cannot be uniformly continuous, by Exercise 4.4.4 (b).
+        
+        \item \lep. Choose $\delta_1 > 0$ such that $\abs{f(x)-f(y)} < \epsilon$ when $\abs{x-y} < \delta_1$. Next, choose $\delta > 0$ such that $\abs{g(x)-g(y)} < \delta_1$ whenever $\abs{x-y} < \delta$. Now let $x,y \in A$ be such that $\abs{x-y} < \delta$. It follows that $\abs{g(x)-g(y)} < \delta_1$. This implies $\abs{f(g(x))-f(g(y))} < \epsilon$, so $f \circ g$ is uniformly continuous on $A$.
+    \end{enumerate}
+    
+    \exc{4.4.11}
+    Assume $g$ is continuous and that $O \subseteq \R$ is open. If $g^-1(O)$ is empty then it is open, so assume $g^-1(O) \neq \emptyset$. Then, we can choose some arbitrary $c \in g^-1(O)$, and we need to show that there is some $\delta > 0$ such that $V_{\delta}(c) \subseteq g^{-}1(O)$. By the definition of $g^-1(O)$, it follows that $g(c) \in O$. Since $O$ is open, there is some $\epsilon > 0$ such that $V_\epsilon(g(c)) \subseteq O$. Using the continuity of $g$, we can find $\delta > 0$ such that $g(x) \in V_\epsilon(g(c))$ for all $x \in V_\delta(c)$. Now consider the set $g(V_\delta(c))$. All of its elements are also elements of $V_\epsilon(g(c))$, which is a subset of $O$. This means that $g(V_\delta(c)) \subseteq O$. Then, is easy to verify that $g(V_\delta(c)) \subseteq O \implies V_\delta(c) \subseteq g^{-1}(O)$, which is what we wanted to show.
+    
+    For the reverse implication we assume that $g^{-1}(O)$ is open whenever $O \subseteq \R$ is open and seek to show that $g$ is continuous on $\R$. Let $c \in \R$ and $\epsilon > 0$ be arbitrary. The set $g^{-1}(V_\epsilon(g(c)))$ must be open, since $V_\epsilon(g(c))$ is open. Notice that $c \in g^{-1}(V_\epsilon(g(c)))$, which means there is a $\delta > 0$ such that $V_\delta(c) \subseteq g^{-1}(V_\epsilon(g(c)))$. Then, $x \in V_\delta(c) \implies x \in g^{-1}(V_\epsilon(g(c))) \implies g(x) \in V_\epsilon(g(c))$ so we can conclude that $g$ is continuous by Theorem 4.3.2 (ii).
+    
+    \exc{4.4.12}
+    \begin{enumerate}
+        \item False. $\oldsin^{-1}([-1,1]) = \R$.
+        
+        \item False, as seen in (a).
+        
+        \item False, as seen in (a). 
+        
+        \item True. Assume $F$ is closed. Then, $F^c$ is open, so $f^{-1}(F^c)=(f^{-1}(F))^c$ must be open, by the Topological Characterization of Continuity. This implies $f^{-1}(F)$ is closed.
+    \end{enumerate}
+    
+    \exc{4.4.13}
+    \begin{enumerate}
+        \item We proved this in Exercise 4.4.6 (b) when $A = (0, 1)$, but the proof itself only assumed $A$ is a subset of the reals, so it also works here.
+        
+        \item Assume $g: (a, b) \to \R$ is uniformly continuous. Let $(x_n) \subseteq (a, b)$ be a Cauchy sequence which converges to $a$. By (a),  $g(x_n)$ is also Cauchy, so it converges, and the same argument applies for a sequence that converges to $b$. Thus, we are justified in defining a new function $f: [a, b] \to \R$ such that
+        \begin{equation*}
+            f(x) = 
+            \begin{cases}
+            g(x) & x \in (a, b) \\ 
+            \lim_{x \to a} g(x) & x = a \\
+            \lim_{x \to b} g(x) & x = b.
+            \end{cases}
+        \end{equation*} To see that $f$, the extended function of $g$, is uniformly continuous on its domain, \lep[l]. Choose $\delta_1 > 0$ such that $\abs{g(x)-g(y)} < \epsilon$ whenever $\abs{x-y} < \delta_1$ for $x,y \in (a, b)$. Next, choose $\delta_2, \delta_3 > 0$ such that $\abs{g(x)-f(a)} < \epsilon$ when $\abs{x-a} < \delta_2$ and $\abs{g(x)-f(b)} < \epsilon$ when $\abs{x-b} < \delta_3$. Now set $\delta = \min(\delta_1, \delta_2, \delta_3, (b-a)/2)$. Now let $x,y \in [a, b]$ be arbitrary. We need to consider four cases: $x,y \in (a, b)$ (1), $x = a, y \in (a, b)$ (2), $x = b, y \in (a, b)$ (3) and $x = a, y = b$ (4). It follows immediately from our definition of $\delta$ that, for cases (1), (2) and (3), we have $\abs{x-y} < \delta \implies \abs{f(x)-f(y)} < \epsilon$. For case (4), notice that $\abs{x-y}=b-a$, which is never less than $\delta$, since $\delta \leq (b-a)/2 < b-a$, so the desired implication is vacuously true. This shows that $f$ is uniformly continuous on $[a, b]$, which of course also means that $f$ is continuous on $[a, b]$, as desired.
+        
+        For the reverse implication, notice that $[a, b]$ is compact, so the continuity of $g$ at $[a, b]$ implies $g$ is uniformly continuous at $[a, b]$, and certainly on $(a, b)$ as well.
+    \end{enumerate}
+    
 \end{enumerate}
 
 \end{document}
